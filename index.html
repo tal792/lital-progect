@@ -1,0 +1,1574 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>ליטל בוהדנה</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Bellefair&display=swap" rel="stylesheet">
+<style>
+/* Layout: airy full-width bands on warm beige; arch portrait + floating cards in the hero; each service opens as its own "page" view */
+:root{
+  color-scheme: light;
+  --beige:#E8D9C3; --sand:#F3EADD; --cream:#FCF8F2;
+  --teal:#55C4C0; --teal-deep:#1F7A76; --teal-soft:#D5EFEC;
+  --lilac:#B9A5D5; --lilac-soft:#EDE6F6; --lilac-deep:#65508A;
+  --ink:#3A3341; --muted:#6C6274; --line:#DCCBB2;
+  --night:#1E3F44; --night-2:#3B3152;
+  --f-display:"Bellefair","Frank Ruhl Libre","David",Georgia,serif;
+  --f-body:"Assistant","Heebo","Arial Hebrew",Arial,sans-serif;
+  --wrap:1120px; --r:20px;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{background:var(--sand);color:var(--ink);font-family:var(--f-body);font-size:18px;line-height:1.75}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--cream)}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;line-height:1.2;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.3rem,5.2vw,3.9rem)}
+h2{font-size:clamp(1.9rem,3.6vw,2.7rem)}
+h3{font-size:1.55rem}
+p{margin:0}
+a{color:var(--teal-deep)}
+.eyebrow{font-size:.85rem;letter-spacing:.08em;color:var(--lilac-deep);font-weight:600}
+.lead{font-size:1.15rem;color:var(--muted);max-width:36em}
+.hl{color:var(--teal-deep)}
+:focus-visible{outline:3px solid var(--lilac-deep);outline-offset:3px;border-radius:6px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:.5em;background:var(--teal);color:var(--ink);font:600 1rem var(--f-body);padding:.85em 1.6em;border-radius:999px;border:2px solid var(--teal);text-decoration:none;cursor:pointer;transition:transform .2s,background .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px -10px var(--teal-deep)}
+.btn-ghost{background:transparent;border-color:var(--ink)}
+.btn-ghost:hover{background:var(--cream)}
+.btn-sm{padding:.45em 1.1em;font-size:.95rem}
+.btn-lilac{background:var(--lilac);border-color:var(--lilac)}
+.actions{display:flex;flex-wrap:wrap;gap:12px}
+.more{font-weight:600;text-decoration:none}
+.more:hover{text-decoration:underline}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--cream) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top-in{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
+.brand{text-decoration:none;color:var(--ink);display:flex;flex-direction:column;line-height:1.1}
+.brand-name{font-family:var(--f-display);font-size:1.7rem}
+.brand-sub{font-size:.75rem;letter-spacing:.06em;color:var(--muted)}
+.nav{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.nav a:not(.btn){color:var(--ink);text-decoration:none;padding:.35em .7em;border-radius:999px;font-size:.98rem}
+.nav a:not(.btn):hover{background:var(--lilac-soft)}
+.nav a.active:not(.btn){background:var(--teal-soft);color:var(--teal-deep);font-weight:600}
+.menu-btn{display:none;background:none;border:1.5px solid var(--ink);border-radius:999px;padding:.35em 1em;font:600 .95rem var(--f-body);color:var(--ink);cursor:pointer}
+@media (max-width:960px){
+  .menu-btn{display:block}
+  .nav{display:none;position:absolute;inset:100% 0 auto;flex-direction:column;align-items:stretch;background:var(--cream);border-bottom:1px solid var(--line);padding:8px max(16px,env(safe-area-inset-right,0px)) 16px max(16px,env(safe-area-inset-left,0px))}
+  .nav.open{display:flex}
+  .nav a:not(.btn){padding:.6em .8em}
+  .nav .btn{justify-content:center;margin-top:6px}
+}
+
+/* bands */
+.band{padding-block:clamp(56px,8vw,104px)}
+.band-cream{background:var(--cream)}
+.band-beige{background:var(--beige)}
+.band-lilac{background:var(--lilac-soft)}
+.band-teal{background:var(--teal-soft)}
+.sec-head{display:grid;gap:12px;max-width:40em;margin-bottom:40px}
+
+/* hero */
+.hero{padding-block:clamp(40px,7vw,88px);background:radial-gradient(60% 70% at 15% 30%,var(--lilac-soft),transparent 70%),radial-gradient(50% 60% at 95% 90%,var(--teal-soft),transparent 70%),var(--sand)}
+.hero-in{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.hero-text{display:grid;gap:22px;min-width:0}
+.hero-art{position:relative;justify-self:center;width:min(360px,100%)}
+.arch{aspect-ratio:3/4;max-width:100%;border-radius:999px 999px 24px 24px;background:linear-gradient(170deg,var(--lilac) 0%,var(--beige) 55%,var(--teal) 130%);display:grid;place-items:center;text-align:center;border:10px solid var(--cream);box-shadow:0 30px 60px -30px rgba(58,51,65,.45)}
+.ph{font-size:.9rem;color:var(--ink);opacity:.75;padding:1em;border:1.5px dashed rgba(58,51,65,.4);border-radius:14px;margin:2em}
+.float-card{position:absolute;background:var(--cream);border-radius:16px;padding:12px 16px;display:grid;justify-items:center;box-shadow:0 14px 30px -16px rgba(58,51,65,.5);animation:float 6s ease-in-out infinite}
+.float-card span{font-family:var(--f-display);font-size:2.4rem;line-height:1;color:var(--teal-deep)}
+.float-card small{font-size:.75rem;color:var(--muted)}
+.fc1{top:12%;inset-inline-end:-28px}
+.fc2{bottom:10%;inset-inline-start:-30px;animation-delay:-3s}
+.fc2 span{color:var(--lilac-deep)}
+@keyframes float{50%{transform:translateY(-10px)}}
+@media (max-width:820px){
+  .hero-in{grid-template-columns:1fr}
+  .hero-art{width:min(280px,78%)}
+  .fc1{inset-inline-end:-14px}.fc2{inset-inline-start:-14px}
+}
+
+/* hello strip */
+.hello{display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:center}
+.age{font-family:var(--f-display);font-size:clamp(4.5rem,10vw,7rem);line-height:.9;color:var(--lilac);position:relative}
+.age::after{content:"זה רק המספר";position:absolute;bottom:-1.6em;inset-inline-start:0;font:600 .8rem var(--f-body);color:var(--muted);white-space:nowrap}
+.hello-text{display:grid;gap:14px;max-width:38em;min-width:0}
+@media (max-width:620px){.hello{grid-template-columns:1fr;gap:44px}}
+
+/* service cards */
+.services{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.svc{background:var(--cream);border-radius:var(--r);padding:28px 24px;display:flex;flex-direction:column;gap:12px;border:1px solid var(--line);text-decoration:none;color:var(--ink);transition:transform .25s,box-shadow .25s,border-color .25s;min-width:0}
+.svc:hover{transform:translateY(-4px);box-shadow:0 22px 40px -26px rgba(58,51,65,.55);border-color:var(--teal)}
+.sym{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-display);font-size:2rem;line-height:1}
+.sym-teal{background:var(--teal-soft);color:var(--teal-deep)}
+.sym-lilac{background:var(--lilac-soft);color:var(--lilac-deep)}
+.sym-sm{font-size:1.2rem;letter-spacing:.04em}
+.svc p{color:var(--muted);font-size:1rem;flex:1}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:.8rem;padding:.15em .7em;border-radius:999px;background:var(--sand);color:var(--ink)}
+.svc .go{font-weight:600;color:var(--teal-deep)}
+@media (max-width:1000px){.services{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.services{grid-template-columns:1fr}}
+
+/* topics */
+.chips{display:flex;flex-wrap:wrap;gap:10px;max-width:60em}
+.chip{background:var(--cream);border:1px solid var(--line);padding:.45em 1.1em;border-radius:999px;font-size:1rem}
+.chip:nth-child(3n+1){border-color:var(--teal)}
+.chip:nth-child(3n+2){border-color:var(--lilac)}
+
+/* quiz */
+.quiz{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.quiz-opts{display:grid;gap:10px}
+.opt{text-align:start;background:var(--cream);border:1.5px solid var(--line);border-radius:14px;padding:.85em 1.1em;font:1.02rem var(--f-body);color:var(--ink);cursor:pointer;transition:border-color .2s,background .2s}
+.opt:hover{border-color:var(--lilac)}
+.opt[aria-pressed="true"]{border-color:var(--teal);background:var(--teal-soft);font-weight:600}
+.answer{background:var(--cream);border-radius:var(--r);padding:32px;display:grid;gap:14px;position:sticky;top:110px;border:1px solid var(--line)}
+.answer .eyebrow{color:var(--teal-deep)}
+@media (max-width:820px){.quiz{grid-template-columns:1fr}.answer{position:static}}
+
+/* quote */
+.quote{text-align:center;display:grid;gap:18px;justify-items:center}
+.quote blockquote{margin:0;font-family:var(--f-display);font-size:clamp(2rem,4.6vw,3.4rem);line-height:1.25;max-width:18em;text-wrap:balance}
+.quote p{color:var(--muted)}
+.sign{font-family:var(--f-display);font-size:1.4rem;color:var(--lilac-deep)}
+
+/* two col */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.two > *{min-width:0}
+.stack{display:grid;gap:16px}
+@media (max-width:820px){.two{grid-template-columns:1fr;gap:40px}}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:18px;counter-reset:s}
+.steps li{display:grid;grid-template-columns:48px 1fr;gap:14px;align-items:start;counter-increment:s}
+.steps li::before{content:counter(s);width:44px;height:44px;border-radius:50%;background:var(--teal);display:grid;place-items:center;font-family:var(--f-display);font-size:1.4rem}
+.steps b{display:block}
+.steps span{color:var(--muted);font-size:1rem}
+.offline{background:var(--cream);border-radius:var(--r);padding:32px;border:1px solid var(--line);display:grid;gap:14px}
+.strike{text-decoration:line-through;text-decoration-color:var(--lilac);text-decoration-thickness:3px;color:var(--muted)}
+
+/* placeholder */
+.todo{border:1.5px dashed var(--lilac-deep);border-radius:var(--r);padding:28px;color:var(--lilac-deep);background:color-mix(in srgb,var(--lilac-soft) 50%,transparent);text-align:center}
+.todo-inline{display:inline-block;border:1px dashed var(--lilac-deep);color:var(--lilac-deep);border-radius:8px;padding:0 .5em;font-size:.95em}
+
+/* cta band */
+.cta{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:24px}
+.cta h2{max-width:16em}
+
+/* inner pages */
+.page-hero{padding-block:clamp(48px,7vw,96px);background:radial-gradient(55% 80% at 10% 0%,var(--lilac-soft),transparent 70%),var(--sand)}
+.page-hero .wrap{display:grid;gap:20px}
+.page-hero .sym{width:80px;height:80px;font-size:2.6rem}
+.list{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+.list li{position:relative;padding-inline-start:28px}
+.list li::before{content:"";position:absolute;inset-inline-start:0;top:.62em;width:12px;height:12px;border-radius:50%;background:var(--lilac)}
+.list li:nth-child(even)::before{background:var(--teal)}
+.list small{display:block;color:var(--muted);font-size:.95rem}
+.formats{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.fmt{background:var(--cream);border-radius:var(--r);padding:28px;border-top:5px solid var(--teal);display:flex;flex-direction:column;gap:10px}
+.fmt .buy,.fmt > .price{margin-top:auto}
+.fmt:nth-child(2){border-top-color:var(--lilac)}
+.fmt:nth-child(3){border-top-color:var(--beige)}
+.fmt p{color:var(--muted);font-size:1rem}
+.note{font-size:.95rem;color:var(--muted);border-inline-start:3px solid var(--lilac);padding-inline-start:16px;max-width:40em}
+
+/* numerology widget */
+.calc{background:var(--cream);border-radius:var(--r);padding:32px;display:grid;gap:16px;border:1px solid var(--line)}
+.calc-row{display:flex;flex-wrap:wrap;gap:12px;align-items:end}
+.field{display:grid;gap:6px;flex:1;min-width:0}
+.field label{font-weight:600;font-size:.95rem}
+input,select,textarea{font:1rem var(--f-body);color:var(--ink);background:var(--sand);border:1.5px solid var(--line);border-radius:12px;padding:.75em 1em;width:100%}
+input:focus,select:focus,textarea:focus{border-color:var(--teal);outline:none;box-shadow:0 0 0 3px var(--teal-soft)}
+.num-out{display:flex;gap:20px;align-items:center}
+.big-num{font-family:var(--f-display);font-size:5rem;line-height:1;color:var(--teal-deep);min-width:1.2em;text-align:center}
+.digits{font-size:.9rem;color:var(--muted);direction:ltr;unicode-bidi:isolate}
+
+/* oracle card */
+.oracle{display:grid;justify-items:center;gap:20px}
+.card3d{width:min(280px,80vw);aspect-ratio:5/7;max-width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer}
+.card3d{display:block}
+.spread{position:relative;width:min(440px,100%);height:380px;margin-inline:auto}
+.pick{position:absolute;left:50%;bottom:20px;width:150px;aspect-ratio:5/7;padding:0;border:0;background:none;cursor:pointer;perspective:900px;transform-origin:50% 115%;transform:translateX(-50%) rotate(var(--r));transition:transform .7s cubic-bezier(.3,.7,.2,1),opacity .5s;z-index:var(--z)}
+.pick:nth-child(1){--r:-30deg;--z:1}.pick:nth-child(2){--r:-10deg;--z:2}.pick:nth-child(3){--r:10deg;--z:3}.pick:nth-child(4){--r:30deg;--z:4}
+.spread:not(.done) .pick:hover{transform:translateX(-50%) rotate(var(--r)) translateY(-14px)}
+.pick.chosen{transform:translateX(-50%) rotate(0deg) translateY(-30px) scale(1.45);z-index:9}
+.pick.chosen .card-in{transform:rotateY(180deg)}
+.spread.done .pick:not(.chosen){opacity:.25;pointer-events:none}
+.pick .face{padding:14px;border-radius:12px}
+.pick .back{border-width:5px;font-size:1.8rem}
+.pick .front{font-size:.95rem;line-height:1.35}
+.pick .front small{bottom:8px;font-size:.55rem}
+@media (max-width:480px){.spread{height:320px}.pick{width:118px}.pick.chosen{transform:translateX(-50%) rotate(0deg) translateY(-30px) scale(1.55)}}
+.card-in{display:block;position:relative;width:100%;height:100%;-webkit-transform-style:preserve-3d;transition:transform .8s cubic-bezier(.3,.7,.2,1);transform-style:preserve-3d}
+.card3d.flipped .card-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;border-radius:18px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:grid;place-items:center;padding:28px;text-align:center;box-shadow:0 24px 44px -24px rgba(58,51,65,.6)}
+.back{background:repeating-linear-gradient(45deg,transparent 0 14px,rgba(252,248,242,.18) 14px 15px),repeating-linear-gradient(-45deg,transparent 0 14px,rgba(252,248,242,.18) 14px 15px),linear-gradient(160deg,var(--lilac),var(--teal));border:8px solid var(--cream);color:var(--cream);font-family:var(--f-display);font-size:1.5rem}
+.front{background:var(--cream);transform:rotateY(180deg);border:2px solid var(--lilac);font-family:var(--f-display);font-size:1.45rem;line-height:1.35;color:var(--ink)}
+.front small{position:absolute;bottom:18px;inset-inline:0;font:600 .75rem var(--f-body);color:var(--lilac-deep);letter-spacing:.08em}
+
+/* about */
+.story{display:grid;gap:18px;max-width:38em}
+.story p:first-child{font-family:var(--f-display);font-size:1.6rem;line-height:1.4;color:var(--lilac-deep)}
+.values{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.val{display:grid;gap:8px;align-content:start}
+.val h3{font-size:1.35rem}
+.val p{color:var(--muted);font-size:1rem}
+@media (max-width:760px){.values{grid-template-columns:1fr}}
+
+/* contact */
+.form{background:var(--cream);border-radius:var(--r);padding:32px;display:grid;gap:16px;border:1px solid var(--line)}
+.sent{background:var(--teal-soft);border-radius:14px;padding:16px 20px;color:var(--teal-deep);font-weight:600}
+.details{display:grid;gap:18px}
+.details dt{font-weight:600}
+.details dd{margin:0;color:var(--muted)}
+
+/* footer */
+.foot{background:var(--beige);padding-block:48px 112px;font-size:.95rem}
+.foot-in{display:grid;gap:24px}
+.foot-nav{display:flex;flex-wrap:wrap;gap:8px 20px}
+.foot-nav a{color:var(--ink);text-decoration:none}
+.foot-nav a:hover{text-decoration:underline}
+.disc{color:var(--muted);font-size:.85rem;max-width:52em;border-top:1px solid var(--line);padding-top:20px}
+
+/* deep bands: theta + numerology heroes, "ready" band */
+.deep{position:relative;overflow:hidden;background:linear-gradient(150deg,var(--night) 0%,var(--night-2) 100%);color:var(--cream)}
+.deep .wrap{position:relative;z-index:1}
+.deep .eyebrow{color:var(--lilac)}
+.deep .lead{color:color-mix(in srgb,var(--cream) 82%,transparent)}
+.smoke::before,.smoke::after{content:"";position:absolute;width:70%;aspect-ratio:1;border-radius:50%;filter:blur(80px);opacity:.42;pointer-events:none;animation:drift 18s ease-in-out infinite alternate}
+.smoke::before{background:var(--teal);top:-35%;inset-inline-start:-15%}
+.smoke::after{background:var(--lilac);bottom:-45%;inset-inline-end:-10%;animation-delay:-9s}
+@keyframes drift{to{transform:translate(8%,10%) scale(1.15)}}
+.statement{font-size:clamp(2.4rem,6vw,4.6rem);max-width:13em;line-height:1.15}
+/* numerology hero */
+.num-hero{padding-block:clamp(48px,7vw,96px);overflow:hidden;background:radial-gradient(50% 70% at 12% 25%,var(--lilac-soft),transparent 70%),radial-gradient(45% 65% at 92% 95%,var(--teal-soft),transparent 70%),var(--sand)}
+.num-hero-in{display:grid;grid-template-columns:1.25fr .75fr;gap:48px;align-items:center}
+.num-hero .statement{max-width:none}
+.wheel{position:relative;width:min(340px,100%);aspect-ratio:1;max-width:100%;justify-self:center}
+.wheel svg{width:100%;height:100%;display:block;overflow:visible}
+.w-halo{fill:none;stroke:var(--lilac);stroke-width:.6;opacity:.6}
+.w-outer{fill:var(--cream);stroke:var(--line);stroke-width:1}
+.w-inner{fill:none;stroke:var(--lilac);stroke-width:1;stroke-dasharray:2 4}
+.w-dig{font-family:var(--f-display);font-size:17px;fill:var(--muted);text-anchor:middle;dominant-baseline:central;transition:fill .4s,font-size .4s}
+.w-dig.on{fill:var(--teal-deep);font-size:24px}
+.wheel-core{position:absolute;inset:31%;border-radius:50%;background:linear-gradient(150deg,var(--lilac),var(--teal));border:6px solid var(--cream);box-shadow:0 18px 40px -18px rgba(58,51,65,.5);display:grid;place-items:center}
+.wheel-core span{font-family:var(--f-display);font-size:clamp(3rem,7vw,4.4rem);line-height:1;color:var(--cream);transition:opacity .4s}
+@media (max-width:820px){.num-hero-in{grid-template-columns:1fr}.wheel{width:min(260px,72%)}}
+section[id]{scroll-margin-top:84px}
+
+/* inner-page hero visuals (same family as the numerology wheel) */
+.statement-long{font-size:clamp(2.1rem,4.3vw,3.5rem)}
+.vis{position:relative;width:min(340px,100%);aspect-ratio:1;max-width:100%;justify-self:center}
+.vis svg{width:100%;height:100%;display:block;overflow:visible}
+.ring{fill:none;stroke-width:1}
+.ring-l{stroke:var(--lilac)}
+.ring-t{stroke:var(--teal);stroke-dasharray:2 4}
+.ring-fill{fill:var(--cream);stroke:var(--line);stroke-width:1}
+.wave{fill:none;stroke:var(--teal-deep);stroke-width:1.2;opacity:.35}
+.tri{fill:none;stroke:var(--lilac);stroke-width:1}
+.ripple{animation:ripple 4.5s ease-in-out infinite;transform-origin:100px 100px;transform-box:view-box}
+.ripple.r2{animation-delay:-1.5s}.ripple.r3{animation-delay:-3s}
+@keyframes ripple{50%{opacity:.3;transform:scale(1.04)}}
+.vis-core{position:absolute;inset:31%;border-radius:50%;background:linear-gradient(150deg,var(--lilac),var(--teal));border:6px solid var(--cream);box-shadow:0 18px 40px -18px rgba(58,51,65,.5);display:grid;place-items:center;font-family:var(--f-display);font-size:clamp(2.8rem,7vw,4.4rem);line-height:1;color:var(--cream)}
+.vis-core.sm{font-size:clamp(1.5rem,4vw,2.1rem);letter-spacing:.05em}
+.vis-label{position:absolute;transform:translate(-50%,-50%);background:var(--cream);border:1.5px solid var(--lilac);border-radius:999px;padding:.4em 1em;font-weight:600;font-size:.95rem;white-space:nowrap}
+.vis-label.t{border-color:var(--teal)}
+.fan{display:grid;place-items:center}
+.mini{position:absolute;width:44%;aspect-ratio:5/7;border-radius:14px;border:6px solid var(--cream);display:grid;place-items:center;color:var(--cream);font-family:var(--f-display);font-size:2.2rem;box-shadow:0 20px 40px -22px rgba(58,51,65,.6);background:repeating-linear-gradient(45deg,transparent 0 12px,rgba(252,248,242,.2) 12px 13px),repeating-linear-gradient(-45deg,transparent 0 12px,rgba(252,248,242,.2) 12px 13px),linear-gradient(160deg,var(--lilac),var(--teal))}
+.mini:nth-child(1){transform:translateX(40%) rotate(14deg)}
+.mini:nth-child(2){transform:translateX(-40%) rotate(-14deg)}
+.mini:nth-child(3){transform:translateY(-5%);z-index:1}
+.chat{display:grid;gap:12px;align-content:center;width:min(360px,100%);justify-self:center;background:var(--cream);border:1px solid var(--line);border-radius:24px;padding:20px;box-shadow:0 24px 48px -30px rgba(58,51,65,.55)}
+.chat-head{display:flex;align-items:center;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(150deg,var(--lilac),var(--teal));color:var(--cream);display:grid;place-items:center;font-family:var(--f-display);font-size:1.3rem}
+.chat-head small{display:block;color:var(--muted);font-size:.8rem;line-height:1.2}
+.bubble{padding:10px 16px;border-radius:18px;max-width:85%;font-size:1.02rem}
+.bubble small{display:block;font-size:.72rem;color:var(--muted)}
+.b-out{background:var(--teal-soft);justify-self:end;border-end-end-radius:6px}
+.b-in{background:var(--lilac-soft);justify-self:start;border-end-start-radius:6px}
+.typing{display:flex;gap:4px;padding:14px 16px}
+.typing i{width:7px;height:7px;border-radius:50%;background:var(--lilac-deep);opacity:.4;animation:blink 1.2s infinite}
+.typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
+@keyframes blink{50%{opacity:1}}
+@media (max-width:820px){.vis{width:min(270px,76%)}}
+@media (max-width:480px){.vis-label{font-size:.8rem;padding:.35em .7em}}
+.no{font-style:normal;color:var(--teal-deep);text-decoration:underline;text-decoration-color:var(--lilac);text-decoration-thickness:5px;text-underline-offset:12px}
+.ready{text-align:center;display:grid;gap:24px;justify-items:center}
+.ready-list{display:grid;gap:14px;width:min(360px,100%)}
+.ready-list a{display:block;background:var(--beige);color:var(--ink);text-decoration:none;text-align:center;padding:.85em 1em;border-radius:14px;font-weight:600;border:1.5px solid transparent;transition:background .2s,transform .2s}
+.ready-list a:hover{background:var(--teal);transform:translateY(-2px)}
+.ready-list a.alt{background:transparent;color:var(--cream);border-color:var(--lilac)}
+
+/* numerology constellation */
+.const{position:relative;width:min(540px,100%);aspect-ratio:1;max-width:100%;margin-inline:auto}
+.const svg{position:absolute;inset:0;width:100%;height:100%;color:var(--lilac)}
+.core{position:absolute;inset:36%;border-radius:50%;background:linear-gradient(150deg,var(--night),var(--night-2));color:var(--cream);display:grid;place-items:center;text-align:center;font-family:var(--f-display);font-size:clamp(1rem,2.6vw,1.4rem);line-height:1.15;box-shadow:0 0 0 8px var(--lilac-soft)}
+.node{position:absolute;transform:translate(-50%,-50%);background:var(--cream);border:1.5px solid var(--lilac);border-radius:999px;padding:.45em 1em;font:600 .95rem var(--f-body);color:var(--ink);cursor:pointer;white-space:nowrap;transition:background .2s,border-color .2s}
+.node:hover{border-color:var(--teal)}
+.node[aria-pressed="true"]{background:var(--teal);border-color:var(--teal)}
+@media (max-width:480px){.node{font-size:.78rem;padding:.35em .65em}}
+.star-panel{background:var(--cream);border-radius:16px;padding:22px 24px;border-inline-start:4px solid var(--teal);display:grid;gap:6px}
+.star-panel p{color:var(--muted)}
+
+/* buyable format cards */
+a.fmt{text-decoration:none;color:var(--ink);transition:transform .25s,box-shadow .25s}
+a.fmt:hover{transform:translateY(-4px);box-shadow:0 22px 40px -26px rgba(58,51,65,.55)}
+.price{font-family:var(--f-display);font-size:2.2rem;color:var(--teal-deep);line-height:1}
+.fmt .btn{align-self:flex-start}
+.buy{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.buy-note{font-size:.9rem;color:var(--lilac-deep)}
+.callout{justify-self:start;background:var(--cream);border:1.5px solid var(--lilac);border-inline-start:6px solid var(--teal);border-radius:14px;padding:.8em 1.2em;font-weight:600;font-size:1.08rem;box-shadow:0 12px 28px -20px rgba(58,51,65,.5)}
+.callout span{color:var(--lilac-deep);margin-inline-end:6px}
+.ask{display:grid;grid-template-columns:1.3fr .7fr;gap:40px;align-items:center}
+.ask > *{min-width:0}
+.ask-box{background:var(--sand);border:1px solid var(--line);border-radius:22px;padding:26px;display:grid;gap:12px;justify-items:start}
+@media (max-width:820px){.ask{grid-template-columns:1fr}}
+
+/* booking (demo) */
+.book-hero{padding-block:clamp(36px,5vw,64px)}
+.book-hero .hero-text{max-width:44em}
+.demo-note{justify-self:start;background:var(--lilac-soft);border:1px dashed var(--lilac-deep);color:var(--lilac-deep);border-radius:12px;padding:.5em 1em;font-size:.95rem}
+.book{display:grid;grid-template-columns:1fr 340px;gap:40px;align-items:start}
+.book-main{display:grid;gap:36px;min-width:0}
+.step{display:grid;gap:14px}
+.step h3{display:flex;align-items:center;gap:12px}
+.n{width:34px;height:34px;border-radius:50%;background:var(--teal);display:grid;place-items:center;font:700 1rem var(--f-body);flex:none}
+.choice{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.ch{text-align:start;background:var(--sand);border:1.5px solid var(--line);border-radius:16px;padding:14px 18px;cursor:pointer;display:grid;gap:2px;font:inherit;color:var(--ink)}
+.ch span{color:var(--muted);font-size:.95rem}
+.ch em{font-style:normal;font-family:var(--f-display);font-size:1.6rem;color:var(--teal-deep);line-height:1.2}
+.ch:hover{border-color:var(--lilac)}
+.ch[aria-pressed="true"]{border-color:var(--teal);background:var(--teal-soft)}
+.cal{background:var(--sand);border-radius:18px;padding:18px;border:1px solid var(--line);max-width:460px}
+.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.cal-nav{background:var(--cream);border:1px solid var(--line);width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1.1rem;color:var(--ink)}
+.cal-nav:disabled{opacity:.35;cursor:default}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center}
+.cal-dow{margin-bottom:6px}
+.cal-dow span{font-size:.8rem;color:var(--muted);font-weight:600}
+.day{aspect-ratio:1;max-width:100%;border-radius:50%;border:1.5px solid transparent;background:none;font:600 .95rem var(--f-body);color:var(--muted);opacity:.45;padding:0}
+.day.open{opacity:1;color:var(--ink);background:var(--cream);border-color:var(--teal);cursor:pointer}
+.day.open:hover{background:var(--teal-soft)}
+.day.sel{background:var(--teal)}
+.cal-legend{font-size:.85rem;color:var(--muted)}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:10px;max-width:560px}
+.slot{background:var(--cream);border:1.5px solid var(--teal);border-radius:12px;padding:.6em;font:600 1rem var(--f-body);color:var(--ink);cursor:pointer;direction:ltr}
+.slot:hover{background:var(--teal-soft)}
+.slot:disabled{border-color:var(--line);color:var(--muted);text-decoration:line-through;cursor:default;opacity:.6;background:var(--cream)}
+.slot[aria-pressed="true"]{background:var(--teal)}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:560px}
+@media (max-width:560px){.fields{grid-template-columns:1fr}}
+.summary{position:sticky;top:100px;background:var(--cream);border:1px solid var(--line);border-radius:22px;padding:26px;display:grid;gap:16px;box-shadow:0 24px 48px -32px rgba(58,51,65,.55)}
+.summary dl{margin:0;display:grid;gap:10px}
+.summary dl div{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dashed var(--line);padding-bottom:8px}
+.summary dt{color:var(--muted);flex:none}
+.summary dd{margin:0;font-weight:600;text-align:end}
+.total{display:flex;justify-content:space-between;align-items:baseline}
+.total b{font-family:var(--f-display);font-size:2.2rem;color:var(--teal-deep);font-weight:400}
+.pay{justify-content:center;width:100%}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.pay-hint{font-size:.85rem;color:var(--muted);text-align:center}
+.paid{background:var(--teal-soft);border-radius:14px;padding:16px;display:grid;gap:8px}
+.paid span{font-size:.92rem;color:var(--muted)}
+.paid .btn{justify-self:start}
+@media (max-width:900px){.book{grid-template-columns:1fr}.summary{position:static}}
+
+/* workshops */
+.emo .vis-label{font-size:1.4rem;padding:.2em .45em;line-height:1.2}
+.worlds{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.world{background:var(--cream);border:1px solid var(--line);border-radius:var(--r);padding:22px;display:grid;gap:6px;align-content:start}
+.world .em{font-size:2rem;line-height:1}
+.world p{color:var(--muted);font-size:1rem}
+@media (max-width:860px){.worlds{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.worlds{grid-template-columns:1fr}}
+.nope{font-family:var(--f-display);font-size:clamp(2.4rem,6vw,4rem);color:var(--teal-deep);line-height:1.1}
+.ws-list{display:grid;gap:16px}
+.ws-card{display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:center;background:var(--cream);border:1px solid var(--line);border-radius:var(--r);padding:20px 24px}
+.ws-card > *{min-width:0}
+.datebox{width:92px;border-radius:16px;background:linear-gradient(160deg,var(--lilac),var(--teal));color:var(--cream);display:grid;justify-items:center;padding:10px 6px;text-align:center;line-height:1.15}
+.datebox b{font-family:var(--f-display);font-size:2.6rem;font-weight:400}
+.datebox span{font-weight:700}
+.datebox small{font-size:.75rem}
+.ws-body{display:grid;gap:6px}
+.ws-body h3{font-size:1.4rem}
+.ws-meta{color:var(--muted);font-size:.95rem}
+.spots{height:8px;border-radius:99px;background:var(--lilac-soft);overflow:hidden;max-width:320px}
+.spots i{display:block;height:100%;background:var(--teal);border-radius:99px}
+.spots-t{color:var(--lilac-deep);font-weight:600}
+.ws-cta{display:grid;justify-items:center;gap:8px}
+@media (max-width:760px){.ws-card{grid-template-columns:auto 1fr;gap:16px}.ws-cta{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center}}
+.ws-reg{background:var(--sand);border:1px solid var(--line);border-radius:22px;padding:26px;display:grid;gap:14px;margin-top:24px}
+.ws-reg .btn{justify-self:start}
+.mail{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;font-size:.95rem;box-shadow:0 18px 36px -26px rgba(58,51,65,.5)}
+.mail-head{padding:12px 18px;border-bottom:1px solid var(--line);display:grid;gap:2px;color:var(--muted);font-size:.85rem}
+.mail-head b{color:var(--ink);font-size:1rem}
+.mail-body{padding:22px 18px;display:grid;gap:12px;color:var(--ink)}
+.mail-body .sign{font-size:1.6rem}
+.mail-btn{justify-self:start;background:var(--teal);color:var(--ink);font-weight:700;padding:.7em 1.4em;border-radius:999px}
+.mail-det{background:var(--sand);border-radius:12px;padding:12px 14px;display:grid;gap:2px}
+
+/* whatsapp */
+.wa{position:fixed;z-index:30;bottom:calc(20px + env(safe-area-inset-bottom,0px));left:calc(20px + env(safe-area-inset-left,0px));display:flex;align-items:center;gap:8px;background:var(--teal);color:var(--night);padding:10px 18px 10px 12px;border-radius:999px;text-decoration:none;font-weight:700;border:3px solid var(--cream);box-shadow:0 14px 30px -12px rgba(30,63,68,.6);transition:transform .2s}
+.wa:hover{transform:translateY(-3px)}
+.wa svg{width:28px;height:28px;flex:none}
+@media (max-width:560px){.wa span{display:none}.wa{padding:12px}}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+
+<div dir="rtl" lang="he">
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="#home" data-go="home"><span class="brand-name">ליטל בוהדנה</span><span class="brand-sub">תטא הילינג · נומרולוגיה · NLP · קלפים</span></a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav">תפריט</button>
+    <nav class="nav" id="nav" aria-label="ניווט ראשי">
+      <a href="#home" data-go="home">בית</a>
+      <a href="#theta" data-go="theta">תטא הילינג</a>
+      <a href="#numerology" data-go="numerology">נומרולוגיה</a>
+      <a href="#nlp" data-go="nlp">NLP</a>
+      <a href="#cards" data-go="cards">קלפים והגשמה</a>
+      <a href="#workshops" data-go="workshops">סדנאות</a>
+      <a href="#about" data-go="about">קצת עליי</a>
+      <a href="#contact" data-go="contact" class="btn btn-sm">בואי נדבר</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ HOME ============ -->
+<div class="view" data-view="home">
+
+  <section class="hero">
+    <div class="wrap hero-in">
+      <div class="hero-text">
+        <p class="eyebrow">תטא הילינג · נומרולוגיה · NLP · קלפים</p>
+        <h1>אל תחכי לזמן הנכון, הוא אף פעם לא מגיע לבד. <span class="hl">תקבעי שעכשיו זה הזמן הנכון.</span></h1>
+        <p class="lead">נעים מאוד, אני ליטל. אני מלווה תהליכים של שינוי, העצמה והתפתחות אישית, ומשלבת רוחניות עם כלים מעשיים שאפשר לקחת הביתה. בגובה העיניים, עם הומור, וברצינות כשצריך.</p>
+        <div class="actions">
+          <a class="btn" href="#quiz" data-scroll="quiz">בואי לגלות מה מתאים לך</a>
+          <a class="btn btn-ghost" href="#contact" data-go="contact">בואי נדבר</a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <div class="arch"><span class="ph">כאן תבוא תמונה שלך<br>באור טבעי</span></div>
+        <div class="float-card fc1" aria-hidden="true"><span>7</span><small>המפה שלך</small></div>
+        <div class="float-card fc2" aria-hidden="true"><span>θ</span><small>אמונות ודפוסים</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-cream">
+    <div class="wrap hello">
+      <div class="age" aria-label="בת 50, זה רק המספר">50</div>
+      <div class="hello-text">
+        <h2>זה רק המספר. אני מרגישה הרבה פחות.</h2>
+        <p>הגעתי לעולם הזה כמו שהרבה מגיעות: מהמקום שבו אני עצמי הייתי צריכה שינוי. משברים ואירועים אישיים הובילו אותי לחפש דרכים לחזק את האמונה בעצמי ולמצוא שמחה אמיתית. היום אני עושה את הדרך הזאת עם אחרות, ולומדת מכל אחת מהן לא פחות ממה שהיא לומדת ממני.</p>
+        <a class="more" href="#about" data-go="about">הסיפור המלא שלי ←</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">הכלים שלי</p>
+        <h2>ארבעה כלים. את בוחרת את הדרך.</h2>
+        <p class="lead">כל כלי פותח זווית אחרת. אפשר להתחיל מאחד, לשלב כמה, או פשוט לבוא עם שאלה ולבחור יחד.</p>
+      </div>
+      <div class="services">
+        <a class="svc" href="#theta" data-go="theta">
+          <span class="sym sym-teal">θ</span>
+          <h3>תטא הילינג</h3>
+          <p>עבודה על אמונות ודפוסים שמעכבים אותך, וחיבור למשאבים שכבר יש בך.</p>
+          <span class="tags"><span class="tag">סשן בודד</span><span class="tag">תהליך</span></span>
+          <span class="go">מעניין אותי ←</span>
+        </a>
+        <a class="svc" href="#numerology" data-go="numerology">
+          <span class="sym sym-lilac">7</span>
+          <h3>נומרולוגיה</h3>
+          <p>הקוד שהבאת איתך לעולם: תכונות, כישרונות, נטיות, אתגרים ותזמונים.</p>
+          <span class="tags"><span class="tag">אישי</span><span class="tag">זוגי</span><span class="tag">עסקי ושותפויות</span></span>
+          <span class="go">מעניין אותי ←</span>
+        </a>
+        <a class="svc" href="#nlp" data-go="nlp">
+          <span class="sym sym-teal sym-sm">NLP</span>
+          <h3>NLP</h3>
+          <p>כלים מעשיים לשינוי הרגלים, להתמודדות עם פחדים וחרדות ולקבלת החלטות.</p>
+          <span class="tags"><span class="tag">אישי</span><span class="tag">זוגי</span><span class="tag">עסקי</span></span>
+          <span class="go">מעניין אותי ←</span>
+        </a>
+        <a class="svc" href="#cards" data-go="cards">
+          <span class="sym sym-lilac">✦</span>
+          <h3>קלפים, תודעה והגשמה</h3>
+          <p>הקלפים מעלים שאלות, פותחים נקודות מבט ועוזרים לברר מה את באמת רוצה.</p>
+          <span class="tags"><span class="tag">משולב בתהליכים</span></span>
+          <span class="go">מעניין אותי ←</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-cream">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">נקודות של צמיחה</p>
+        <h2>מה מביא אותך אליי?</h2>
+      </div>
+      <div class="chips">
+        <span class="chip">קבלת החלטות</span>
+        <span class="chip">שינוי הרגלים ודפוסים</span>
+        <span class="chip">פחדים, חרדות ופוביות</span>
+        <span class="chip">חיזוק האמונה העצמית</span>
+        <span class="chip">משברים ושינויים</span>
+        <span class="chip">הגשמה עצמית</span>
+        <span class="chip">מניפסטיישן: זימון ויצירת מציאות</span>
+        <span class="chip">הצבת מטרות ותנועה קדימה</span>
+        <span class="chip">פריצות דרך</span>
+        <span class="chip">צמיחה אישית, זוגית ועסקית</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-lilac" id="quiz">
+    <div class="wrap quiz">
+      <div class="stack">
+        <p class="eyebrow">בואי לגלות מה מתאים לך</p>
+        <h2>מה הכי מעסיק אותך עכשיו?</h2>
+        <p class="lead">בחרי את מה שהכי קרוב. אין תשובה לא נכונה, ואפשר תמיד לשנות.</p>
+        <div class="quiz-opts" id="quizOpts">
+          <button class="opt" aria-pressed="false" data-a="decide">אני תקועה מול החלטה</button>
+          <button class="opt" aria-pressed="false" data-a="pattern">יש משהו שחוזר אצלי שוב ושוב</button>
+          <button class="opt" aria-pressed="false" data-a="fear">פחד או חרדה שמגבילים אותי</button>
+          <button class="opt" aria-pressed="false" data-a="know">אני רוצה להבין את עצמי (או את הזוגיות) לעומק</button>
+          <button class="opt" aria-pressed="false" data-a="dream">יש לי חלום, ואני רוצה להתחיל להגשים</button>
+          <button class="opt" aria-pressed="false" data-a="biz">העסק או השותפות שלי צריכים כיוון</button>
+          <button class="opt" aria-pressed="false" data-a="none">אין לי מושג. רק מרגישה שהגיע הזמן</button>
+        </div>
+      </div>
+      <div class="answer" id="answer" aria-live="polite">
+        <p class="eyebrow">ההצעה שלי</p>
+        <h3 id="ansTitle">בחרי משהו מהרשימה</h3>
+        <p id="ansText">ואני אספר לך מאיזה כלי הייתי מציעה להתחיל. זו רק נקודת פתיחה. את ההחלטה הסופית נעשה יחד.</p>
+        <div class="actions" id="ansActions">
+          <a class="btn" href="#contact" data-go="contact">בואי נדבר</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-teal">
+    <div class="wrap quote">
+      <blockquote>יש בנו הכול, ובהכול יש אותנו.</blockquote>
+      <p>ומה יותר חזק וטוב מאותנטיות?</p>
+      <span class="sign">ליטל</span>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap two">
+      <div class="offline">
+        <p class="eyebrow">נגד הזרם</p>
+        <h2>לא תמצאי אותי בטיקטוק.</h2>
+        <p>וגם לא באינסטגרם, ולא בפייסבוק. אני <span class="strike">אושיית רשת</span> לא נמצאת במרוץ של לייקים, תגובות, הבטחות וסיסמאות.</p>
+        <p>רוב מי שמגיעות אליי מגיעות מהמלצה של מישהי שכבר הייתה כאן. בעיניי זה הכי מדויק שיש: הנשמות הנכונות נפגשות בזמן הנכון.</p>
+      </div>
+      <div class="stack">
+        <p class="eyebrow">איך מתחילים</p>
+        <h2>פשוט יותר ממה שנדמה</h2>
+        <ol class="steps">
+          <li><div><b>כותבת לי או מתקשרת</b><span>משפט אחד מספיק. לא צריך לדעת מראש מה בדיוק את רוצה.</span></div></li>
+          <li><div><b>מדברות קצת</b><span>אני מקשיבה ומבינה מה מעסיק אותך עכשיו.</span></div></li>
+          <li><div><b>בוחרות יחד</b><span>איזה כלי, ואם מתאים סשן בודד או תהליך.</span></div></li>
+          <li><div><b>מתחילות</b><span>בקצב שלך, בגובה העיניים.</span></div></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-cream">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">המלצות</p>
+        <h2>מה אומרות מי שהיו כאן</h2>
+      </div>
+      <div class="todo">כאן ייכנסו 3–4 המלצות אמיתיות של לקוחות (בשם פרטי ובאישורן).</div>
+    </div>
+  </section>
+
+  <section class="band deep smoke">
+    <div class="wrap ready">
+      <h2>מוכנה לפגוש את מה שכבר יש בך?</h2>
+      <p class="lead">בחרי מאיפה להתחיל:</p>
+      <div class="ready-list">
+        <a href="#theta" data-go="theta">תטא הילינג</a>
+        <a href="#numerology" data-go="numerology">אבחון וייעוץ נומרולוגי</a>
+        <a href="#nlp" data-go="nlp">NLP</a>
+        <a href="#cards" data-go="cards">קלפים, תודעה והגשמה</a>
+        <a class="alt" href="#contact" data-go="contact">עוד לא יודעת? בואי נדבר</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ THETA ============ -->
+<div class="view" data-view="theta" hidden>
+  <section class="num-hero">
+    <div class="wrap num-hero-in">
+      <div class="hero-text">
+        <p class="eyebrow">תטא הילינג</p>
+        <h1 class="statement statement-long">שחררי את מה שעוצר אותך, פני מקום לשפע, ותתחילי לחיות את <em class="no">החלום</em>.</h1>
+        <p class="lead">תטא הילינג היא דרך לריפוי מבפנים. אנחנו מגיעות יחד לאמונות ולדפוסים שמעכבים אותך, גם לאלה שכבר שכחת מאיפה הגיעו, ופותחות מקום לשינוי אמיתי.</p>
+        <div class="actions"><a class="btn" href="#contact" data-go="contact">מעניין אותי</a></div>
+      </div>
+      <div class="vis" aria-hidden="true">
+        <svg viewBox="0 0 200 200">
+          <circle class="ring ring-l ripple r3" cx="100" cy="100" r="99"/>
+          <circle class="ring-fill" cx="100" cy="100" r="90"/>
+          <circle class="ring ring-t ripple r2" cx="100" cy="100" r="78"/>
+          <circle class="ring ring-l ripple" cx="100" cy="100" r="66"/>
+          <path class="wave" d="M14 100 q 12 -20 24 0 t 24 0 t 24 0 t 24 0 t 24 0 t 24 0 t 24 0"/>
+        </svg>
+        <div class="vis-core">θ</div>
+      </div>
+    </div>
+  </section>
+  <section class="band band-cream">
+    <div class="wrap two">
+      <div class="stack">
+        <h2>על מה עובדים</h2>
+        <ul class="list">
+          <li>אמונות מעכבות<small>"אני לא מספיק טובה", "זה לא בשבילי", "כסף לא בא בקלות"</small></li>
+          <li>דפוסים שחוזרים<small>בזוגיות, בעבודה, בכסף, בקשר עם עצמך</small></li>
+          <li>אמונה וביטחון עצמי</li>
+          <li>חיבור למשאבים הפנימיים שלך</li>
+          <li>תקופות של משבר ושינוי</li>
+        </ul>
+      </div>
+      <div class="stack">
+        <h2>איך זה נראה</h2>
+        <p>סשן נפתח בשיחה. את מספרת מה מעסיק אותך, ואני מקשיבה גם למה שבין המילים. משם אנחנו נכנסות לעבודה עצמה: נעשה סריקה אנרגטית, נזהה את האמונה שמחזיקה את הדפוס, ונבדוק מה יכול לבוא במקומה.</p>
+        <p class="sign">מכאן הקסם מתחיל...</p>
+      </div>
+    </div>
+  </section>
+  <section class="band">
+    <div class="wrap">
+      <div class="sec-head"><h2>סשן בודד או תהליך?</h2></div>
+      <div class="formats">
+        <a class="fmt" href="#book" data-book="single"><h3>סשן בודד</h3><span class="tags"><span class="tag">60 דקות</span></span><p>לנושא ממוקד אחד, כשמשהו מבקש תשומת לב עכשיו.</p><span class="price">333 ₪</span><span class="btn btn-sm">לרכישה וקביעת מועד</span></a>
+        <a class="fmt" href="#book" data-book="pack"><h3>תהליך מתמשך</h3><span class="tags"><span class="tag">10 מפגשים</span></span><p>עשרה מפגשים, לעבודה עמוקה יותר על דפוס או על תחום שלם בחיים.</p><span class="price">2,222 ₪</span><span class="btn btn-sm">לרכישה וקביעת מועד</span></a>
+      </div>
+    </div>
+  </section>
+  <section class="band band-beige"><div class="wrap cta"><h2>יש אמונה אחת שהיית שמחה להיפרד ממנה?</h2><a class="btn" href="#contact" data-go="contact">בואי נדבר</a></div></section>
+</div>
+
+<!-- ============ NUMEROLOGY ============ -->
+<div class="view" data-view="numerology" hidden>
+  <section class="num-hero">
+    <div class="wrap num-hero-in">
+      <div class="hero-text">
+        <p class="eyebrow">נומרולוגיה</p>
+        <h1 class="statement">המספר הוא <em class="no">לא</em> רק מספר.</h1>
+        <p class="lead">התאריך שבו נולדת והשם שקיבלת לא נבחרו במקרה. מקודדים בהם דפוסים, כישרונות ואתגרים שמלווים אותך כל החיים, גם אם עוד לא שמת לב אליהם. השאלה היא רק אם את מנהלת אותם, או שהם מנהלים אותך.</p>
+        <div class="actions">
+          <a class="btn" href="#contact" data-go="contact">אני רוצה לגלות את הקוד שלי</a>
+          <a class="btn btn-ghost" href="#calc-sec" data-scroll="calc-sec">מה המספר שלי?</a>
+        </div>
+      </div>
+      <div class="wheel" aria-hidden="true">
+        <svg viewBox="0 0 200 200">
+          <circle class="w-halo" cx="100" cy="100" r="99"/>
+          <circle class="w-outer" cx="100" cy="100" r="92"/>
+          <circle class="w-inner" cx="100" cy="100" r="66"/>
+          <text class="w-dig" x="100" y="20">1</text>
+          <text class="w-dig" x="151.4" y="38.7">2</text>
+          <text class="w-dig" x="178.8" y="86.1">3</text>
+          <text class="w-dig" x="169.3" y="140">4</text>
+          <text class="w-dig" x="127.4" y="175.2">5</text>
+          <text class="w-dig" x="72.6" y="175.2">6</text>
+          <text class="w-dig" x="30.7" y="140">7</text>
+          <text class="w-dig" x="21.2" y="86.1">8</text>
+          <text class="w-dig" x="48.6" y="38.7">9</text>
+        </svg>
+        <div class="wheel-core"><span id="spinNum">7</span></div>
+      </div>
+    </div>
+  </section>
+  <section class="band band-cream">
+    <div class="wrap two">
+      <div class="stack">
+        <p class="eyebrow">אבחון וייעוץ אישי</p>
+        <h2>מה מתחבא במפה שלך</h2>
+        <p>כל אחת נולדת עם קוד. הוא כתוב בתאריך הלידה ובשם, והוא נוגע בהכול: איך את אוהבת, איך את עובדת, ממה את נמנעת, ולמה. לחצי על כוכב במפה.</p>
+        <div class="star-panel" aria-live="polite"><h3 id="starTitle">תכונות</h3><p id="starText">מי את באמת, מתחת לתפקידים ולציפיות: האופי, הטמפרמנט, והדרך שבה את מגיבה לעולם.</p></div>
+      </div>
+      <div class="const" id="const">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="38" fill="none" stroke="currentColor" stroke-width=".3" stroke-dasharray="1 1.5"/>
+          <g stroke="currentColor" stroke-width=".35" fill="none">
+            <line x1="50" y1="50" x2="50" y2="12"/><line x1="50" y1="50" x2="82.9" y2="31"/><line x1="50" y1="50" x2="82.9" y2="69"/>
+            <line x1="50" y1="50" x2="50" y2="88"/><line x1="50" y1="50" x2="17.1" y2="69"/><line x1="50" y1="50" x2="17.1" y2="31"/>
+          </g>
+          <g fill="currentColor">
+            <circle cx="30" cy="10" r=".7"/><circle cx="72" cy="14" r=".9"/><circle cx="94" cy="50" r=".6"/><circle cx="70" cy="92" r=".8"/>
+            <circle cx="28" cy="90" r=".6"/><circle cx="6" cy="50" r=".8"/><circle cx="64" cy="40" r=".5"/><circle cx="36" cy="62" r=".5"/>
+          </g>
+        </svg>
+        <div class="core">הקוד<br>שלך</div>
+        <button class="node" type="button" style="left:50%;top:12%" data-k="0" aria-pressed="true">תכונות</button>
+        <button class="node" type="button" style="left:82.9%;top:31%" data-k="1" aria-pressed="false">כישרונות</button>
+        <button class="node" type="button" style="left:82.9%;top:69%" data-k="2" aria-pressed="false">נטיות</button>
+        <button class="node" type="button" style="left:50%;top:88%" data-k="3" aria-pressed="false">אתגרים</button>
+        <button class="node" type="button" style="left:17.1%;top:69%" data-k="4" aria-pressed="false">תזמונים</button>
+        <button class="node" type="button" style="left:17.1%;top:31%" data-k="5" aria-pressed="false">ומה עושים עם זה</button>
+      </div>
+    </div>
+  </section>
+  <section class="band">
+    <div class="wrap">
+      <div class="sec-head"><h2>שלוש דרכים לקרוא את המפה</h2><p class="lead">אבחון תמיד מגיע יחד עם ייעוץ. מידע בלי כיוון הוא רק מידע.</p></div>
+      <div class="formats">
+        <div class="fmt"><h3>אבחון וייעוץ אישי</h3><p>המפה הנומרולוגית שלך היא הקוד שהבאת איתך לעולם. יש בה את התכונות, הכישרונות והנטיות שלך, את האתגרים שחוזרים ואת התזמונים בחיים. באבחון אנחנו קוראות אותה יחד, ובייעוץ מחליטות מה עושים איתה.</p><div class="buy"><a class="btn btn-sm" href="#book" data-book="single" data-svc="נומרולוגיה אישי">לקביעת אבחון וייעוץ · 444 ₪</a></div></div>
+        <div class="fmt"><h3>אבחון וייעוץ זוגי</h3><p>שתי מפות, מערכת יחסים אחת. איפה אתם משלימים, איפה צפויים חיכוכים, ואיך לדבר בשפה של השני.</p><div class="buy"><a class="btn btn-sm" href="#book" data-book="single" data-svc="נומרולוגיה זוגי">לקביעת אבחון וייעוץ · 444 ₪</a></div></div>
+        <div class="fmt"><h3>אבחון וייעוץ עסקי ושותפויות</h3><span class="tags"><span class="tag">דגש על שותפויות</span></span><p>לפני שנכנסים לשותפות, כדאי לדעת עם מי. השוואת המפות מראה איפה השותפים משלימים זה את זה, איפה צפויים חיכוכים, ואיך נכון לחלק תפקידים. ובנוסף: זווית נומרולוגית על העסק, על התזמונים ועל ההחלטות הגדולות.</p><div class="buy"><a class="btn btn-sm" href="#book" data-book="single" data-svc="נומרולוגיה עסקי ושותפויות">לקביעת אבחון וייעוץ · 444 ₪</a></div></div>
+      </div>
+    </div>
+  </section>
+  <section class="band band-cream" id="ask-sec">
+    <div class="wrap ask">
+      <div class="stack">
+        <p class="eyebrow">שאלה אחת, תשובה אחת</p>
+        <h2>יש לך שאלה אחת בחיים שמחפשת תשובה?</h2>
+        <p>לא תמיד צריך מפה שלמה. אם יש לך שאלה אחת, בנושא אחד, אפשר לשלוח אותה אליי ולקבל תשובה דרך המספרים.</p>
+      </div>
+      <div class="ask-box">
+        <span class="price">150 ₪</span>
+        <span class="cal-legend">שאלה אחת · נושא אחד · תשובה במייל</span>
+        <button class="btn" type="button" id="askPay">שליחת שאלה · תשלום בביט</button>
+        <div class="paid" id="askPaid" hidden>
+          <b class="sign">התשלום התקבל!</b>
+          <span>עכשיו נשאר רק לשלוח את השאלה למייל <b class="todo-inline">כתובת מייל לעדכן</b>. העתיקי את התבנית המוכנה, עם מקום לשם, לתאריך הלידה ולשאלה.</span>
+          <button class="btn btn-sm" type="button" id="askMail">העתקת התבנית</button>
+          <span>זו הדגמה: באתר האמיתי המייל נפתח רק אחרי שהתשלום בביט מאושר.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="band band-lilac" id="calc-sec">
+    <div class="wrap two">
+      <div class="stack">
+        <p class="eyebrow">רגע של סקרנות</p>
+        <h2>מה מספר שביל הגורל שלך?</h2>
+        <p>זה המספר הבסיסי ביותר במפה, והוא מחושב מתאריך הלידה. הכניסי את התאריך שלך וגלי.</p>
+        <p class="note">זה מספר אחד מתוך מפה שלמה. מה הוא אומר עלייך, ואיך הוא משתלב בכל השאר, את זה נגלה יחד.</p>
+      </div>
+      <form class="calc" id="calc">
+        <div class="calc-row">
+          <div class="field"><label for="bdate">תאריך לידה</label><input type="date" id="bdate" value="1975-08-14" required></div>
+          <button class="btn" type="submit">חשבי לי</button>
+        </div>
+        <div class="num-out" aria-live="polite">
+          <span class="big-num" id="lpNum">–</span>
+          <div><b id="lpTitle">המספר שלך יופיע כאן</b><div class="digits" id="lpSteps"></div></div>
+        </div>
+      </form>
+    </div>
+  </section>
+  <section class="band band-beige"><div class="wrap cta"><h2>רוצה לראות את המפה המלאה?</h2><a class="btn" href="#contact" data-go="contact">לתיאום ייעוץ נומרולוגי</a></div></section>
+</div>
+
+<!-- ============ NLP ============ -->
+<div class="view" data-view="nlp" hidden>
+  <section class="num-hero">
+    <div class="wrap num-hero-in">
+      <div class="hero-text">
+        <p class="eyebrow">NLP</p>
+        <h1 class="statement">המוח שלך לומד מהר. גם דברים <em class="no">חדשים</em>.</h1>
+        <p class="lead">NLP היא גישה מעשית שעוסקת בקשר בין מחשבה, שפה והתנהגות. היא עוזרת לזהות איך אנחנו מתכנתות את עצמנו, ולשנות את מה שכבר לא משרת אותנו. כאן פחות שואלים "למה", ויותר "איך".</p>
+        <div class="actions"><a class="btn" href="#contact" data-go="contact">מעניין אותי</a></div>
+      </div>
+      <div class="vis" aria-hidden="true">
+        <svg viewBox="0 0 200 200">
+          <circle class="ring ring-l" cx="100" cy="100" r="99"/>
+          <circle class="ring-fill" cx="100" cy="100" r="90"/>
+          <circle class="ring ring-t" cx="100" cy="100" r="82"/>
+          <path class="tri" d="M100 18 L171 141 L29 141 Z"/>
+        </svg>
+        <div class="vis-core sm">NLP</div>
+        <span class="vis-label" style="left:50%;top:9%">מחשבה</span>
+        <span class="vis-label t" style="left:85.5%;top:70.5%">שפה</span>
+        <span class="vis-label" style="left:14.5%;top:70.5%">התנהגות</span>
+      </div>
+    </div>
+  </section>
+  <section class="band band-cream">
+    <div class="wrap two">
+      <div class="stack">
+        <h2>על מה עובדים</h2>
+        <ul class="list">
+          <li>שינוי הרגלים</li>
+          <li>התמודדות עם פחדים, פוביות וחרדות</li>
+          <li>שינוי דפוסי חשיבה</li>
+          <li>קבלת החלטות</li>
+          <li>הגדרת מטרות</li>
+          <li>יצירת פריצות דרך</li>
+        </ul>
+      </div>
+      <div class="stack">
+        <h2>למי זה מתאים</h2>
+        <p>למי שרוצה כלים שאפשר להשתמש בהם כבר מחר בבוקר. NLP מתאים כשיש משהו קונקרטי שאת רוצה לשנות: הרגל, תגובה, פחד, או החלטה שמחכה יותר מדי זמן.</p>
+        <p class="note">חשוב לי לומר בכנות: NLP אינו תחליף לטיפול רפואי או נפשי. אם את מתמודדת עם חרדה משמעותית, נדבר בפתיחות על מה הכי נכון לך.</p>
+      </div>
+    </div>
+  </section>
+  <section class="band">
+    <div class="wrap">
+      <div class="sec-head"><h2>בחרי מסלול וקבעי מועד</h2><p class="lead">לבד, בזוג או בעסק. סשן בודד או תהליך.</p></div>
+      <div class="formats">
+        <div class="fmt"><h3>אישי</h3><p>את, המטרה שלך, והכלים להגיע אליה.</p>
+          <div class="buy"><a class="btn btn-sm" href="#book" data-book="single" data-svc="NLP אישי">סשן בודד · 333 ₪</a><a class="btn btn-sm btn-lilac" href="#book" data-book="pack" data-svc="NLP אישי">10 מפגשים · 2,222 ₪</a></div></div>
+        <div class="fmt"><h3>זוגי</h3><p>לשנות יחד את מה שנתקע בתקשורת ובהרגלים המשותפים.</p>
+          <div class="buy"><a class="btn btn-sm" href="#book" data-book="single" data-svc="NLP זוגי">סשן בודד · 333 ₪</a><a class="btn btn-sm btn-lilac" href="#book" data-book="pack" data-svc="NLP זוגי">10 מפגשים · 2,222 ₪</a></div></div>
+        <div class="fmt"><h3>עסקי</h3><p>החלטות, יעדים, ודפוסים שמשפיעים על העסק.</p>
+          <div class="buy"><a class="btn btn-sm" href="#book" data-book="single" data-svc="NLP עסקי">סשן בודד · 333 ₪</a></div>
+          <p class="buy-note">אחרי הסשן הראשון נבנה יחד המשך בהתאמה אישית לעסק שלך.</p></div>
+      </div>
+    </div>
+  </section>
+  <section class="band band-beige"><div class="wrap cta"><h2>מה היית משנה, אם היית יודעת איך?</h2><a class="btn" href="#contact" data-go="contact">בואי נדבר</a></div></section>
+</div>
+
+<!-- ============ CARDS ============ -->
+<div class="view" data-view="cards" hidden>
+  <section class="num-hero">
+    <div class="wrap num-hero-in">
+      <div class="hero-text">
+        <p class="eyebrow">קלפים, תודעה והגשמה</p>
+        <h1 class="statement">לפעמים קלף אחד אומר <em class="no">בדיוק</em> את מה שהיית צריכה לשמוע.</h1>
+        <p class="lead">אני לא משתמשת בקלפים כדי לנבא לך את העתיד. הם כלי להתבוננות: מציפים שאלות, פותחים נקודת מבט חדשה, עוזרים לברר מה את באמת רוצה, ומזיזים תהליך שנתקע.</p>
+        <p class="callout"><span aria-hidden="true">✦</span> הקלפים משתלבים בכל התהליכים שלי: בתטא הילינג, בנומרולוגיה וב־ NLP.</p>
+        <div class="actions">
+          <a class="btn" href="#contact" data-go="contact">בואי נתחיל</a>
+          <a class="btn btn-ghost" href="#oracle-sec" data-scroll="oracle-sec">שלפי קלף</a>
+        </div>
+      </div>
+      <div class="vis fan" aria-hidden="true">
+        <div class="mini"></div>
+        <div class="mini"></div>
+        <div class="mini">✦</div>
+      </div>
+    </div>
+  </section>
+  <section class="band band-lilac" id="oracle-sec">
+    <div class="wrap two">
+      <div class="stack">
+        <p class="eyebrow">נסי בעצמך</p>
+        <h2>שלפי קלף, קבלי מסר</h2>
+        <p>בחרי קלף אחד מתוך הארבעה, זה שקורא לך, וקבלי את המסר שלך להיום. קחי רגע, ותראי מה הוא מעורר בך.</p>
+        <div class="actions"><button class="btn btn-ghost" id="again" type="button">לשלוף שוב</button></div>
+      </div>
+      <div class="oracle">
+        <div class="spread" id="spread">
+          <button class="pick" type="button" aria-label="קלף 1"><span class="card-in"><span class="face back">✦</span><span class="face front"><span class="q"></span><small>ליטל בוהדנה</small></span></span></button>
+          <button class="pick" type="button" aria-label="קלף 2"><span class="card-in"><span class="face back">✦</span><span class="face front"><span class="q"></span><small>ליטל בוהדנה</small></span></span></button>
+          <button class="pick" type="button" aria-label="קלף 3"><span class="card-in"><span class="face back">✦</span><span class="face front"><span class="q"></span><small>ליטל בוהדנה</small></span></span></button>
+          <button class="pick" type="button" aria-label="קלף 4"><span class="card-in"><span class="face back">✦</span><span class="face front"><span class="q"></span><small>ליטל בוהדנה</small></span></span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="band band-cream">
+    <div class="wrap two">
+      <div class="stack">
+        <h2>ומה עם מניפסטיישן?</h2>
+        <p>זימון ויצירת מציאות זה לא רק לכתוב משאלה ולחכות. זה לברר מה את רוצה באמת, להבין מה עומד בדרך, ואז לעשות את הצעדים.</p>
+        <p>הקלפים עוזרים בחלק הראשון. תטא הילינג, נומרולוגיה ו־NLP נכנסים בהמשך.</p>
+      </div>
+      <div class="stack">
+        <h2>איפה הקלפים פוגשים את התהליך</h2>
+        <ul class="list">
+          <li>להתבוננות בתחילת מפגש</li>
+          <li>לפתיחת נקודות מבט חדשות</li>
+          <li>להצפת שאלות שלא נשאלו</li>
+          <li>לבירור רצונות</li>
+          <li>להנעת תהליך אישי</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section class="band band-beige"><div class="wrap cta"><h2>יש לך חלום שמחכה בתור?</h2><a class="btn" href="#contact" data-go="contact">בואי נתחיל</a></div></section>
+</div>
+
+<!-- ============ ABOUT ============ -->
+<div class="view" data-view="about" hidden>
+  <section class="num-hero">
+    <div class="wrap num-hero-in">
+      <div class="hero-text">
+        <p class="eyebrow">קצת עליי</p>
+        <h1 class="statement">נעים מאוד, אני <em class="no">ליטל</em>.</h1>
+        <p class="lead">מטפלת בתטא הילינג, נומרולוגית ומנחת NLP, שמשלבת קלפים בתהליכים. ובעיקר, אישה שעשתה את הדרך הזאת בעצמה.</p>
+        <div class="actions"><a class="btn" href="#contact" data-go="contact">בואי נדבר</a></div>
+      </div>
+      <div class="hero-art"><div class="arch"><span class="ph">תמונה טבעית שלך<br>(לא מסטודיו)</span></div></div>
+    </div>
+  </section>
+  <section class="band band-cream">
+    <div class="wrap">
+      <div class="story">
+        <p>אני בת 50. זה רק המספר, אני מרגישה הרבה פחות.</p>
+        <p>הגעתי לעולם הרוח מהמקום שבו אני עצמי הייתי צריכה טיפול ושינוי. אירועים אישיים ומשברים הובילו אותי לחפש דרכים לחזק את האמונה בעצמי, לצאת מתקופות מורכבות ולמצוא שמחה אמיתית. את מה שמצאתי בדרך אני מביאה היום למפגשים.</p>
+        <p>אני שוחה נגד הזרם בהרבה מובנים. אני לא טיקטוקרית, לא אינסטגרמית, לא פייסבוקית ולא אושיית רשת. לשמחתי, אני לא במרוץ של לייקים, תגובות, הבטחות, סיסמאות ואישורים חיצוניים.</p>
+        <p>אני מאמינה בדרך שלי. אני מאמינה שכל מי שמגיעה אליי מגיעה מתוך חיבור שיש לו משמעות, ושיש חשיבות לתזמון, למפגש ולאנשים שאנחנו פוגשות בדרך. אני מאמינה בדיוק הקוסמי שמפגיש בין הנשמות הנכונות, בזמן הנכון, במקום הנכון ובנושא שבו יש לנו תפקיד ושליחות.</p>
+        <p>מתוך המלצות שנולדות מחוויה אישית, אני גדלה ומתפתחת יחד עם הלקוחות שלי. והכול בגובה העיניים, בקלילות, בהומור, וברצינות כשצריך.</p>
+        <p>כי ככה זה: יש בנו הכול, ובהכול יש אותנו. ומה יותר חזק וטוב מאותנטיות?</p>
+      </div>
+    </div>
+  </section>
+  <section class="band">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">מה תמצאי אצלי</p><h2>ומה לא</h2></div>
+      <div class="values">
+        <div class="val"><h3>גובה העיניים</h3><p>בלי מרחק, בלי גורו, בלי מילים גבוהות. שתי נשים שמדברות.</p></div>
+        <div class="val"><h3>רוח ומעשה</h3><p>עומק רוחני לצד כלים מעשיים, כדי שהשינוי לא יישאר רק בחדר.</p></div>
+        <div class="val"><h3>בלי סיסמאות גדולות</h3><p>אני כן מבטיחה תוצאות, למי שרוצה לעשות את הדרך ומתמסרת לתהליך. את העבודה עושים יחד.</p></div>
+      </div>
+    </div>
+  </section>
+  <section class="band band-cream">
+    <div class="wrap"><div class="todo">כאן אפשר להוסיף הכשרות ותעודות (תטא הילינג, נומרולוגיה, NLP), אם תרצי.</div></div>
+  </section>
+  <section class="band band-beige"><div class="wrap cta"><h2>הגעת עד כאן? כנראה שיש לנו על מה לדבר.</h2><a class="btn" href="#contact" data-go="contact">בואי נדבר</a></div></section>
+</div>
+
+<!-- ============ CONTACT ============ -->
+<div class="view" data-view="contact" hidden>
+  <section class="num-hero">
+    <div class="wrap num-hero-in">
+      <div class="hero-text">
+        <p class="eyebrow">יצירת קשר</p>
+        <h1 class="statement">בואי <em class="no">נדבר</em>.</h1>
+        <p class="lead">לא צריך לדעת מראש איזה כלי מתאים לך. מספיק משפט אחד על מה שמעסיק אותך, ומשם נמשיך יחד.</p>
+      </div>
+      <div class="chat" aria-hidden="true">
+        <div class="chat-head"><span class="avatar">ל</span><div><b>ליטל בוהדנה</b><small>וואטסאפ · 052-915-4321</small></div></div>
+        <div class="bubble b-out">היי ליטל, מוכנה לשינוי!<small>עכשיו</small></div>
+        <div class="bubble b-in typing"><i></i><i></i><i></i></div>
+      </div>
+    </div>
+  </section>
+  <section class="band band-cream">
+    <div class="wrap two">
+      <form class="form" id="contactForm">
+        <div class="field"><label for="cName">שם</label><input id="cName" autocomplete="name" required></div>
+        <div class="field"><label for="cPhone">טלפון</label><input id="cPhone" type="tel" autocomplete="tel" dir="ltr" required></div>
+        <div class="field"><label for="cTopic">מה מעניין אותך?</label>
+          <select id="cTopic">
+            <option>עוד לא יודעת, בואי נבדוק יחד</option>
+            <option>תטא הילינג</option>
+            <option>נומרולוגיה: אבחון וייעוץ אישי</option>
+            <option>נומרולוגיה: אבחון וייעוץ זוגי</option>
+            <option>נומרולוגיה: אבחון וייעוץ עסקי ושותפויות</option>
+            <option>NLP</option>
+            <option>קלפים, תודעה והגשמה</option>
+          </select>
+        </div>
+        <div class="field"><label for="cMsg">רוצה לספר משהו? (לא חובה)</label><textarea id="cMsg" rows="4"></textarea></div>
+        <div><button class="btn" type="submit">שליחה</button></div>
+        <p class="sent" id="sent" hidden>תודה! ההודעה התקבלה, ואחזור אלייך בהקדם. (באבטיפוס הטופס עוד לא שולח באמת. בבניית האתר הוא יחובר לוואטסאפ או למייל של ליטל.)</p>
+      </form>
+      <dl class="details">
+        <div><dt>וואטסאפ</dt><dd><span dir="ltr">052-915-4321</span> · <a href="https://wa.me/972529154321" target="_blank" rel="noopener">לשליחת הודעה</a></dd></div>
+        <div><dt>מייל</dt><dd><span class="todo-inline">כתובת מייל לעדכן</span></dd></div>
+        <div><dt>איפה נפגשים</dt><dd>בקליניקה בגליל התחתון, או בזום · <a href="https://waze.com/ul?navigate=yes&amp;q=%D7%92%D7%9C%D7%99%D7%9C%20%D7%AA%D7%97%D7%AA%D7%95%D7%9F" target="_blank" rel="noopener">ניווט ב-Waze</a></dd></div>
+        <div><dt>מה קורה אחרי שפונים</dt><dd>אני חוזרת אלייך, מדברות קצת, ובוחרות יחד מה מתאים.</dd></div>
+      </dl>
+    </div>
+  </section>
+</div>
+
+<!-- ============ WORKSHOPS ============ -->
+<div class="view" data-view="workshops" hidden>
+  <section class="num-hero">
+    <div class="wrap num-hero-in">
+      <div class="hero-text">
+        <p class="eyebrow">סדנאות · יאחתי</p>
+        <h1 class="statement">יאחתי, שימי את השגרה <em class="no">בצד</em>. ובואי.</h1>
+        <p class="lead">ערב נשים קצת אחר: ערב של סקרנות, צחוק, שמחה, התרגשות והמון כיף ❤️</p>
+        <div class="actions">
+          <a class="btn" href="#ws-sec" data-scroll="ws-sec">למפגשים הקרובים</a>
+          <a class="btn btn-ghost" href="#worlds-sec" data-scroll="worlds-sec">מה עושים שם?</a>
+        </div>
+      </div>
+      <div class="vis emo" aria-hidden="true">
+        <svg viewBox="0 0 200 200">
+          <circle class="ring ring-l ripple r3" cx="100" cy="100" r="99"/>
+          <circle class="ring-fill" cx="100" cy="100" r="90"/>
+          <circle class="ring ring-t ripple r2" cx="100" cy="100" r="76"/>
+        </svg>
+        <div class="vis-core sm">יאחתי</div>
+        <span class="vis-label" style="left:50%;top:12%">🔢</span>
+        <span class="vis-label t" style="left:82.9%;top:31%">🃏</span>
+        <span class="vis-label" style="left:82.9%;top:69%">💫</span>
+        <span class="vis-label t" style="left:50%;top:88%">🧠</span>
+        <span class="vis-label" style="left:17.1%;top:69%">🧚🏼‍♀️</span>
+        <span class="vis-label t" style="left:17.1%;top:31%">🪷</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-cream">
+    <div class="wrap two">
+      <div class="stack">
+        <h2>את בטח חושבת שזה עוד מעגל נשים, של לשבת ולהקשיב להרצאה...</h2>
+      </div>
+      <div class="stack">
+        <p class="nope">אז זהו, שלא 😍</p>
+        <p>זה ערב שבו את משתתפת פעילה, שותפה לחוויה. מגלות עולמות חדשים וסודות מפתיעים, ומשתחררות 💃🏻</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="worlds-sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">סדרת מפגשים חודשית</p>
+        <h2>בכל פעם נפתח דלת לעולם אחר</h2>
+        <p class="lead">כל קבוצה נפתחת במפגש פתיחה: טעימה והיכרות עם כל העולמות. ובהמשך? ננשנש בכל פעם מהעומקים והסודות של עולם אחר (וגם קפה ומשהו טעים ליד ☕).</p>
+      </div>
+      <div class="worlds">
+        <div class="world"><span class="em">🔢</span><h3>נומרולוגיה</h3><p>המפה הסודית המקודדת שלך. את הוויז, את הנהגת, ואת בוחרת את המסלול הטוב והמדויק שלך 🎯</p></div>
+        <div class="world"><span class="em">🃏</span><h3>קלפים</h3><p>משלוח מהיר מתת־המודע, עם החבילה שאת הכי רוצה לקבל 📦✨</p></div>
+        <div class="world"><span class="em">💫</span><h3>יצירת מציאות</h3><p>מניפסטינג: נכנסות למעבדה של הזימונים, ופשוט בוראות 🪄</p></div>
+        <div class="world"><span class="em">🧠</span><h3>NLP</h3><p>את התסריטאית. כותבת את הסיפור מחדש, ולוקחת אוסקר 😜🏆</p></div>
+        <div class="world"><span class="em">🧚🏼‍♀️</span><h3>תטא הילינג</h3><p>לעוף הכי רחוק שאת מדמיינת. טוב, אפילו למקומות שאת לא מדמיינת 💫</p></div>
+        <div class="world"><span class="em">🪷</span><h3>פתיחת התודעה</h3><p>המפתח המאסטר שפותח כל שער בעולם. ועוד סודות...</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-lilac">
+    <div class="wrap two">
+      <div class="stack">
+        <p class="eyebrow">וזה לא הכל</p>
+        <h2>יאחתי היא קהילה</h2>
+        <p>קהילת נשים שמעצימות אחת את השנייה, מתחברות, מפרגנות ונהנות יחד. נגלה אילו כוחות עצומים חבויים בנו, נקבל כלים פרקטיים לשינוי ונרחיב את התודעה. והכל בכיף, בגובה העיניים, עם מלא הומור. וגם קצת רצינות 🤭</p>
+        <p>יש עוד הפתעות בהמשך...</p>
+      </div>
+      <div class="offline">
+        <p class="eyebrow">🎁 בונוס מיוחד</p>
+        <h3>קהילת עסקים נשיים</h3>
+        <p>בתוך יאחתי: להכיר, לפרגן, ליצור חיבורים ושיתופי פעולה, עם קופונים והטבות לחברות הקהילה.</p>
+        <p><b>כי למה להצליח לבד, אם אפשר להרים אחת לשנייה? 😍</b></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-cream" id="ws-sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">המפגשים הקרובים</p>
+        <h2>בחרי קבוצה, ושרייני מקום</h2>
+        <p class="lead">מתאים לבנות ונשים מגיל 18 · מספר המקומות מוגבל</p>
+        <p class="demo-note">התאריכים, השעות והמיקומים כאן הם לדוגמה.</p>
+      </div>
+      <div class="ws-list" id="wsList"></div>
+      <div class="ws-reg" id="wsReg" hidden aria-live="polite">
+        <p class="eyebrow">הרשמה לסדנה</p>
+        <h3 id="wsRegTitle"></h3>
+        <p class="cal-legend" id="wsRegMeta"></p>
+        <p class="callout">מלאי שם, טלפון ומייל, ותקבלי למייל הזמנה לקבוצת הוואטסאפ של הסדנה. כל ההמשך מתנהל שם.</p>
+        <div class="fields">
+          <div class="field"><label for="wName">שם</label><input id="wName" autocomplete="name"></div>
+          <div class="field"><label for="wPhone">טלפון</label><input id="wPhone" type="tel" autocomplete="tel" dir="ltr"></div>
+          <div class="field"><label for="wMail">מייל (לשם יישלח הלינק לקבוצה)</label><input id="wMail" type="email" autocomplete="email" dir="ltr"></div>
+        </div>
+        <button class="btn" id="wPay" type="button" disabled>תשלום בביט</button>
+        <div class="paid" id="wPaid" hidden>
+          <b class="sign">יאללה, את בפנים! 🪄</b>
+          <span id="wPaidText"></span>
+          <div class="actions" id="wLinks"></div>
+          <span>זו הדגמה: באתר האמיתי המקום נשמר רק אחרי שהתשלום בביט מאושר.</span>
+          <p class="eyebrow">ככה ייראה המייל שהיא מקבלת</p>
+          <div class="mail" id="wMailPrev"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-teal">
+    <div class="wrap quote">
+      <blockquote>מקסימום, תהני. לא ככה?</blockquote>
+      <p>אני יודעת איפה זה מתחיל... אבל מי יודע לאן נגיע 😜 יש מצב שתצאי עם כמה תשובות, ועם הרבה יותר שאלות (תשמרי אותן לפעם הבאה ✨)</p>
+      <span class="sign">יאחתי, הולך להיות כיף 🩷</span>
+    </div>
+  </section>
+</div>
+
+<!-- ============ BOOKING (demo) ============ -->
+<div class="view" data-view="book" hidden>
+  <section class="num-hero book-hero">
+    <div class="wrap">
+      <div class="hero-text">
+        <p class="eyebrow"><span id="bookSvc">תטא הילינג</span> · הזמנה</p>
+        <h1 class="statement">בואי נקבע לך <em class="no">זמן</em>.</h1>
+        <p class="demo-note">הדגמה: כך ייראה תהליך ההזמנה באתר. כאן עוד לא מתבצע תשלום ולא נשמרת הזמנה.</p>
+      </div>
+    </div>
+  </section>
+  <section class="band band-cream">
+    <div class="wrap book">
+      <div class="book-main">
+        <div class="step">
+          <h3><span class="n">1</span>מה מזמינים?</h3>
+          <div class="choice" data-key="product">
+            <button type="button" class="ch" data-v="single" aria-pressed="true"><b>סשן בודד</b><span>60 דקות</span><em>333 ₪</em></button>
+            <button type="button" class="ch" data-v="pack" aria-pressed="false"><b>תהליך מתמשך</b><span>10 מפגשים</span><em>2,222 ₪</em></button>
+          </div>
+        </div>
+        <div class="step">
+          <h3><span class="n">2</span>איפה נפגשים?</h3>
+          <div class="choice" data-key="place">
+            <button type="button" class="ch" data-v="clinic" aria-pressed="true"><b>בקליניקה</b><span>גליל תחתון</span></button>
+            <button type="button" class="ch" data-v="zoom" aria-pressed="false"><b>בזום</b><span>מכל מקום</span></button>
+          </div>
+        </div>
+        <div class="step" id="packStep" hidden>
+          <h3><span class="n">3</span>איך קובעים את המפגשים?</h3>
+          <div class="choice" data-key="packMode">
+            <button type="button" class="ch" data-v="calendar" aria-pressed="true"><b>אבחר עכשיו ביומן</b><span>את המועד של המפגש הראשון</span></button>
+            <button type="button" class="ch" data-v="personal" aria-pressed="false"><b>ליטל תשלח לי קישור</b><span>קביעה אישית איתה, אחרי התשלום</span></button>
+          </div>
+        </div>
+        <div class="step" id="calStep">
+          <h3><span class="n">3</span><span id="calStepTitle">בחרי יום</span></h3>
+          <div class="cal">
+            <div class="cal-head">
+              <button type="button" class="cal-nav" id="calPrev" aria-label="החודש הקודם">→</button>
+              <b id="calTitle"></b>
+              <button type="button" class="cal-nav" id="calNext" aria-label="החודש הבא">←</button>
+            </div>
+            <div class="cal-grid cal-dow"><span>א׳</span><span>ב׳</span><span>ג׳</span><span>ד׳</span><span>ה׳</span><span>ו׳</span><span>ש׳</span></div>
+            <div class="cal-grid" id="calDays"></div>
+          </div>
+          <p class="cal-legend">הימים המסומנים בטורקיז פנויים. ימי עבודה לדוגמה: א׳–ה׳, 9:00–19:00.</p>
+        </div>
+        <div class="step" id="slotStep">
+          <h3><span class="n">4</span>בחרי שעה</h3>
+          <p id="slotHint" class="cal-legend">קודם בחרי יום ביומן.</p>
+          <div class="slots" id="slots"></div>
+        </div>
+        <div class="step">
+          <h3><span class="n">5</span>הפרטים שלך</h3>
+          <div class="fields">
+            <div class="field"><label for="bName">שם</label><input id="bName" autocomplete="name"></div>
+            <div class="field"><label for="bPhone">טלפון</label><input id="bPhone" type="tel" autocomplete="tel" dir="ltr"></div>
+          </div>
+        </div>
+      </div>
+      <aside class="summary" aria-live="polite">
+        <p class="eyebrow">סיכום ההזמנה</p>
+        <dl>
+          <div><dt>מה</dt><dd id="sWhat"></dd></div>
+          <div><dt>איפה</dt><dd id="sWhere"></dd></div>
+          <div><dt>מתי</dt><dd id="sWhen"></dd></div>
+        </dl>
+        <div class="total"><span>לתשלום</span><b id="sPrice"></b></div>
+        <button class="btn pay" id="payBtn" type="button" disabled>תשלום בביט</button>
+        <p class="pay-hint" id="payHint"></p>
+        <div class="paid" id="paid" hidden>
+          <b class="sign">לחיי התחלות חדשות!</b>
+          <span id="paidText"></span>
+          <div class="actions" id="paidLinks"></div>
+          <span>זו הדגמה: באתר האמיתי, כאן הגולשת עוברת לתשלום בביט, ורק אחרי שהתשלום מאושר השעה נסגרת ביומן.</span>
+          <button type="button" class="btn btn-ghost btn-sm" id="bookAgain">הזמנה חדשה</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+</div>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <a class="brand" href="#home" data-go="home"><span class="brand-name">ליטל בוהדנה</span><span class="brand-sub">יש בנו הכול, ובהכול יש אותנו</span></a>
+    <nav class="foot-nav" aria-label="ניווט תחתון">
+      <a href="#theta" data-go="theta">תטא הילינג</a>
+      <a href="#numerology" data-go="numerology">נומרולוגיה</a>
+      <a href="#nlp" data-go="nlp">NLP</a>
+      <a href="#cards" data-go="cards">קלפים והגשמה</a>
+      <a href="#workshops" data-go="workshops">סדנאות</a>
+      <a href="#about" data-go="about">קצת עליי</a>
+      <a href="#contact" data-go="contact">יצירת קשר</a>
+    </nav>
+    <p class="disc">התהליכים המוצעים כאן הם תהליכי העצמה והתפתחות אישית, ואינם מהווים תחליף לאבחון, לייעוץ או לטיפול רפואי, פסיכולוגי או נפשי. © ליטל בוהדנה</p>
+  </div>
+</footer>
+
+<a class="wa" id="wa" href="#contact" data-go="contact" aria-label="שליחת הודעה בוואטסאפ">
+  <svg viewBox="0 0 32 32" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" d="M16 3.5A12.5 12.5 0 0 0 5.2 22.3L3.6 28.4l6.3-1.6A12.5 12.5 0 1 0 16 3.5z"/><path fill="currentColor" d="M11.6 9.6c.4 0 .7 0 1 .7l1.2 2.8c.1.3 0 .6-.2.9l-.8 1c-.2.2-.2.5 0 .8a10 10 0 0 0 4.6 4.1c.3.1.6.1.8-.1l1.1-1.3c.2-.3.6-.4.9-.2l2.7 1.3c.4.2.5.5.4.9-.3 1.6-1.7 2.6-3.2 2.5-4.7-.4-9.6-5.1-10-9.8-.1-1.5.8-2.9 1.5-3.6z"/></svg>
+  <span>וואטסאפ</span>
+</a>
+
+</div>
+
+<script>
+(() => {
+  const views = [...document.querySelectorAll('.view')];
+  const names = views.map(v => v.dataset.view);
+  const nav = document.getElementById('nav');
+  const menuBtn = document.getElementById('menuBtn');
+
+  function show(name, scrollTop = true) {
+    if (!names.includes(name)) name = 'home';
+    views.forEach(v => { v.hidden = v.dataset.view !== name; });
+    nav.querySelectorAll('a[data-go]').forEach(a => a.classList.toggle('active', a.dataset.go === name));
+    nav.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    if (scrollTop) window.scrollTo({ top: 0 });
+    try { history.replaceState(null, '', '#' + name); } catch (e) {}
+  }
+
+  document.addEventListener('click', e => {
+    const bk = e.target.closest('[data-book]');
+    if (bk) { e.preventDefault(); B.svc = bk.dataset.svc || 'תטא הילינג'; $('bookSvc').textContent = B.svc; const num = B.svc.startsWith('נומרולוגיה'); PRODUCTS.single = num ? ['אבחון וייעוץ', 444] : ['סשן בודד, 60 דקות', 333]; document.querySelector('.ch[data-v="single"]').innerHTML = num ? '<b>אבחון וייעוץ</b><span>מפגש אחד</span><em>444 ₪</em>' : '<b>סשן בודד</b><span>60 דקות</span><em>333 ₪</em>'; document.querySelector('.ch[data-v="pack"]').hidden = num || B.svc === 'NLP עסקי'; setChoice('product', bk.dataset.book); show('book'); return; }
+    const go = e.target.closest('[data-go]');
+    if (go) { e.preventDefault(); show(go.dataset.go); return; }
+    const sc = e.target.closest('[data-scroll]');
+    if (sc) {
+      e.preventDefault();
+      const target = document.getElementById(sc.dataset.scroll);
+      const v = target.closest('.view');
+      if (v.hidden) show(v.dataset.view, false);
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+  menuBtn.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', String(open));
+  });
+  show((location.hash || '').slice(1) || 'home', false);
+
+  // quiz
+  const answers = {
+    decide:  ['NLP, עם נגיעה של נומרולוגיה', 'NLP נותן כלים ברורים לקבלת החלטות, והמפה הנומרולוגית מוסיפה זווית על התזמון ועל מה שמתאים לך באמת.', [['nlp','על NLP'],['numerology','על נומרולוגיה']]],
+    pattern: ['תטא הילינג', 'כשמשהו חוזר שוב ושוב, בדרך כלל יש מאחוריו אמונה שמחזיקה אותו. בתטא הילינג אנחנו מחפשות אותה ועובדות עליה.', [['theta','על תטא הילינג']]],
+    fear:    ['NLP', 'NLP עובד בצורה ממוקדת ומעשית עם פחדים, פוביות וחרדות, ונותן כלים שאפשר להשתמש בהם ביום־יום.', [['nlp','על NLP']]],
+    know:    ['אבחון וייעוץ נומרולוגי', 'המפה הנומרולוגית מראה את הקוד שהבאת איתך: תכונות, כישרונות, נטיות, אתגרים ותזמונים. אפשר אישי, ואפשר זוגי.', [['numerology','על נומרולוגיה']]],
+    dream:   ['קלפים, תודעה והגשמה', 'נתחיל לברר מה את רוצה באמת, ומשם נבנה את הצעדים. מניפסטיישן עם רגליים על הקרקע.', [['cards','על קלפים והגשמה']]],
+    biz:     ['אבחון וייעוץ עסקי ושותפויות, או NLP עסקי', 'המפות הנומרולוגיות מראות איפה העסק והשותפים חזקים, איפה צפויים חיכוכים, ומה התזמון הנכון. NLP עוזר בהחלטות, ביעדים ובדפוסים. ואפשר לשלב.', [['numerology','על נומרולוגיה'],['nlp','על NLP']]],
+    none:    ['פשוט לדבר', 'לפעמים זו בדיוק נקודת ההתחלה. אין צורך לדעת מראש. נדבר, ונמצא יחד את הכיוון.', []]
+  };
+  const opts = document.getElementById('quizOpts');
+  opts.addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b) return;
+    opts.querySelectorAll('.opt').forEach(o => o.setAttribute('aria-pressed', String(o === b)));
+    const [t, txt, links] = answers[b.dataset.a];
+    document.getElementById('ansTitle').textContent = t;
+    document.getElementById('ansText').textContent = txt;
+    const act = document.getElementById('ansActions');
+    act.innerHTML = '';
+    links.forEach(([v, label]) => {
+      const a = document.createElement('a');
+      a.className = 'btn btn-ghost'; a.href = '#' + v; a.dataset.go = v; a.textContent = label;
+      act.appendChild(a);
+    });
+    const c = document.createElement('a');
+    c.className = 'btn'; c.href = '#contact'; c.dataset.go = 'contact'; c.textContent = 'בואי נדבר';
+    act.appendChild(c);
+  });
+
+  // life path number
+  const sumDigits = s => String(s).split('').reduce((a, d) => a + Number(d), 0);
+  document.getElementById('calc').addEventListener('submit', e => {
+    e.preventDefault();
+    const v = document.getElementById('bdate').value;
+    if (!v) return;
+    const digits = v.replace(/\D/g, '');
+    let n = sumDigits(digits);
+    const chain = [n];
+    while (n > 9 && ![11, 22, 33].includes(n)) { n = sumDigits(n); chain.push(n); }
+    document.getElementById('lpNum').textContent = n;
+    document.getElementById('lpTitle').textContent = [11, 22, 33].includes(n) ? 'מספר מאסטר! זה כבר מעניין במיוחד.' : 'זה מספר שביל הגורל שלך.';
+    document.getElementById('lpSteps').textContent = digits.split('').join('+') + ' = ' + chain.join(' → ');
+  });
+
+  // oracle card
+  const qs = [
+    'את לא צריכה להיות מוכנה לגמרי. את צריכה רק להתחיל.',
+    'הפחד הוא לא סימן לעצור. הוא סימן שאת קרובה למשהו חשוב.',
+    'מה שהיה נכון לך פעם, לא חייב להיות נכון לך היום.',
+    'יש בך יותר כוח ממה שהשתמשת בו עד עכשיו.',
+    'התזמון שלך לא מאחר. הוא בדיוק בזמן.',
+    'לפעמים הצעד הכי אמיץ הוא להגיד לא.',
+    'השינוי כבר התחיל. אחרת לא היית שולפת את הקלף הזה.',
+    'מותר לך לרצות יותר. ומותר לך לקבל.',
+    'את לא חייבת לסחוב את זה לבד.',
+    'תסמכי על מה שאת מרגישה. זה יודע דברים.'
+  ];
+  const spread = document.getElementById('spread');
+  let last = -1;
+  spread.addEventListener('click', e => {
+    const c = e.target.closest('.pick');
+    if (!c || spread.classList.contains('done')) return;
+    let i; do { i = Math.floor(Math.random() * qs.length); } while (i === last);
+    last = i; c.querySelector('.q').textContent = qs[i];
+    spread.classList.add('done'); c.classList.add('chosen');
+  });
+  document.getElementById('again').addEventListener('click', () => {
+    spread.classList.remove('done');
+    spread.querySelectorAll('.pick').forEach(p => p.classList.remove('chosen'));
+  });
+
+  // numerology hero wheel
+  const spin = document.getElementById('spinNum');
+  const digs = [...document.querySelectorAll('.w-dig')];
+  let cur = 7;
+  const mark = () => digs.forEach(d => d.classList.toggle('on', Number(d.textContent) === cur));
+  mark();
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    setInterval(() => {
+      spin.style.opacity = 0;
+      setTimeout(() => { cur = cur % 9 + 1; spin.textContent = cur; mark(); spin.style.opacity = 1; }, 400);
+    }, 2200);
+  }
+
+  // numerology constellation
+  const stars = [
+    ['תכונות', 'מי את באמת, מתחת לתפקידים ולציפיות: האופי, הטמפרמנט, והדרך שבה את מגיבה לעולם.'],
+    ['כישרונות', 'היכולות שנולדת איתן. חלקן כבר גלויות, וחלקן עוד מחכות שתשימי לב אליהן.'],
+    ['נטיות', 'לאן את נמשכת שוב ושוב, בעבודה, באהבה ובהחלטות. ולמה.'],
+    ['אתגרים', 'השיעורים שחוזרים בחייך בצורות שונות, עד שמבינים מה הם באו ללמד.'],
+    ['תזמונים', 'המחזורים והשנים האישיות שלך: מתי נכון לפתוח, מתי לבנות, ומתי לשחרר.'],
+    ['ומה עושים עם זה', 'כאן נכנס הייעוץ. אבחון בלי ייעוץ הוא רק מידע. יחד אנחנו הופכות אותו לצעדים ולהחלטות.']
+  ];
+  const cons = document.getElementById('const');
+  cons.addEventListener('click', e => {
+    const n = e.target.closest('.node'); if (!n) return;
+    cons.querySelectorAll('.node').forEach(o => o.setAttribute('aria-pressed', String(o === n)));
+    const [t, txt] = stars[n.dataset.k];
+    document.getElementById('starTitle').textContent = t;
+    document.getElementById('starText').textContent = txt;
+  });
+
+  // whatsapp: until a number is set, the button opens the contact page
+  const WA_NUMBER = '972529154321';
+  if (WA_NUMBER) {
+    const wa = document.getElementById('wa');
+    wa.removeAttribute('data-go');
+    wa.href = 'https://api.whatsapp.com/send?phone=' + WA_NUMBER + '&text=' + encodeURIComponent('היי ליטל, מוכנה לשינוי!');
+    wa.target = '_blank'; wa.rel = 'noopener';
+  }
+
+  // booking demo: availability is sample data until a real booking system is connected
+  const B = { svc: 'תטא הילינג', product: 'single', place: 'clinic', packMode: 'calendar', date: null, time: null };
+  const PRODUCTS = { single: ['סשן בודד, 60 דקות', 333], pack: ['תהליך מתמשך, 10 מפגשים', 2222] };
+  const PLACES = { clinic: 'קליניקה, גליל תחתון', zoom: 'זום' };
+  const WORK_DAYS = [0, 1, 2, 3, 4]; // Sun–Thu
+  const HOURS = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18]; // last session 18:00–19:00
+  const booked = new Set();
+  const WAZE_PLACE = 'גליל תחתון'; // TODO: exact clinic address
+  const WAZE_URL = 'https://waze.com/ul?navigate=yes&q=' + encodeURIComponent(WAZE_PLACE);
+  const hashStr = s => { let h = 7; for (const c of s) h = (h * 31 + c.charCodeAt(0)) >>> 0; return h; };
+  const ymd = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  const hhmm = h => String(h).padStart(2, '0') + ':00';
+  const heDate = key => new Date(key + 'T00:00').toLocaleDateString('he-IL', { weekday: 'long', day: 'numeric', month: 'long' });
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const lastDay = new Date(today); lastDay.setDate(lastDay.getDate() + 60);
+  const isTaken = (key, h) => booked.has(key + ' ' + h) || hashStr(key + h) % 4 === 0;
+  const dayOpen = d => d > today && d <= lastDay && WORK_DAYS.includes(d.getDay()) && HOURS.some(h => !isTaken(ymd(d), h));
+  let viewMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+  const $ = id => document.getElementById(id);
+  const useCal = () => !(B.product === 'pack' && B.packMode === 'personal');
+
+  function setChoice(key, v) {
+    B[key] = v;
+    document.querySelectorAll('.choice[data-key="' + key + '"] .ch').forEach(c => c.setAttribute('aria-pressed', String(c.dataset.v === v)));
+    updateBook();
+  }
+  function renderCal() {
+    $('calTitle').textContent = viewMonth.toLocaleDateString('he-IL', { month: 'long', year: 'numeric' });
+    const grid = $('calDays'); grid.innerHTML = '';
+    for (let i = 0; i < viewMonth.getDay(); i++) grid.appendChild(document.createElement('span'));
+    const days = new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 0).getDate();
+    for (let i = 1; i <= days; i++) {
+      const d = new Date(viewMonth.getFullYear(), viewMonth.getMonth(), i);
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'day'; b.textContent = i;
+      if (dayOpen(d)) {
+        b.classList.add('open'); b.dataset.date = ymd(d); b.setAttribute('aria-label', heDate(ymd(d)));
+        if (B.date === ymd(d)) b.classList.add('sel');
+      } else b.disabled = true;
+      grid.appendChild(b);
+    }
+    $('calPrev').disabled = viewMonth <= new Date(today.getFullYear(), today.getMonth(), 1);
+    $('calNext').disabled = new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 1) > lastDay;
+  }
+  function renderSlots() {
+    const box = $('slots'); box.innerHTML = '';
+    $('slotHint').hidden = !!B.date;
+    if (!B.date) return;
+    HOURS.forEach(h => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'slot'; b.textContent = hhmm(h); b.dataset.h = h;
+      if (isTaken(B.date, h)) { b.disabled = true; b.setAttribute('aria-label', hhmm(h) + ' תפוס'); }
+      b.setAttribute('aria-pressed', String(B.time === h));
+      box.appendChild(b);
+    });
+  }
+  function updateBook() {
+    const cal = useCal();
+    $('packStep').hidden = B.product !== 'pack';
+    $('calStep').hidden = !cal;
+    $('slotStep').hidden = !cal;
+    document.querySelectorAll('.book-main .step:not([hidden]) .n').forEach((n, i) => { n.textContent = i + 1; });
+    $('calStepTitle').textContent = B.product === 'pack' ? 'בחרי יום למפגש הראשון' : 'בחרי יום';
+    const [what, price] = PRODUCTS[B.product];
+    const picked = B.date && B.time !== null;
+    $('sWhat').textContent = B.svc + ' · ' + what;
+    $('sWhere').textContent = PLACES[B.place];
+    $('sWhen').textContent = !cal ? 'ליטל תשלח לך קישור אישי' : picked ? heDate(B.date) + ', ' + hhmm(B.time) : '—';
+    $('sPrice').textContent = price.toLocaleString('he-IL') + ' ₪';
+    const filled = $('bName').value.trim() && $('bPhone').value.trim();
+    const ready = (!cal || picked) && filled;
+    $('payBtn').disabled = !ready;
+    $('payHint').textContent = ready ? 'המועד נשמר רק אחרי שהתשלום עובר.' : (cal && !picked ? 'בחרי יום ושעה כדי להמשיך.' : 'מלאי שם וטלפון כדי להמשיך.');
+  }
+  document.querySelectorAll('.choice').forEach(box => box.addEventListener('click', e => {
+    const c = e.target.closest('.ch'); if (c) setChoice(box.dataset.key, c.dataset.v);
+  }));
+  $('calDays').addEventListener('click', e => {
+    const d = e.target.closest('.day.open'); if (!d) return;
+    B.date = d.dataset.date; B.time = null;
+    renderCal(); renderSlots(); updateBook();
+  });
+  $('slots').addEventListener('click', e => {
+    const s = e.target.closest('.slot'); if (!s || s.disabled) return;
+    B.time = Number(s.dataset.h); renderSlots(); updateBook();
+  });
+  $('calPrev').addEventListener('click', () => { viewMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth() - 1, 1); renderCal(); });
+  $('calNext').addEventListener('click', () => { viewMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 1); renderCal(); });
+  ['bName', 'bPhone'].forEach(id => $(id).addEventListener('input', updateBook));
+  $('payBtn').addEventListener('click', () => {
+    const btn = $('payBtn');
+    btn.disabled = true; btn.textContent = 'מעבירים לתשלום בביט...';
+    setTimeout(() => {
+      const cal = useCal();
+      if (cal) booked.add(B.date + ' ' + B.time);
+      $('paidText').textContent = cal
+        ? 'נרשמת, ונתראה ב' + heDate(B.date) + ' בשעה ' + hhmm(B.time) + (B.place === 'zoom' ? ' בזום.' : ' בקליניקה בגליל התחתון.')
+        : 'נרשמת! ליטל תשלח לך בקרוב קישור אישי ליומן, לקביעת המפגשים.';
+      const links = $('paidLinks'); links.innerHTML = '';
+      const addLink = (label, href) => { const a = document.createElement('a'); a.className = 'btn btn-sm'; a.href = href; a.target = '_blank'; a.rel = 'noopener'; a.textContent = label; links.appendChild(a); };
+      if (cal) {
+        const t = B.date.replace(/-/g, '') + 'T' + String(B.time).padStart(2, '0') + '0000';
+        const t2 = B.date.replace(/-/g, '') + 'T' + String(B.time + 1).padStart(2, '0') + '0000';
+        addLink('הוספה ליומן', 'https://calendar.google.com/calendar/render?action=TEMPLATE&ctz=Asia/Jerusalem&dates=' + t + '/' + t2 + '&text=' + encodeURIComponent('מפגש עם ליטל בוהדנה') + '&location=' + encodeURIComponent(B.place === 'zoom' ? 'זום' : WAZE_PLACE));
+      }
+      if (B.place === 'clinic') addLink('ניווט ב-Waze', WAZE_URL);
+      $('paid').hidden = false; btn.hidden = true; $('payHint').hidden = true;
+    }, 1400);
+  });
+  $('bookAgain').addEventListener('click', () => {
+    B.date = null; B.time = null;
+    const btn = $('payBtn'); btn.hidden = false; btn.textContent = 'תשלום בביט';
+    $('paid').hidden = true; $('payHint').hidden = false;
+    renderCal(); renderSlots(); updateBook();
+  });
+  renderCal(); renderSlots(); updateBook();
+
+  // numerology single question: pay first, then a prefilled email
+  const MAIL = ''; // TODO: Lital's email address
+  $('askMail').addEventListener('click', () => {
+    navigator.clipboard.writeText('שאלה בנומרולוגיה\n\nשם מלא:\nתאריך לידה:\n\nהשאלה שלי:\n')
+      .then(() => { $('askMail').textContent = 'הועתק!'; }, () => { $('askMail').textContent = 'לא הצלחתי להעתיק'; });
+  });
+  $('askPay').addEventListener('click', () => {
+    const b = $('askPay'); b.disabled = true; b.textContent = 'מעבירים לתשלום בביט...';
+    setTimeout(() => { b.hidden = true; $('askPaid').hidden = false; }, 1400);
+  });
+
+  // workshops: sample dates and places until real ones are set
+  const WS = [
+    { cohort: 'קבוצת דצמבר', date: '2026-12-19', start: '20:00', end: '22:30', place: 'מיקום לדוגמה, גליל תחתון', price: 72, cap: 20, left: 6, wa: 'https://chat.whatsapp.com/FvinAHXSDUTHMEm1QvOKJ3' },
+    { cohort: 'קבוצת ינואר', date: '2027-01-16', start: '20:00', end: '22:30', place: 'מיקום לדוגמה, גליל תחתון', price: 72, cap: 20, left: 14, wa: '' },
+    { cohort: 'קבוצת אוגוסט', date: '2027-08-14', start: '20:00', end: '22:30', place: 'מיקום לדוגמה, גליל תחתון', price: 72, cap: 20, left: 20, wa: '' } // each cohort gets its own WhatsApp group link
+  ];
+  const wazeTo = place => 'https://waze.com/ul?navigate=yes&q=' + encodeURIComponent(place);
+  let wsCur = null;
+  WS.forEach((w, i) => {
+    const d = new Date(w.date + 'T00:00');
+    const card = document.createElement('article');
+    card.className = 'ws-card';
+    card.innerHTML =
+      `<div class="datebox"><b>${d.getDate()}</b><span>${d.toLocaleDateString('he-IL', { month: 'long' })}</span><small>${d.toLocaleDateString('he-IL', { weekday: 'long' })}</small></div>` +
+      `<div class="ws-body"><h3>${w.cohort}</h3><p class="cal-legend">מפגש פתיחה: טעימה מכל העולמות</p>` +
+      `<p class="ws-meta">🕗 <span dir="ltr">${w.start}–${w.end}</span> · 📍 ${w.place} · <a href="${wazeTo(w.place)}" target="_blank" rel="noopener">ניווט ב-Waze</a></p>` +
+      `<div class="spots"><i style="width:${Math.round((w.cap - w.left) / w.cap * 100)}%"></i></div><small class="spots-t">נשארו ${w.left} מקומות מתוך ${w.cap}</small></div>` +
+      `<div class="ws-cta"><span class="price">${w.price} ₪</span><button class="btn" type="button" data-ws="${i}">שרייני לי מקום</button></div>`;
+    $('wsList').appendChild(card);
+  });
+  const wsReady = () => { $('wPay').disabled = !(wsCur !== null && $('wName').value.trim() && $('wPhone').value.trim() && $('wMail').value.includes('@')); };
+  $('wsList').addEventListener('click', e => {
+    const b = e.target.closest('[data-ws]'); if (!b) return;
+    wsCur = Number(b.dataset.ws);
+    const w = WS[wsCur];
+    $('wsRegTitle').textContent = w.cohort + ' · מפגש פתיחה';
+    $('wsRegMeta').textContent = heDate(w.date) + ' · ' + w.start + '–' + w.end + ' · ' + w.place;
+    $('wPay').textContent = 'תשלום בביט · ' + w.price + ' ₪';
+    $('wPay').hidden = false; $('wPaid').hidden = true; $('wsReg').hidden = false;
+    wsReady();
+    $('wsReg').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+  ['wName', 'wPhone', 'wMail'].forEach(id => $(id).addEventListener('input', wsReady));
+  $('wPay').addEventListener('click', () => {
+    const btn = $('wPay'), w = WS[wsCur];
+    btn.disabled = true; btn.textContent = 'מעבירים לתשלום בביט...';
+    setTimeout(() => {
+      const t = s => w.date.replace(/-/g, '') + 'T' + s.replace(':', '') + '00';
+      $('wPaidText').textContent = 'נתראה ב' + heDate(w.date) + ' בשעה ' + w.start + ', ' + w.place + '. הלינק לקבוצת הוואטסאפ של ' + w.cohort + ' נשלח גם למייל ' + $('wMail').value.trim() + '.';
+      const links = $('wLinks'); links.innerHTML = '';
+      [['הוספה ליומן', 'https://calendar.google.com/calendar/render?action=TEMPLATE&ctz=Asia/Jerusalem&dates=' + t(w.start) + '/' + t(w.end) + '&text=' + encodeURIComponent('יאחתי · ' + w.cohort) + '&location=' + encodeURIComponent(w.place)],
+       ['ניווט ב-Waze', wazeTo(w.place)],
+       ...(w.wa ? [['הצטרפות לקבוצת הוואטסאפ', w.wa]] : [])].forEach(([label, href]) => {
+        const a = document.createElement('a'); a.className = 'btn btn-sm'; a.href = href; a.target = '_blank'; a.rel = 'noopener'; a.textContent = label; links.appendChild(a);
+      });
+      const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+      $('wMailPrev').innerHTML =
+        `<div class="mail-head"><span>מאת: ליטל בוהדנה</span><span dir="ltr" style="text-align:end">${esc($('wMail').value.trim())} :אל</span><b>יאחתי, את בפנים! הלינק ל${w.cohort}</b></div>` +
+        `<div class="mail-body"><span class="sign">היי ${esc($('wName').value.trim())} 🩷</span>` +
+        `<p>איזה כיף שבחרת לשים את השגרה בצד! המקום שלך ב${w.cohort} שמור.</p>` +
+        `<div class="mail-det"><b>מפגש פתיחה: טעימה מכל העולמות</b><span>📅 ${heDate(w.date)} · ${w.start}–${w.end}</span><span>📍 ${w.place}</span></div>` +
+        `<p>הצעד הבא: להצטרף לקבוצת הוואטסאפ של הקבוצה. שם נמשיך הכל.</p>` +
+        `<span class="mail-btn">להצטרפות לקבוצת הוואטסאפ</span>` +
+        `<small class="cal-legend" dir="ltr" style="text-align:end">https://chat.whatsapp.com/EXAMPLE-LINK</small>` +
+        `<p>מקסימום, תהני. לא ככה? 😉<br>נתראה,<br>ליטל</p></div>`;
+      btn.hidden = true; $('wPaid').hidden = false;
+    }, 1400);
+  });
+
+  // contact form (prototype)
+  document.getElementById('contactForm').addEventListener('submit', e => {
+    e.preventDefault();
+    document.getElementById('sent').hidden = false;
+  });
+})();
+</script>
+
+</body>
+</html>
