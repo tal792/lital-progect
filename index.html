@@ -20,6 +20,7 @@
   --lilac:#B9A5D5; --lilac-soft:#EDE6F6; --lilac-deep:#65508A;
   --ink:#3A3341; --muted:#6C6274; --line:#DCCBB2;
   --night:#1E3F44; --night-2:#3B3152;
+  --plum:#8C4F9C; --plum-ink:#5B3569; --hdr-1:#E8DAF2; --hdr-2:#D6C0E7; --gold:#C59A3E; --gold-2:#EED38A;
   --f-display:"Bellefair","Frank Ruhl Libre","David",Georgia,serif;
   --f-body:"Assistant","Heebo","Arial Hebrew",Arial,sans-serif;
   --wrap:1120px; --r:20px;
@@ -28,7 +29,7 @@
 [hidden]{display:none!important}
 html{scroll-behavior:smooth}
 body{background:var(--sand);color:var(--ink);font-family:var(--f-body);font-size:18px;line-height:1.75}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--cream)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--hdr-1)}
 .wrap{max-width:var(--wrap);margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 h1,h2,h3{font-family:var(--f-display);font-weight:400;line-height:1.2;text-wrap:balance;margin:0}
 h1{font-size:clamp(2.3rem,5.2vw,3.9rem)}
@@ -53,19 +54,20 @@ a{color:var(--teal-deep)}
 .more:hover{text-decoration:underline}
 
 /* header */
-.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--cream) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:radial-gradient(40% 140% at 8% 0%,rgba(238,211,138,.35),transparent 70%),linear-gradient(115deg,var(--hdr-1),var(--hdr-2) 55%,var(--hdr-1));box-shadow:0 8px 24px -18px rgba(91,53,105,.6)}
+.top::after{content:"";position:absolute;inset:auto 0 -3px 0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-2) 30%,var(--gold) 55%,var(--gold-2) 80%,var(--gold))}
 .top-in{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
-.brand{text-decoration:none;color:var(--ink);display:flex;flex-direction:column;line-height:1.1}
-.brand-name{font-family:var(--f-display);font-size:1.7rem}
-.brand-sub{font-size:.75rem;letter-spacing:.06em;color:var(--muted)}
+.brand{text-decoration:none;color:var(--plum);display:flex;flex-direction:column;line-height:1.1}
+.brand-name{font-family:var(--f-display);font-size:1.8rem;color:var(--plum)}
+.brand-sub{font-size:.75rem;letter-spacing:.06em;color:var(--plum-ink)}
 .nav{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
-.nav a:not(.btn){color:var(--ink);text-decoration:none;padding:.35em .7em;border-radius:999px;font-size:.98rem}
-.nav a:not(.btn):hover{background:var(--lilac-soft)}
-.nav a.active:not(.btn){background:var(--teal-soft);color:var(--teal-deep);font-weight:600}
-.menu-btn{display:none;background:none;border:1.5px solid var(--ink);border-radius:999px;padding:.35em 1em;font:600 .95rem var(--f-body);color:var(--ink);cursor:pointer}
+.nav a:not(.btn){color:var(--plum-ink);text-decoration:none;padding:.35em .7em;border-radius:999px;font-size:.98rem}
+.nav a:not(.btn):hover{background:rgba(255,255,255,.5)}
+.nav a.active:not(.btn){background:rgba(255,255,255,.7);color:var(--plum);font-weight:700;box-shadow:inset 0 0 0 1.5px var(--gold-2)}
+.menu-btn{display:none;background:rgba(255,255,255,.45);border:1.5px solid var(--plum);border-radius:999px;padding:.35em 1em;font:600 .95rem var(--f-body);color:var(--plum);cursor:pointer}
 @media (max-width:960px){
   .menu-btn{display:block}
-  .nav{display:none;position:absolute;inset:100% 0 auto;flex-direction:column;align-items:stretch;background:var(--cream);border-bottom:1px solid var(--line);padding:8px max(16px,env(safe-area-inset-right,0px)) 16px max(16px,env(safe-area-inset-left,0px))}
+  .nav{display:none;position:absolute;inset:calc(100% + 3px) 0 auto;flex-direction:column;align-items:stretch;background:linear-gradient(180deg,var(--hdr-1),var(--hdr-2));border-bottom:3px solid var(--gold);padding:8px max(16px,env(safe-area-inset-right,0px)) 16px max(16px,env(safe-area-inset-left,0px))}
   .nav.open{display:flex}
   .nav a:not(.btn){padding:.6em .8em}
   .nav .btn{justify-content:center;margin-top:6px}
