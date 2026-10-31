@@ -1510,7 +1510,7 @@ a.fmt:hover{transform:translateY(-4px);box-shadow:0 22px 40px -26px rgba(58,51,6
 
   document.addEventListener('click', e => {
     const bk = e.target.closest('[data-book]');
-    if (bk) { e.preventDefault(); B.svc = bk.dataset.svc || 'תטא הילינג'; $('bookSvc').textContent = B.svc; const num = B.svc.startsWith('נומרולוגיה'); PRODUCTS.single = num ? ['אבחון וייעוץ', 444] : ['סשן בודד, 60 דקות', 333]; document.querySelector('.ch[data-v="single"]').innerHTML = num ? '<b>אבחון וייעוץ</b><span>מפגש אחד</span><em>444 ₪</em>' : '<b>סשן בודד</b><span>60 דקות</span><em>333 ₪</em>'; document.querySelector('.ch[data-v="pack"]').hidden = num || B.svc === 'NLP עסקי'; setChoice('product', bk.dataset.book); show('book'); return; }
+    if (bk) { e.preventDefault(); B.svc = bk.dataset.svc || 'תטא הילינג'; $('bookSvc').textContent = B.svc; const num = B.svc.startsWith('נומרולוגיה'); PRODUCTS.single = num ? ['אבחון וייעוץ, 60 דקות', 444] : ['סשן בודד, 60 דקות', 333]; document.querySelector('.ch[data-v="single"]').innerHTML = num ? '<b>אבחון וייעוץ</b><span>60 דקות</span><em>444 ₪</em>' : '<b>סשן בודד</b><span>60 דקות</span><em>333 ₪</em>'; document.querySelector('.ch[data-v="pack"]').hidden = num || B.svc === 'NLP עסקי'; setChoice('product', bk.dataset.book); show('book'); return; }
     const go = e.target.closest('[data-go]');
     if (go) { e.preventDefault(); show(go.dataset.go); return; }
     const sc = e.target.closest('[data-scroll]');
