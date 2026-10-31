@@ -104,6 +104,17 @@ a{color:var(--teal-deep)}
 .hero-sq{width:min(460px,100%)}
 .hero-img{display:block;width:100%;height:auto;aspect-ratio:1;border-radius:26px;border:8px solid var(--cream);box-shadow:0 30px 60px -30px rgba(58,51,65,.5)}
 @media (max-width:820px){.hero-sq{width:min(420px,100%)}}
+/* reviews */
+.reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:14px}
+.review{position:relative;margin:0;background:var(--cream);border:1px solid var(--line);border-radius:var(--r);padding:34px 24px 22px;display:flex;flex-direction:column;gap:16px}
+.review::before{content:"\201D";position:absolute;top:-6px;inset-inline-start:18px;font-family:var(--f-display);font-size:4.6rem;line-height:1;color:var(--lilac)}
+.review blockquote{margin:0;font-size:1.05rem;line-height:1.7;color:var(--muted)}
+.review figcaption{margin-top:auto;display:flex;align-items:center;gap:10px}
+.review .av{width:42px;height:42px;border-radius:50%;background:linear-gradient(150deg,var(--lilac),var(--teal));color:var(--cream);display:grid;place-items:center;font-family:var(--f-display);font-size:1.3rem}
+.review .who b{display:block;line-height:1.2}
+.review .who span{font-size:.85rem;color:var(--plum)}
+.sample{position:absolute;top:12px;inset-inline-end:12px;font-size:.72rem;font-weight:700;color:var(--lilac-deep);border:1px dashed var(--lilac-deep);border-radius:99px;padding:.1em .6em}
+@media (max-width:860px){.reviews{grid-template-columns:1fr}}
 /* hello strip */
 .hello{display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:center}
 .age{font-family:var(--f-display);font-size:clamp(4.5rem,10vw,7rem);line-height:.9;color:var(--lilac);position:relative}
@@ -640,7 +651,24 @@ a.fmt:hover{transform:translateY(-4px);box-shadow:0 22px 40px -26px rgba(58,51,6
         <p class="eyebrow">המלצות</p>
         <h2>מה אומרות מי שהיו כאן</h2>
       </div>
-      <div class="todo">כאן ייכנסו 3–4 המלצות אמיתיות של לקוחות (בשם פרטי ובאישורן).</div>
+      <div class="reviews">
+        <figure class="review">
+          <span class="sample">דוגמה</span>
+          <blockquote>[כאן תיכנס המלצה אמיתית: 2–3 משפטים במילים של הלקוחה, על מה שהשתנה אצלה.]</blockquote>
+          <figcaption><span class="av" aria-hidden="true">?</span><span class="who"><b>שם פרטי</b><span>תטא הילינג</span></span></figcaption>
+        </figure>
+        <figure class="review">
+          <span class="sample">דוגמה</span>
+          <blockquote>[כאן תיכנס המלצה אמיתית: 2–3 משפטים במילים של הלקוחה, על מה שהשתנה אצלה.]</blockquote>
+          <figcaption><span class="av" aria-hidden="true">?</span><span class="who"><b>שם פרטי</b><span>נומרולוגיה</span></span></figcaption>
+        </figure>
+        <figure class="review">
+          <span class="sample">דוגמה</span>
+          <blockquote>[כאן תיכנס המלצה אמיתית: 2–3 משפטים במילים של הלקוחה, על מה שהשתנה אצלה.]</blockquote>
+          <figcaption><span class="av" aria-hidden="true">?</span><span class="who"><b>שם פרטי</b><span>NLP</span></span></figcaption>
+        </figure>
+      </div>
+      <p class="cal-legend">אלה מקומות שמורים לדוגמה. ההמלצות האמיתיות, בשם פרטי ובאישור הלקוחות, ייכנסו במקומם.</p>
     </div>
   </section>
 
