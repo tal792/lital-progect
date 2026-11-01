@@ -1,0 +1,23 @@
+name = "lital-api"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "lital"
+database_id = "00000000-0000-0000-0000-000000000000" # replaced after `wrangler d1 create lital`
+
+# Daily cleanup: release stale holds, erase personal details after 12 months.
+[triggers]
+crons = ["17 2 * * *"]
+
+[vars]
+ALLOWED_ORIGINS = "https://www.deepshift.co.il,https://deepshift.co.il"
+SITE_URL = "https://www.deepshift.co.il"
+MAIL_FROM = "ליטל בוהדנה <noreply@deepshift.co.il>"
+LITAL_EMAIL = ""
+
+# Secrets (set with `wrangler secret put`, never committed):
+#   ADMIN_PASSWORD   Lital's password for the admin page
+#   SESSION_SECRET   random string used to sign admin sessions
+#   RESEND_API_KEY   key for sending emails
