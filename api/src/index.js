@@ -90,7 +90,7 @@ async function availability(url, env) {
 async function publicWorkshops(env) {
   const today = ilParts(Date.now()).date;
   const { results } = await env.DB.prepare(
-    `SELECT w.id, w.cohort, w.title, w.date, w.start, w.end, w.place, w.price, w.capacity,
+    `SELECT w.id, w.cohort, w.title, w.date, w.start, w.end, w.place, w.price, w.capacity, w.bit_link,
        (SELECT COUNT(*) FROM bookings b WHERE b.workshop_id = w.id AND (b.status IN ('claimed', 'paid') OR (b.status = 'held' AND b.hold_until > ?))) AS taken
      FROM workshops w WHERE w.active = 1 AND w.date >= ? ORDER BY w.date`
   ).bind(Date.now(), today).all();
@@ -255,14 +255,15 @@ async function saveWorkshop(req, env, id) {
     place: text(b.place, 2, 120, 'place'),
     price: Number.isInteger(+b.price) && +b.price >= 0 ? +b.price : bad('price'),
     capacity: Number.isInteger(+b.capacity) && +b.capacity > 0 ? +b.capacity : bad('capacity'),
+    bit_link: b.bit_link ? (/^https:\/\/(www\.)?bitpay\.co\.il\/\S+$/.test(b.bit_link) ? b.bit_link : bad('bit_link')) : null,
     wa_link: b.wa_link ? (/^https:\/\/chat\.whatsapp\.com\/\S+$/.test(b.wa_link) ? b.wa_link : bad('wa_link')) : null,
   };
-  const vals = [w.cohort, w.title, w.date, w.start, w.end, w.place, w.price, w.capacity, w.wa_link];
+  const vals = [w.cohort, w.title, w.date, w.start, w.end, w.place, w.price, w.capacity, w.wa_link, w.bit_link];
   if (id) {
-    await env.DB.prepare('UPDATE workshops SET cohort=?, title=?, date=?, start=?, end=?, place=?, price=?, capacity=?, wa_link=? WHERE id=?').bind(...vals, id).run();
+    await env.DB.prepare('UPDATE workshops SET cohort=?, title=?, date=?, start=?, end=?, place=?, price=?, capacity=?, wa_link=?, bit_link=? WHERE id=?').bind(...vals, id).run();
     return json({ id });
   }
-  const r = await env.DB.prepare('INSERT INTO workshops (cohort, title, date, start, end, place, price, capacity, wa_link) VALUES (?,?,?,?,?,?,?,?,?) RETURNING id').bind(...vals).first();
+  const r = await env.DB.prepare('INSERT INTO workshops (cohort, title, date, start, end, place, price, capacity, wa_link, bit_link) VALUES (?,?,?,?,?,?,?,?,?,?) RETURNING id').bind(...vals).first();
   return json({ id: r.id }, 201);
 }
 

@@ -144,6 +144,7 @@ th{font-size:.8rem;color:var(--muted);background:var(--sand)}
           <div class="field"><label for="f-price">מחיר (₪)</label><input id="f-price" type="number" min="0" value="72" required></div>
           <div class="field"><label for="f-cap">מספר מקומות</label><input id="f-cap" type="number" min="1" value="20" required></div>
           <div class="field"><label for="f-wa">לינק לקבוצת הוואטסאפ</label><input id="f-wa" type="url" dir="ltr" placeholder="https://chat.whatsapp.com/..."></div>
+          <div class="field"><label for="f-bit">לינק לארנק ביט של הסדנה</label><input id="f-bit" type="url" dir="ltr" placeholder="https://www.bitpay.co.il/..."></div>
         </div>
         <p class="err" id="wsErr"></p>
         <div class="row"><button class="btn" type="submit">שמירה</button><button class="btn ghost" type="button" id="wsCancel" hidden>ביטול עריכה</button></div>
@@ -289,7 +290,7 @@ th{font-size:.8rem;color:var(--muted);background:var(--sand)}
     const ed = e.target.closest('[data-edit]'), hd = e.target.closest('[data-hide]');
     if (ed) {
       const w = workshops.find(x => x.id == ed.dataset.edit); editing = w.id;
-      $('f-cohort').value = w.cohort; $('f-date').value = w.date; $('f-start').value = w.start; $('f-end').value = w.end; $('f-place').value = w.place; $('f-price').value = w.price; $('f-cap').value = w.capacity; $('f-wa').value = w.wa_link || '';
+      $('f-cohort').value = w.cohort; $('f-date').value = w.date; $('f-start').value = w.start; $('f-end').value = w.end; $('f-place').value = w.place; $('f-price').value = w.price; $('f-cap').value = w.capacity; $('f-wa').value = w.wa_link || ''; $('f-bit').value = w.bit_link || '';
       $('wsFormTitle').textContent = 'עריכת ' + w.cohort; $('wsCancel').hidden = false; $('wsForm').scrollIntoView({ behavior: 'smooth' });
     }
     if (hd) { try { await api('/api/admin/workshops/' + hd.dataset.hide, { method: 'DELETE' }); toast('הסדנה הוסתרה מהאתר'); load(); } catch { toast('לא הצלחתי. נסי שוב.'); } }
@@ -298,9 +299,9 @@ th{font-size:.8rem;color:var(--muted);background:var(--sand)}
   $('wsCancel').addEventListener('click', resetForm);
   $('wsForm').addEventListener('submit', async e => {
     e.preventDefault(); $('wsErr').textContent = '';
-    const data = { cohort: $('f-cohort').value, date: $('f-date').value, start: $('f-start').value, end: $('f-end').value, place: $('f-place').value, price: $('f-price').value, capacity: $('f-cap').value, wa_link: $('f-wa').value.trim() };
+    const data = { cohort: $('f-cohort').value, date: $('f-date').value, start: $('f-start').value, end: $('f-end').value, place: $('f-place').value, price: $('f-price').value, capacity: $('f-cap').value, wa_link: $('f-wa').value.trim(), bit_link: $('f-bit').value.trim() };
     try { await api('/api/admin/workshops' + (editing ? '/' + editing : ''), { method: editing ? 'PUT' : 'POST', body: JSON.stringify(data) }); toast(editing ? 'הסדנה עודכנה' : 'הסדנה נוספה לאתר 🎉'); resetForm(); load(); }
-    catch (err) { $('wsErr').textContent = err.message === 'wa_link' ? 'הלינק צריך להתחיל ב-https://chat.whatsapp.com/' : 'משהו לא תקין בשדות. בדקי ונסי שוב.'; }
+    catch (err) { $('wsErr').textContent = err.message === 'wa_link' ? 'הלינק צריך להתחיל ב-https://chat.whatsapp.com/' : err.message === 'bit_link' ? 'לינק הביט צריך להתחיל ב-https://www.bitpay.co.il/' : 'משהו לא תקין בשדות. בדקי ונסי שוב.'; }
   });
 
   show();

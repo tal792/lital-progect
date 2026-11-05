@@ -42,5 +42,6 @@ CREATE TABLE IF NOT EXISTS workshops (
   price INTEGER NOT NULL DEFAULT 72,
   capacity INTEGER NOT NULL DEFAULT 20,
   wa_link TEXT,
+  bit_link TEXT, -- Bit wallet link for this workshop's payments
   active INTEGER NOT NULL DEFAULT 1
 );

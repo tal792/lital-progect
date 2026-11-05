@@ -1652,7 +1652,9 @@ a.fmt:hover{transform:translateY(-4px);box-shadow:0 22px 40px -26px rgba(58,51,6
   const BIT_PHONE = '052-915-4321';
   const BIT_LINK = 'https://www.bitpay.co.il/app/me/BF93A66C-956D-9DE6-9331-B231F4B945F35CFD'; // Lital's fixed Bit QR
   const BIT_QR = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWgAAAFoAQAAAABSnlx4AAAElUlEQVR42u1bQXKjOhTsB64SU38BN4DdHANu8I8Evpl8jNnhG+DViCpMz0ICA4ljmIxjJxGLVGzaMujRr/s9yUJsOAJ49FdBg/XwX04iJ8lakWRnT5XsB4BwNvbimakAQPv53oCWTWiuQCuSJIE2AE4iSE8ikoSUTJH7DChJks2a6258LB+LFpEIgOpxSIQ4xiSPuwnqJCKVQxNA9+aXNY6gfr6fAN0BiGD/ZMkVdBsgbwDgLFKoDkgbIK39DH5CtCL3aStISeqTCGtQqk1je3X9WHQxfbEDIE6D2x89EFIA6RET++zXD3sqJYDTtbHp5/tZ0K2IiAwOjEIdUqrWqesxA/YiIpK8MnYPZDtAG/e69k7pOdA7AIkTVUtes8RycXTunSYkawh1PDnp5/vh6Gqk3Mt4uto1dGk17oB0AKRGqBGySo0N6oor6f18P7IPIawAUNtehO1DaAAl2SNv3D8v+hArr6TYhNY3cbLpLvktYunklGQPxMbSMTcuuiRthEmyyjuwUhde7oDswnAuhqw7oIi2Xsl9oiPPG516011mq+8yGcZu5o0rF6ZsR4shjVhR1S41j0cFDN0n12i8T73zPZj2t2iuiPxUXcsmJHKXf1m79FzSAIBw5PV9rvuevPwynF91s6PHtam5A2msZSpr1QOqt9zUCFfEMppYJs+0j0YfE+CQAHtxcZACQH5UlKwNWTkjBagewWiZq1siEW3tiKx1Ss853//aD77vum10ksCl5uiFQicAWKseZe1YnJMkDZCzQ1lDyCZkBTVT1+RWveP18p+i5wZpN41uM1eSNqRkwF4ScJ9RpAht/kXKs4gLPffZ/DkxAJr+Koubr8CG5+D8X7JYv/FxY1k8ajGBmLTrtk3IKh0rXQPqGyvuX8effKL1+SKae2TV2xDmBtSDr3Kp2ZZCAF7pQMmtr//q8/1s/tvGMl80hEG6tE0NcQQd1fWeWbPwvNwS+XnWtU7J1q5ESbd0XpIuhyqygiJ1ymWO1YMb1qNyR+9UV49+F7obzerk48XMGg/qugPOIXGi8CCWtzjGBE4Jyvrn7yDXDEq2QY826P18Pwp9qUaHTUuVpXo/ZzGdhDqZZY1BXUnXY8Tq9R0fnY90SnPT6mJJUiu7AdG97AEom6PLIbrBrZJVfyen9BToJS9R2p6+UMcdkHfAZSV2wNHYbiInWgrY1ZxFFoAApv/k3ue2w+MmhycfMrZMYxG8FvALiy+HsY3/MUeXtSKrMUc3K1ZpC8+0u6E5VdcAy0comO38H0rWGgBiskoNgLhHWQOb1NWvwTyiir6oq12rI8k6HIrYGS+vqevO8/LRTmkSCAGUAc47HrIaQCsAQre96SQu9O1/3XTnfyfz32wsDtP7ldTHZmT9xgxGwdBNREjkZqK3bhubFdUKNz2yZ9pj0NGVdArw8H9jH/ycAI5xH0CdBemviIekWZ0hvAJ+ELq4pq5GXO1q7C63ctgAw5W1q5/vR6MvO/8pkpJSKIqIouQ821OpWa67Xo56+YYtnJoH97+/oet9Zed/lQ1vZGNZuxMgufx2x8/g50f/AdTkFSh7D7RjAAAAAElFTkSuQmCC';
-  function bitHold(box, amount, onPaid, onExpire) {
+  const BIT_WS_LINK = 'https://www.bitpay.co.il/app/share-info?i=jdgoAKZI&j=true'; // Lital's Bit wallet for workshops
+  // `wallet`: a Bit group-wallet link (workshops). Without it, payment goes to Lital's personal Bit.
+  function bitHold(box, amount, onPaid, onExpire, wallet) {
     clearInterval(box._t);
     const now = new Date(), h = now.getHours(), night = h < 9 || h >= 23;
     const until = new Date(now.getTime() + 15 * 60000);
@@ -1660,11 +1662,11 @@ a.fmt:hover{transform:translateY(-4px);box-shadow:0 22px 40px -26px rgba(58,51,6
     box.hidden = false;
     box.innerHTML =
       `<b class="sign">המקום שלך שמור ⏳</b>` +
-      `<p>להשלמת ההזמנה, שלמי <b>${amount.toLocaleString('he-IL')} ₪ בביט</b> לליטל בוהדנה:</p>` +
-      `<a class="btn bit-open" href="${BIT_LINK}" target="_blank" rel="noopener">לתשלום בביט ←</a>` +
-      `<div class="bit-qr"><img src="${BIT_QR}" width="180" height="180" alt="קוד QR לתשלום בביט לליטל בוהדנה"><span>או סרקי את הקוד עם המצלמה של הטלפון</span></div>` +
+      `<p>להשלמת ההזמנה, שלמי <b>${amount.toLocaleString('he-IL')} ₪ בביט</b> ${wallet ? 'לארנק הסדנאות של ליטל' : 'לליטל בוהדנה'}:</p>` +
+      `<a class="btn bit-open" href="${wallet || BIT_LINK}" target="_blank" rel="noopener">לתשלום בביט ←</a>` +
+      (wallet ? '' : `<div class="bit-qr"><img src="${BIT_QR}" width="180" height="180" alt="קוד QR לתשלום בביט לליטל בוהדנה"><span>או סרקי את הקוד עם המצלמה של הטלפון</span></div>`) +
       `<p class="cal-legend">בביט הקלידי את הסכום (<b>${amount.toLocaleString('he-IL')} ₪</b>), ובהערה כתבי את השם שלך. אחרי התשלום, חזרי לכאן ולחצי על הכפתור למטה.</p>` +
-      `<div class="bit-num"><span>אפשר גם לפי מספר:</span><b dir="ltr">${BIT_PHONE}</b><button type="button" class="btn btn-sm btn-ghost bit-copy">העתקת המספר</button></div>` +
+      (wallet ? '' : `<div class="bit-num"><span>אפשר גם לפי מספר:</span><b dir="ltr">${BIT_PHONE}</b><button type="button" class="btn btn-sm btn-ghost bit-copy">העתקת המספר</button></div>`) +
       `<p class="bit-timer">שמור עבורך עד <b>${night ? (h >= 23 ? 'מחר ב-' : '') : ''}${until.toTimeString().slice(0, 5)}</b> <span class="bit-left"></span></p>` +
       `<button type="button" class="btn bit-done">העברתי את התשלום ✓</button>`;
     const left = box.querySelector('.bit-left');
@@ -1674,7 +1676,7 @@ a.fmt:hover{transform:translateY(-4px);box-shadow:0 22px 40px -26px rgba(58,51,6
       if (!night) left.textContent = '· נשארו ' + Math.floor(ms / 60000) + ':' + String(Math.floor(ms / 1000) % 60).padStart(2, '0');
     };
     tick(); box._t = setInterval(tick, 1000);
-    box.querySelector('.bit-copy').addEventListener('click', e => {
+    box.querySelector('.bit-copy')?.addEventListener('click', e => {
       navigator.clipboard.writeText(BIT_PHONE.replace(/-/g, '')).then(() => { e.target.textContent = 'הועתק!'; }, () => { e.target.textContent = 'לא הצלחתי להעתיק'; });
     });
     box.querySelector('.bit-done').addEventListener('click', () => { clearInterval(box._t); box.hidden = true; onPaid(); });
@@ -1865,7 +1867,7 @@ a.fmt:hover{transform:translateY(-4px);box-shadow:0 22px 40px -26px rgba(58,51,6
         `<small class="cal-legend" dir="ltr" style="text-align:end">https://chat.whatsapp.com/EXAMPLE-LINK</small>` +
         `<p>מקסימום, תהני. לא ככה? 😉<br>נתראה,<br>ליטל</p></div>`;
       $('wPaid').hidden = false;
-    }, () => { btn.hidden = false; });
+    }, () => { btn.hidden = false; }, w.bit || BIT_WS_LINK);
   });
 
   // contact form (prototype)
