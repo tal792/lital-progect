@@ -15,7 +15,7 @@ crons = ["17 2 * * *"]
 ALLOWED_ORIGINS = "https://www.deepshift.co.il,https://deepshift.co.il"
 SITE_URL = "https://www.deepshift.co.il"
 MAIL_FROM = "ליטל בוהדנה <noreply@deepshift.co.il>"
-LITAL_EMAIL = ""
+LITAL_EMAIL = "litalspirit222@gmail.com"
 
 # Secrets (set with `wrangler secret put`, never committed):
 #   ADMIN_PASSWORD   Lital's password for the admin page
