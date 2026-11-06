@@ -841,13 +841,17 @@ a.fmt:hover{transform:translateY(-4px);box-shadow:0 22px 40px -26px rgba(58,51,6
       <div class="ask-box">
         <span class="price">150 ₪</span>
         <span class="cal-legend">שאלה אחת · נושא אחד · תשובה במייל</span>
-        <button class="btn" type="button" id="askPay">שליחת שאלה · תשלום בביט</button>
+        <div class="fields" id="askFields">
+          <div class="field"><label for="qName">שם</label><input id="qName" autocomplete="name"></div>
+          <div class="field"><label for="qPhone">טלפון</label><input id="qPhone" type="tel" autocomplete="tel" dir="ltr"></div>
+          <div class="field"><label for="qMail">מייל (לשם תגיע התשובה)</label><input id="qMail" type="email" autocomplete="email" dir="ltr"></div>
+        </div>
+        <button class="btn" type="button" id="askPay" disabled>שליחת שאלה · תשלום בביט</button>
+        <p class="pay-hint" id="askErr" hidden></p>
         <div class="bit-box" id="askBit" hidden></div>
         <div class="paid" id="askPaid" hidden>
           <b class="sign">קיבלנו! 💛</b>
-          <span>עכשיו נשאר רק לשלוח את השאלה למייל <b class="todo-inline">כתובת מייל לעדכן</b>. העתיקי את התבנית המוכנה, עם מקום לשם, לתאריך הלידה ולשאלה.</span>
-          <button class="btn btn-sm" type="button" id="askMail">העתקת התבנית</button>
-          <span>זו הדגמה: באתר האמיתי, ליטל מאשרת שהתשלום בביט התקבל, ועונה לשאלה במייל.</span>
+          <span>ברגע שליטל תאשר את התשלום, תקבלי למייל הסבר איך לשלוח את השאלה: שם מלא, תאריך לידה והשאלה עצמה.</span>
         </div>
       </div>
     </div>
@@ -1346,7 +1350,6 @@ a.fmt:hover{transform:translateY(-4px);box-shadow:0 22px 40px -26px rgba(58,51,6
         <p class="eyebrow">המפגשים הקרובים</p>
         <h2>בחרי קבוצה, ושרייני מקום</h2>
         <p class="lead">מתאים לבנות ונשים מגיל 18 · מספר המקומות מוגבל</p>
-        <p class="demo-note">התאריכים, השעות והמיקומים כאן הם לדוגמה.</p>
       </div>
       <div class="ws-list" id="wsList"></div>
       <div class="ws-reg" id="wsReg" hidden aria-live="polite">
@@ -1361,14 +1364,12 @@ a.fmt:hover{transform:translateY(-4px);box-shadow:0 22px 40px -26px rgba(58,51,6
         </div>
         <p class="cal-legend">בתשלום את מאשרת את <a href="#pol-cancel" data-scroll="pol-cancel">מדיניות הביטולים</a>.</p>
         <button class="btn" id="wPay" type="button" disabled>תשלום בביט</button>
+        <p class="pay-hint" id="wErr" hidden></p>
         <div class="bit-box" id="wBit" hidden></div>
         <div class="paid" id="wPaid" hidden>
           <b class="sign">יאללה, את בפנים! 🪄</b>
           <span id="wPaidText"></span>
           <div class="actions" id="wLinks"></div>
-          <span>זו הדגמה: באתר האמיתי, המקום נשמר סופית אחרי שליטל מאשרת שהתשלום בביט התקבל.</span>
-          <p class="eyebrow">ככה ייראה המייל שיישלח אחרי האישור</p>
-          <div class="mail" id="wMailPrev"></div>
         </div>
       </div>
     </div>
@@ -1390,7 +1391,6 @@ a.fmt:hover{transform:translateY(-4px);box-shadow:0 22px 40px -26px rgba(58,51,6
       <div class="hero-text">
         <p class="eyebrow"><span id="bookSvc">תטא הילינג</span> · הזמנה</p>
         <h1 class="statement">בואי נקבע לך <em class="no">זמן</em>.</h1>
-        <p class="demo-note">הדגמה: כך ייראה תהליך ההזמנה באתר. כאן עוד לא מתבצע תשלום ולא נשמרת הזמנה.</p>
       </div>
     </div>
   </section>
@@ -1420,6 +1420,7 @@ a.fmt:hover{transform:translateY(-4px);box-shadow:0 22px 40px -26px rgba(58,51,6
         </div>
         <div class="step" id="calStep">
           <h3><span class="n">3</span><span id="calStepTitle">בחרי יום</span></h3>
+          <p class="cal-legend" id="calLoad" hidden></p>
           <div class="cal">
             <div class="cal-head">
               <button type="button" class="cal-nav" id="calPrev" aria-label="החודש הקודם">→</button>
@@ -1429,7 +1430,7 @@ a.fmt:hover{transform:translateY(-4px);box-shadow:0 22px 40px -26px rgba(58,51,6
             <div class="cal-grid cal-dow"><span>א׳</span><span>ב׳</span><span>ג׳</span><span>ד׳</span><span>ה׳</span><span>ו׳</span><span>ש׳</span></div>
             <div class="cal-grid" id="calDays"></div>
           </div>
-          <p class="cal-legend">הימים המסומנים בטורקיז פנויים. ימי עבודה לדוגמה: א׳–ה׳, 9:00–19:00.</p>
+          <p class="cal-legend">הימים המסומנים בטורקיז פנויים. ימי עבודה: א׳–ה׳, 9:00–19:00.</p>
         </div>
         <div class="step" id="slotStep">
           <h3><span class="n">4</span>בחרי שעה</h3>
@@ -1461,7 +1462,6 @@ a.fmt:hover{transform:translateY(-4px);box-shadow:0 22px 40px -26px rgba(58,51,6
           <b class="sign">לחיי התחלות חדשות!</b>
           <span id="paidText"></span>
           <div class="actions" id="paidLinks"></div>
-          <span>זו הדגמה: באתר האמיתי, השעה נשמרת סופית אחרי שליטל מאשרת שהתשלום בביט התקבל.</span>
           <button type="button" class="btn btn-ghost btn-sm" id="bookAgain">הזמנה חדשה</button>
         </div>
       </aside>
@@ -1648,17 +1648,28 @@ a.fmt:hover{transform:translateY(-4px);box-shadow:0 22px 40px -26px rgba(58,51,6
     wa.target = '_blank'; wa.rel = 'noopener';
   }
 
-  // regular Bit: hold 15 min between 9:00–23:00; at night until 10:00 the next morning
+  // Bookings are saved by the API; the slot is held briefly while the client pays Lital in Bit.
+  const API = 'https://lital-api.deepshift.workers.dev/api';
+  async function api(path, data) {
+    const res = await fetch(API + path, data ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) } : {});
+    const body = await res.json().catch(() => ({}));
+    if (!res.ok) { const e = new Error(body.error || 'error'); e.status = res.status; throw e; }
+    return body;
+  }
+  const FAIL_MSG = 'משהו השתבש. נסי שוב בעוד רגע, או כתבי לליטל בוואטסאפ 052-915-4321.';
+  const fieldMsg = e => e.message === 'phone' ? 'מספר הטלפון לא תקין.' : e.message === 'email' ? 'כתובת המייל לא תקינה.' : e.message === 'name' ? 'צריך למלא שם.' : FAIL_MSG;
+
   const BIT_PHONE = '052-915-4321';
   const BIT_LINK = 'https://www.bitpay.co.il/app/me/BF93A66C-956D-9DE6-9331-B231F4B945F35CFD'; // Lital's fixed Bit QR
   const BIT_QR = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWgAAAFoAQAAAABSnlx4AAAElUlEQVR42u1bQXKjOhTsB64SU38BN4DdHANu8I8Evpl8jNnhG+DViCpMz0ICA4ljmIxjJxGLVGzaMujRr/s9yUJsOAJ49FdBg/XwX04iJ8lakWRnT5XsB4BwNvbimakAQPv53oCWTWiuQCuSJIE2AE4iSE8ikoSUTJH7DChJks2a6258LB+LFpEIgOpxSIQ4xiSPuwnqJCKVQxNA9+aXNY6gfr6fAN0BiGD/ZMkVdBsgbwDgLFKoDkgbIK39DH5CtCL3aStISeqTCGtQqk1je3X9WHQxfbEDIE6D2x89EFIA6RET++zXD3sqJYDTtbHp5/tZ0K2IiAwOjEIdUqrWqesxA/YiIpK8MnYPZDtAG/e69k7pOdA7AIkTVUtes8RycXTunSYkawh1PDnp5/vh6Gqk3Mt4uto1dGk17oB0AKRGqBGySo0N6oor6f18P7IPIawAUNtehO1DaAAl2SNv3D8v+hArr6TYhNY3cbLpLvktYunklGQPxMbSMTcuuiRthEmyyjuwUhde7oDswnAuhqw7oIi2Xsl9oiPPG516011mq+8yGcZu5o0rF6ZsR4shjVhR1S41j0cFDN0n12i8T73zPZj2t2iuiPxUXcsmJHKXf1m79FzSAIBw5PV9rvuevPwynF91s6PHtam5A2msZSpr1QOqt9zUCFfEMppYJs+0j0YfE+CQAHtxcZACQH5UlKwNWTkjBagewWiZq1siEW3tiKx1Ss853//aD77vum10ksCl5uiFQicAWKseZe1YnJMkDZCzQ1lDyCZkBTVT1+RWveP18p+i5wZpN41uM1eSNqRkwF4ScJ9RpAht/kXKs4gLPffZ/DkxAJr+Koubr8CG5+D8X7JYv/FxY1k8ajGBmLTrtk3IKh0rXQPqGyvuX8effKL1+SKae2TV2xDmBtSDr3Kp2ZZCAF7pQMmtr//q8/1s/tvGMl80hEG6tE0NcQQd1fWeWbPwvNwS+XnWtU7J1q5ESbd0XpIuhyqygiJ1ymWO1YMb1qNyR+9UV49+F7obzerk48XMGg/qugPOIXGi8CCWtzjGBE4Jyvrn7yDXDEq2QY826P18Pwp9qUaHTUuVpXo/ZzGdhDqZZY1BXUnXY8Tq9R0fnY90SnPT6mJJUiu7AdG97AEom6PLIbrBrZJVfyen9BToJS9R2p6+UMcdkHfAZSV2wNHYbiInWgrY1ZxFFoAApv/k3ue2w+MmhycfMrZMYxG8FvALiy+HsY3/MUeXtSKrMUc3K1ZpC8+0u6E5VdcAy0comO38H0rWGgBiskoNgLhHWQOb1NWvwTyiir6oq12rI8k6HIrYGS+vqevO8/LRTmkSCAGUAc47HrIaQCsAQre96SQu9O1/3XTnfyfz32wsDtP7ldTHZmT9xgxGwdBNREjkZqK3bhubFdUKNz2yZ9pj0NGVdArw8H9jH/ycAI5xH0CdBemviIekWZ0hvAJ+ELq4pq5GXO1q7C63ctgAw5W1q5/vR6MvO/8pkpJSKIqIouQ821OpWa67Xo56+YYtnJoH97+/oet9Zed/lQ1vZGNZuxMgufx2x8/g50f/AdTkFSh7D7RjAAAAAElFTkSuQmCC';
   const BIT_WS_LINK = 'https://www.bitpay.co.il/app/share-info?i=jdgoAKZI&j=true'; // Lital's Bit wallet for workshops
-  // `wallet`: a Bit group-wallet link (workshops). Without it, payment goes to Lital's personal Bit.
-  function bitHold(box, amount, onPaid, onExpire, wallet) {
+  const ilDay = ms => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Jerusalem' }).format(new Date(ms));
+  const ilTime = ms => new Date(ms).toLocaleTimeString('he-IL', { timeZone: 'Asia/Jerusalem', hour: '2-digit', minute: '2-digit', hour12: false });
+  // `until` comes from the server (15 min by day, 10:00 next morning at night).
+  // `onPaid` reports "I paid" to the server; `wallet` is a Bit group-wallet link (workshops).
+  function bitHold(box, amount, until, onPaid, onExpire, wallet) {
     clearInterval(box._t);
-    const now = new Date(), h = now.getHours(), night = h < 9 || h >= 23;
-    const until = new Date(now.getTime() + 15 * 60000);
-    if (night) { until.setTime(now.getTime()); if (h >= 23) until.setDate(until.getDate() + 1); until.setHours(10, 0, 0, 0); }
+    const long = until - Date.now() > 20 * 60000;
     box.hidden = false;
     box.innerHTML =
       `<b class="sign">המקום שלך שמור ⏳</b>` +
@@ -1667,42 +1678,60 @@ a.fmt:hover{transform:translateY(-4px);box-shadow:0 22px 40px -26px rgba(58,51,6
       (wallet ? '' : `<div class="bit-qr"><img src="${BIT_QR}" width="180" height="180" alt="קוד QR לתשלום בביט לליטל בוהדנה"><span>או סרקי את הקוד עם המצלמה של הטלפון</span></div>`) +
       `<p class="cal-legend">בביט הקלידי את הסכום (<b>${amount.toLocaleString('he-IL')} ₪</b>), ובהערה כתבי את השם שלך. אחרי התשלום, חזרי לכאן ולחצי על הכפתור למטה.</p>` +
       (wallet ? '' : `<div class="bit-num"><span>אפשר גם לפי מספר:</span><b dir="ltr">${BIT_PHONE}</b><button type="button" class="btn btn-sm btn-ghost bit-copy">העתקת המספר</button></div>`) +
-      `<p class="bit-timer">שמור עבורך עד <b>${night ? (h >= 23 ? 'מחר ב-' : '') : ''}${until.toTimeString().slice(0, 5)}</b> <span class="bit-left"></span></p>` +
-      `<button type="button" class="btn bit-done">העברתי את התשלום ✓</button>`;
+      `<p class="bit-timer">שמור עבורך עד <b>${ilDay(until) !== ilDay(Date.now()) ? 'מחר ב-' : ''}${ilTime(until)}</b> <span class="bit-left"></span></p>` +
+      `<button type="button" class="btn bit-done">העברתי את התשלום ✓</button><p class="pay-hint bit-err" hidden></p>`;
     const left = box.querySelector('.bit-left');
+    const expire = () => { clearInterval(box._t); box.innerHTML = '<p class="bit-exp">הזמן עבר, והמקום שוחרר. אפשר להזמין שוב 💛</p>'; if (onExpire) onExpire(); };
     const tick = () => {
-      const ms = until - new Date();
-      if (ms <= 0) { clearInterval(box._t); box.innerHTML = '<p class="bit-exp">הזמן עבר, והמקום שוחרר. אפשר להזמין שוב 💛</p>'; if (onExpire) onExpire(); return; }
-      if (!night) left.textContent = '· נשארו ' + Math.floor(ms / 60000) + ':' + String(Math.floor(ms / 1000) % 60).padStart(2, '0');
+      const ms = until - Date.now();
+      if (ms <= 0) return expire();
+      if (!long) left.textContent = '· נשארו ' + Math.floor(ms / 60000) + ':' + String(Math.floor(ms / 1000) % 60).padStart(2, '0');
     };
     tick(); box._t = setInterval(tick, 1000);
     box.querySelector('.bit-copy')?.addEventListener('click', e => {
       navigator.clipboard.writeText(BIT_PHONE.replace(/-/g, '')).then(() => { e.target.textContent = 'הועתק!'; }, () => { e.target.textContent = 'לא הצלחתי להעתיק'; });
     });
-    box.querySelector('.bit-done').addEventListener('click', () => { clearInterval(box._t); box.hidden = true; onPaid(); });
+    const done = box.querySelector('.bit-done');
+    done.addEventListener('click', async () => {
+      done.disabled = true;
+      try { await onPaid(); clearInterval(box._t); box.hidden = true; }
+      catch (e) {
+        if (e.status === 410) return expire();
+        const err = box.querySelector('.bit-err'); err.textContent = FAIL_MSG; err.hidden = false; done.disabled = false;
+      }
+    });
   }
 
-  // booking demo: availability is sample data until a real booking system is connected
+  // ---------- sessions ----------
   const B = { svc: 'תטא הילינג', product: 'single', place: 'clinic', packMode: 'calendar', date: null, time: null };
+  const SVC_KEYS = { 'תטא הילינג': 'theta', 'NLP אישי': 'nlp-personal', 'NLP זוגי': 'nlp-couple', 'NLP עסקי': 'nlp-business',
+    'נומרולוגיה אישי': 'numerology-personal', 'נומרולוגיה זוגי': 'numerology-couple', 'נומרולוגיה עסקי ושותפויות': 'numerology-business' };
   const PRODUCTS = { single: ['סשן בודד, 60 דקות', 333], pack: ['תהליך מתמשך, 10 מפגשים', 2222] };
   const PLACES = { clinic: 'קליניקה, כפר חיטים', zoom: 'זום' };
-  const WORK_DAYS = [0, 1, 2, 3, 4]; // Sun–Thu
-  const HOURS = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18]; // last session 18:00–19:00
-  const booked = new Set();
   const WAZE_PLACE = 'כפר חיטים'; // TODO: street address, if Lital wants it
   const WAZE_URL = 'https://waze.com/ul?navigate=yes&q=' + encodeURIComponent(WAZE_PLACE);
-  const hashStr = s => { let h = 7; for (const c of s) h = (h * 31 + c.charCodeAt(0)) >>> 0; return h; };
   const ymd = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
   const hhmm = h => String(h).padStart(2, '0') + ':00';
   const heDate = key => new Date(key + 'T00:00').toLocaleDateString('he-IL', { weekday: 'long', day: 'numeric', month: 'long' });
-  const today = new Date(); today.setHours(0, 0, 0, 0);
-  const lastDay = new Date(today); lastDay.setDate(lastDay.getDate() + 60);
-  const isTaken = (key, h) => booked.has(key + ' ' + h) || hashStr(key + h) % 4 === 0;
-  const dayOpen = d => d > today && d <= lastDay && WORK_DAYS.includes(d.getDay()) && HOURS.some(h => !isTaken(ymd(d), h));
-  let viewMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+  let avail = null; // { workDays, hours, today, lastDay, taken: Set }
+  let viewMonth = new Date(); viewMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth(), 1);
   const $ = id => document.getElementById(id);
   const useCal = () => !(B.product === 'pack' && B.packMode === 'personal');
+  const isTaken = (key, h) => avail.taken.has(key + ' ' + h);
+  const dayOpen = key => !!avail && key > avail.today && key <= avail.lastDay && avail.workDays.includes(new Date(key + 'T00:00').getDay()) && avail.hours.some(h => !isTaken(key, h));
 
+  async function loadAvailability() {
+    $('calLoad').hidden = false; $('calLoad').textContent = 'טוענת את היומן…';
+    try {
+      const r = await api('/availability');
+      avail = { ...r, taken: new Set(r.taken) };
+      $('calLoad').hidden = true;
+      if (B.date && B.time !== null && isTaken(B.date, B.time)) B.time = null;
+    } catch {
+      avail = null; $('calLoad').textContent = 'לא הצלחתי לטעון את היומן. נסי לרענן את הדף, או כתבי לליטל בוואטסאפ 052-915-4321.';
+    }
+    renderCal(); renderSlots(); updateBook();
+  }
   function setChoice(key, v) {
     B[key] = v;
     document.querySelectorAll('.choice[data-key="' + key + '"] .ch').forEach(c => c.setAttribute('aria-pressed', String(c.dataset.v === v)));
@@ -1714,23 +1743,24 @@ a.fmt:hover{transform:translateY(-4px);box-shadow:0 22px 40px -26px rgba(58,51,6
     for (let i = 0; i < viewMonth.getDay(); i++) grid.appendChild(document.createElement('span'));
     const days = new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 0).getDate();
     for (let i = 1; i <= days; i++) {
-      const d = new Date(viewMonth.getFullYear(), viewMonth.getMonth(), i);
+      const key = ymd(new Date(viewMonth.getFullYear(), viewMonth.getMonth(), i));
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'day'; b.textContent = i;
-      if (dayOpen(d)) {
-        b.classList.add('open'); b.dataset.date = ymd(d); b.setAttribute('aria-label', heDate(ymd(d)));
-        if (B.date === ymd(d)) b.classList.add('sel');
+      if (dayOpen(key)) {
+        b.classList.add('open'); b.dataset.date = key; b.setAttribute('aria-label', heDate(key));
+        if (B.date === key) b.classList.add('sel');
       } else b.disabled = true;
       grid.appendChild(b);
     }
-    $('calPrev').disabled = viewMonth <= new Date(today.getFullYear(), today.getMonth(), 1);
-    $('calNext').disabled = new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 1) > lastDay;
+    const first = new Date(); first.setDate(1); first.setHours(0, 0, 0, 0);
+    $('calPrev').disabled = viewMonth <= first;
+    $('calNext').disabled = !avail || ymd(new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 1)) > avail.lastDay;
   }
   function renderSlots() {
     const box = $('slots'); box.innerHTML = '';
     $('slotHint').hidden = !!B.date;
-    if (!B.date) return;
-    HOURS.forEach(h => {
+    if (!B.date || !avail) return;
+    avail.hours.forEach(h => {
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'slot'; b.textContent = hhmm(h); b.dataset.h = h;
       if (isTaken(B.date, h)) { b.disabled = true; b.setAttribute('aria-label', hhmm(h) + ' תפוס'); }
@@ -1773,12 +1803,22 @@ a.fmt:hover{transform:translateY(-4px);box-shadow:0 22px 40px -26px rgba(58,51,6
   $('calPrev').addEventListener('click', () => { viewMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth() - 1, 1); renderCal(); });
   $('calNext').addEventListener('click', () => { viewMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 1); renderCal(); });
   ['bName', 'bPhone', 'bMail'].forEach(id => $(id).addEventListener('input', updateBook));
-  $('payBtn').addEventListener('click', () => {
-    const btn = $('payBtn');
-    btn.hidden = true; $('payHint').hidden = true;
-    bitHold($('bBit'), PRODUCTS[B.product][1], () => {
-      const cal = useCal();
-      if (cal) booked.add(B.date + ' ' + B.time);
+  $('payBtn').addEventListener('click', async () => {
+    const btn = $('payBtn'), cal = useCal();
+    btn.disabled = true; btn.textContent = 'רגע…';
+    let r;
+    try {
+      r = await api('/bookings', { kind: 'session', service: SVC_KEYS[B.svc] || 'theta', product: B.product, place: B.place, packMode: B.packMode,
+        date: cal ? B.date : null, hour: cal ? B.time : null, name: $('bName').value, phone: $('bPhone').value, email: $('bMail').value.trim() });
+    } catch (e) {
+      btn.textContent = 'תשלום בביט';
+      if (e.status === 409) { $('payHint').textContent = 'השעה הזאת נתפסה ממש עכשיו. בחרי שעה אחרת 💛'; B.time = null; await loadAvailability(); $('payHint').textContent = 'השעה הזאת נתפסה ממש עכשיו. בחרי שעה אחרת 💛'; }
+      else { updateBook(); $('payHint').textContent = fieldMsg(e); }
+      return;
+    }
+    btn.hidden = true; btn.textContent = 'תשלום בביט'; $('payHint').hidden = true;
+    bitHold($('bBit'), r.amount, r.holdUntil, async () => {
+      await api(`/bookings/${r.id}/claim`, { token: r.token });
       $('paidText').textContent = cal
         ? 'קיבלנו! ברגע שליטל תאשר את התשלום, תקבלי אישור למייל. נתראה ב' + heDate(B.date) + ' בשעה ' + hhmm(B.time) + (B.place === 'zoom' ? ' בזום.' : ' בקליניקה בכפר חיטים.')
         : 'קיבלנו! ברגע שליטל תאשר את התשלום, היא תשלח לך קישור אישי ליומן, לקביעת המפגשים.';
@@ -1791,64 +1831,76 @@ a.fmt:hover{transform:translateY(-4px);box-shadow:0 22px 40px -26px rgba(58,51,6
       }
       if (B.place === 'clinic') addLink('ניווט ב-Waze', WAZE_URL);
       $('paid').hidden = false;
-    }, () => { btn.hidden = false; $('payHint').hidden = false; });
+    }, () => { btn.hidden = false; $('payHint').hidden = false; B.time = null; loadAvailability(); });
   });
   $('bookAgain').addEventListener('click', () => {
     B.date = null; B.time = null;
     const btn = $('payBtn'); btn.hidden = false; btn.textContent = 'תשלום בביט';
     $('paid').hidden = true; $('payHint').hidden = false; clearInterval($('bBit')._t); $('bBit').hidden = true;
-    renderCal(); renderSlots(); updateBook();
+    loadAvailability();
   });
-  renderCal(); renderSlots(); updateBook();
+  renderCal(); renderSlots(); updateBook(); loadAvailability();
 
-  // numerology single question: pay first, then a prefilled email
-  const MAIL = ''; // TODO: Lital's email address
-  $('askMail').addEventListener('click', () => {
-    navigator.clipboard.writeText('שאלה בנומרולוגיה\n\nשם מלא:\nתאריך לידה:\n\nהשאלה שלי:\n')
-      .then(() => { $('askMail').textContent = 'הועתק!'; }, () => { $('askMail').textContent = 'לא הצלחתי להעתיק'; });
-  });
-  $('askPay').addEventListener('click', () => {
-    const b = $('askPay'); b.hidden = true;
-    bitHold($('askBit'), 150, () => { $('askPaid').hidden = false; }, () => { b.hidden = false; });
+  // ---------- one numerology question (150 ₪) ----------
+  const qReady = () => { $('askPay').disabled = !($('qName').value.trim() && $('qPhone').value.trim() && $('qMail').value.includes('@')); };
+  ['qName', 'qPhone', 'qMail'].forEach(id => $(id).addEventListener('input', qReady)); qReady();
+  $('askPay').addEventListener('click', async () => {
+    const b = $('askPay'); b.disabled = true; $('askErr').hidden = true;
+    let r;
+    try { r = await api('/bookings', { kind: 'question', name: $('qName').value, phone: $('qPhone').value, email: $('qMail').value.trim() }); }
+    catch (e) { $('askErr').textContent = fieldMsg(e); $('askErr').hidden = false; qReady(); return; }
+    b.hidden = true; $('askFields').hidden = true;
+    bitHold($('askBit'), r.amount, r.holdUntil, async () => {
+      await api(`/bookings/${r.id}/claim`, { token: r.token });
+      $('askPaid').hidden = false;
+    }, () => { b.hidden = false; $('askFields').hidden = false; qReady(); });
   });
 
-  // workshops: sample dates and places until real ones are set
-  const WS = [
-    { cohort: 'קבוצת דצמבר', date: '2026-12-19', start: '20:00', end: '22:30', place: 'מיקום לדוגמה, גליל תחתון', price: 72, cap: 20, left: 6, wa: 'https://chat.whatsapp.com/FvinAHXSDUTHMEm1QvOKJ3' },
-    { cohort: 'קבוצת ינואר', date: '2027-01-16', start: '20:00', end: '22:30', place: 'מיקום לדוגמה, גליל תחתון', price: 72, cap: 20, left: 14, wa: '' },
-    { cohort: 'קבוצת אוגוסט', date: '2027-08-14', start: '20:00', end: '22:30', place: 'מיקום לדוגמה, גליל תחתון', price: 72, cap: 20, left: 20, wa: '' } // each cohort gets its own WhatsApp group link
-  ];
+  // ---------- workshops ----------
   const wazeTo = place => 'https://waze.com/ul?navigate=yes&q=' + encodeURIComponent(place);
-  let wsCur = null;
-  WS.forEach((w, i) => {
-    const d = new Date(w.date + 'T00:00');
-    const card = document.createElement('article');
-    card.className = 'ws-card';
-    card.innerHTML =
-      `<div class="datebox"><b>${d.getDate()}</b><span>${d.toLocaleDateString('he-IL', { month: 'long' })}</span><small>${d.toLocaleDateString('he-IL', { weekday: 'long' })}</small></div>` +
-      `<div class="ws-body"><h3>${w.cohort}</h3><p class="cal-legend">מפגש פתיחה: טעימה מכל העולמות</p>` +
-      `<p class="ws-meta">🕗 <span dir="ltr">${w.start}–${w.end}</span> · 📍 ${w.place} · <a href="${wazeTo(w.place)}" target="_blank" rel="noopener">ניווט ב-Waze</a></p>` +
-      `<div class="spots"><i style="width:${Math.round((w.cap - w.left) / w.cap * 100)}%"></i></div><small class="spots-t">נשארו ${w.left} מקומות מתוך ${w.cap}</small></div>` +
-      `<div class="ws-cta"><span class="price">${w.price} ₪</span><button class="btn" type="button" data-ws="${i}">שרייני לי מקום</button></div>`;
-    $('wsList').appendChild(card);
-  });
+  const escH = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  let WS = [], wsCur = null;
+  async function loadWorkshops() {
+    try { WS = await api('/workshops'); } catch { $('wsList').innerHTML = `<p class="cal-legend">לא הצלחתי לטעון את הסדנאות. נסי לרענן את הדף, או כתבי לליטל בוואטסאפ ${BIT_PHONE}.</p>`; return; }
+    $('wsList').innerHTML = WS.length ? '' : `<p class="cal-legend">כרגע אין סדנאות פתוחות להרשמה. רוצה לשמוע על הבאה? כתבי לליטל בוואטסאפ ${BIT_PHONE} 💛</p>`;
+    WS.forEach((w, i) => {
+      const d = new Date(w.date + 'T00:00');
+      const card = document.createElement('article');
+      card.className = 'ws-card';
+      card.innerHTML =
+        `<div class="datebox"><b>${d.getDate()}</b><span>${d.toLocaleDateString('he-IL', { month: 'long' })}</span><small>${d.toLocaleDateString('he-IL', { weekday: 'long' })}</small></div>` +
+        `<div class="ws-body"><h3>${escH(w.cohort)}</h3><p class="cal-legend">${escH(w.title)}</p>` +
+        `<p class="ws-meta">🕗 <span dir="ltr">${escH(w.start)}–${escH(w.end)}</span> · 📍 ${escH(w.place)} · <a href="${wazeTo(w.place)}" target="_blank" rel="noopener">ניווט ב-Waze</a></p>` +
+        `<div class="spots"><i style="width:${Math.round((w.capacity - w.left) / w.capacity * 100)}%"></i></div><small class="spots-t">${w.left ? `נשארו ${w.left} מקומות מתוך ${w.capacity}` : 'הסדנה מלאה'}</small></div>` +
+        `<div class="ws-cta"><span class="price">${w.price} ₪</span><button class="btn" type="button" data-ws="${i}" ${w.left ? '' : 'disabled'}>שרייני לי מקום</button></div>`;
+      $('wsList').appendChild(card);
+    });
+  }
   const wsReady = () => { $('wPay').disabled = !(wsCur !== null && $('wName').value.trim() && $('wPhone').value.trim() && $('wMail').value.includes('@')); };
   $('wsList').addEventListener('click', e => {
     const b = e.target.closest('[data-ws]'); if (!b) return;
     wsCur = Number(b.dataset.ws);
     const w = WS[wsCur];
-    $('wsRegTitle').textContent = w.cohort + ' · מפגש פתיחה';
+    $('wsRegTitle').textContent = w.cohort + ' · ' + w.title;
     $('wsRegMeta').textContent = heDate(w.date) + ' · ' + w.start + '–' + w.end + ' · ' + w.place;
     $('wPay').textContent = 'תשלום בביט · ' + w.price + ' ₪';
-    $('wPay').hidden = false; $('wPaid').hidden = true; $('wsReg').hidden = false; clearInterval($('wBit')._t); $('wBit').hidden = true;
+    $('wPay').hidden = false; $('wPaid').hidden = true; $('wErr').hidden = true; $('wsReg').hidden = false; clearInterval($('wBit')._t); $('wBit').hidden = true;
     wsReady();
     $('wsReg').scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
   ['wName', 'wPhone', 'wMail'].forEach(id => $(id).addEventListener('input', wsReady));
-  $('wPay').addEventListener('click', () => {
+  $('wPay').addEventListener('click', async () => {
     const btn = $('wPay'), w = WS[wsCur];
+    btn.disabled = true; $('wErr').hidden = true;
+    let r;
+    try { r = await api('/bookings', { kind: 'workshop', workshopId: w.id, name: $('wName').value, phone: $('wPhone').value, email: $('wMail').value.trim() }); }
+    catch (e) {
+      $('wErr').textContent = e.status === 409 ? 'אוי, הסדנה התמלאה ממש עכשיו. כתבי לליטל בוואטסאפ ונמצא פתרון 💛' : fieldMsg(e);
+      $('wErr').hidden = false; wsReady(); if (e.status === 409) loadWorkshops(); return;
+    }
     btn.hidden = true;
-    bitHold($('wBit'), w.price, () => {
+    bitHold($('wBit'), r.amount, r.holdUntil, async () => {
+      await api(`/bookings/${r.id}/claim`, { token: r.token });
       const t = s => w.date.replace(/-/g, '') + 'T' + s.replace(':', '') + '00';
       $('wPaidText').textContent = 'קיבלנו! ברגע שליטל תאשר את התשלום, הלינק לקבוצת הוואטסאפ של ' + w.cohort + ' יישלח למייל ' + $('wMail').value.trim() + '. נתראה ב' + heDate(w.date) + ' בשעה ' + w.start + ', ' + w.place + '.';
       const links = $('wLinks'); links.innerHTML = '';
@@ -1856,19 +1908,11 @@ a.fmt:hover{transform:translateY(-4px);box-shadow:0 22px 40px -26px rgba(58,51,6
        ['ניווט ב-Waze', wazeTo(w.place)]].forEach(([label, href]) => {
         const a = document.createElement('a'); a.className = 'btn btn-sm'; a.href = href; a.target = '_blank'; a.rel = 'noopener'; a.textContent = label; links.appendChild(a);
       });
-      const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-      $('wMailPrev').innerHTML =
-        `<div class="mail-head"><span>מאת: ליטל בוהדנה</span><span dir="ltr" style="text-align:end">${esc($('wMail').value.trim())} :אל</span><b>יאחתי, את בפנים! הלינק ל${w.cohort}</b></div>` +
-        `<div class="mail-body"><span class="sign">היי ${esc($('wName').value.trim())} 🩷</span>` +
-        `<p>איזה כיף שבחרת לשים את השגרה בצד! המקום שלך ב${w.cohort} שמור.</p>` +
-        `<div class="mail-det"><b>מפגש פתיחה: טעימה מכל העולמות</b><span>📅 ${heDate(w.date)} · ${w.start}–${w.end}</span><span>📍 ${w.place}</span></div>` +
-        `<p>הצעד הבא: להצטרף לקבוצת הוואטסאפ של הקבוצה. שם נמשיך הכל.</p>` +
-        `<span class="mail-btn">להצטרפות לקבוצת הוואטסאפ</span>` +
-        `<small class="cal-legend" dir="ltr" style="text-align:end">https://chat.whatsapp.com/EXAMPLE-LINK</small>` +
-        `<p>מקסימום, תהני. לא ככה? 😉<br>נתראה,<br>ליטל</p></div>`;
       $('wPaid').hidden = false;
-    }, () => { btn.hidden = false; }, w.bit || BIT_WS_LINK);
+      loadWorkshops();
+    }, () => { btn.hidden = false; wsReady(); loadWorkshops(); }, w.bit_link || BIT_WS_LINK);
   });
+  loadWorkshops();
 
   // contact form (prototype)
   document.getElementById('contactForm').addEventListener('submit', e => {

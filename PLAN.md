@@ -45,13 +45,14 @@
 - תמונה טבעית שלה לעמוד "קצת עליי"
 
 ## סטטוס הבנייה האמיתית
-**נכתב ונבדק מקומית (לא הועלה עדיין):**
-- `api/`: שרת Cloudflare Worker + מסד D1. הזמנות עם שמירת מקום (15 דק' / עד 10:00 בלילה), "העברתי", אישור "שולם", ביטול, סדנאות עם מכסה, שאלה ב-150 ₪, ייצוא CSV לאקסל, ניקוי יומי ומחיקת פרטים אחרי 12 חודשים. המחירים נקבעים בשרת.
-- `admin/`: עמוד הניהול של ליטל (כניסה עם סיסמה): ממתינות לאישור, יומן שבועי, כל ההזמנות + ייצוא לאקסל, ניהול סדנאות (כולל לינק לקבוצה, שנשלח רק במייל אחרי אישור).
+**באוויר:**
+- שרת: **https://lital-api.deepshift.workers.dev** (Cloudflare, החשבון של ליטל, מסד D1 `lital` באירופה). ניקוי יומי ב-02:17 UTC.
+- האתר מחובר לשרת: זמינות אמיתית ביומן, שמירת הזמנה, "העברתי", סדנאות מהשרת, שאלה ב-150 ₪.
+- עמוד ניהול: **https://www.deepshift.co.il/admin/**
+- סביבת ענן נפרדת `lital-progect` עם המפתח של Cloudflare (לא בקוד, לא בצ'אט).
 
-**הצעדים הבאים (בסשן עם `CLOUDFLARE_API_TOKEN`):**
-1. `cd api && npx wrangler d1 create lital`, להעתיק את ה-database_id ל-wrangler.toml, ואז `npx wrangler d1 execute lital --remote --file=schema.sql`
-2. `npx wrangler secret put ADMIN_PASSWORD` / `SESSION_SECRET` (וגם `RESEND_API_KEY` כשיהיה)
-3. `npx wrangler deploy`, ולעדכן את כתובת ה-API ב-`admin/index.html` וב-`index.html`
-4. לחבר את האתר (`index.html`) לשרת: זמינות אמיתית ביומן, יצירת הזמנה, "העברתי", סדנאות מהשרת
-5. Resend: לאמת את deepshift.co.il (רשומות DNS ב-box), להגדיר LITAL_EMAIL
+**נשאר:**
+1. **סיסמת ניהול:** ליטל מגדירה ב-Cloudflare: Workers & Pages → lital-api → Settings → Variables and Secrets → Add → Secret, בשם `ADMIN_PASSWORD`.
+2. **מיילים:** Resend: לאמת את deepshift.co.il (רשומות DNS ב-box), `wrangler secret put RESEND_API_KEY`, ולמלא `LITAL_EMAIL` ב-wrangler.toml. עד אז "שולם ✅" עובד, אבל לא נשלח מייל ללקוחה.
+3. **סדנאות:** ליטל מוסיפה מעמוד הניהול (תאריך, מקום, מחיר, מקומות, לינק לקבוצה, לינק לארנק ביט).
+4. לפריסה מחדש: `cd api && CLOUDFLARE_API_TOKEN=proxy-injected CLOUDFLARE_ACCOUNT_ID=<id> npx wrangler deploy`

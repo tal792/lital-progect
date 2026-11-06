@@ -5,7 +5,7 @@ compatibility_date = "2025-01-01"
 [[d1_databases]]
 binding = "DB"
 database_name = "lital"
-database_id = "00000000-0000-0000-0000-000000000000" # replaced after `wrangler d1 create lital`
+database_id = "3ee1d4db-c8a7-4f82-8420-cb2d0e6b6731"
 
 # Daily cleanup: release stale holds, erase personal details after 12 months.
 [triggers]

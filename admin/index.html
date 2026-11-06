@@ -158,7 +158,7 @@ th{font-size:.8rem;color:var(--muted);background:var(--sand)}
 <script>
 (() => {
   // Set once the server is deployed; `?api=` overrides it for testing.
-  const API = new URLSearchParams(location.search).get('api') || 'https://lital-api.REPLACE.workers.dev';
+  const API = new URLSearchParams(location.search).get('api') || 'https://lital-api.deepshift.workers.dev';
   const $ = id => document.getElementById(id);
   const store = {
     get: k => { try { return sessionStorage.getItem(k); } catch { return null; } },
