@@ -1,0 +1,7 @@
+# GitHub Pages (Jekyll): keep internal project files off the live site.
+# The site itself is index.html + admin/ + CNAME. Add any new internal file here.
+exclude:
+  - PLAN.md
+  - CLAUDE.md
+  - api/
+  - .claude/
