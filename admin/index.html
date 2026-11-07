@@ -95,6 +95,7 @@ th{font-size:.8rem;color:var(--muted);background:var(--sand)}
 <section id="appView" hidden>
   <header class="top"><div class="wrap">
     <h1>האזור של ליטל</h1>
+    <span class="st held" id="demoBadge" hidden>תצוגה לדוגמה · השמות והנתונים מומצאים</span>
     <div class="row"><button class="btn small ghost" id="refresh" type="button">רענון</button><button class="btn small ghost" id="logout" type="button">יציאה</button></div>
   </div></header>
   <div class="wrap">
@@ -176,7 +177,41 @@ th{font-size:.8rem;color:var(--muted);background:var(--sand)}
   const when = b => b.date ? `${fmt(b.date, { weekday: 'short', day: 'numeric', month: 'numeric' })}${b.hour != null ? ' · ' + b.hour + ':00' : b.w_start ? ' · ' + b.w_start : ''}` : '—';
   function toast(msg) { const t = $('toast'); t.textContent = msg; t.hidden = false; clearTimeout(t._t); t._t = setTimeout(() => { t.hidden = true; }, 3500); }
 
+  // ?demo shows the admin with sample data, for presenting it without a password. Nothing is saved.
+  const DEMO = new URLSearchParams(location.search).has('demo');
+  if (DEMO) token = 'demo';
+  function demoData() {
+    const t = todayIL(), names = ['מיכל לוי', 'רונית כהן', 'שירה אברהם', 'נועה פרץ', 'יעל מזרחי', 'דפנה ביטון', 'הילה דהן', 'סיגל אוחיון'];
+    const now = Date.now(), d = n => addDays(t, n);
+    const rows = [
+      [1, 'session', 'תטא הילינג · מפגש בודד, 60 דקות', d(1), 10, 'clinic', 333, 'claimed'],
+      [2, 'session', 'נומרולוגיה זוגי · אבחון וייעוץ, 60 דקות', d(2), 14, 'zoom', 444, 'claimed'],
+      [3, 'workshop', 'סדנה · קבוצת דצמבר', d(30), null, null, 72, 'claimed'],
+      [4, 'session', 'NLP אישי · תהליך, 10 מפגשים', d(1), 12, 'clinic', 2222, 'paid'],
+      [5, 'session', 'תטא הילינג · מפגש בודד, 60 דקות', d(3), 9, 'clinic', 333, 'paid'],
+      [6, 'session', 'NLP זוגי · מפגש בודד, 60 דקות', d(3), 16, 'zoom', 333, 'paid'],
+      [7, 'question', 'שאלה בנומרולוגיה', null, null, null, 150, 'paid'],
+      [8, 'workshop', 'סדנה · קבוצת דצמבר', d(30), null, null, 72, 'paid'],
+      [9, 'session', 'נומרולוגיה אישי · אבחון וייעוץ, 60 דקות', d(4), 11, 'clinic', 444, 'paid'],
+      [10, 'session', 'תטא הילינג · מפגש בודד, 60 דקות', d(2), 18, 'zoom', 333, 'held'],
+    ];
+    return {
+      bookings: rows.map(([id, kind, label, date, hour, place, amount, status], i) => ({ id, kind, label, date, hour, place, amount, status,
+        name: names[i % names.length], phone: '05' + (2 + i % 3) + '-' + (1234567 + i * 1111), email: 'client' + id + '@example.com',
+        created_at: now - i * 3600000, paid_at: status === 'paid' ? now - i * 3600000 : null, cohort: kind === 'workshop' ? 'קבוצת דצמבר' : null, w_start: kind === 'workshop' ? '20:00' : null })),
+      workshops: [{ id: 1, cohort: 'קבוצת דצמבר', date: d(30), start: '20:00', end: '22:30', place: 'כפר חיטים', price: 72, capacity: 20, registered: 14, paid: 12, wa_link: 'https://chat.whatsapp.com/example', active: 1 },
+                  { id: 2, cohort: 'קבוצת ינואר', date: d(58), start: '20:00', end: '22:30', place: 'כפר חיטים', price: 72, capacity: 20, registered: 5, paid: 5, wa_link: '', active: 1 }],
+    };
+  }
+  const demoStore = DEMO ? demoData() : null;
   async function api(path, opts = {}) {
+    if (DEMO) {
+      if (path === '/api/admin/bookings') return demoStore.bookings;
+      if (path === '/api/admin/workshops') return demoStore.workshops;
+      const m = path.match(/bookings\/(\d+)\/(paid|cancel)/);
+      if (m) { const b = demoStore.bookings.find(x => x.id == m[1]); b.status = m[2] === 'paid' ? 'paid' : 'cancelled'; if (m[2] === 'paid') b.paid_at = Date.now(); return { ok: true, emailed: true }; }
+      throw new Error('demo');
+    }
     const res = await fetch(API + path, { ...opts, headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: 'Bearer ' + token } : {}), ...(opts.headers || {}) } });
     if (res.status === 401 && path !== '/api/admin/login') { logout(); throw new Error('login'); }
     if (!res.ok) { let e = 'error'; try { e = (await res.json()).error; } catch {} throw new Error(e); }
@@ -304,6 +339,7 @@ th{font-size:.8rem;color:var(--muted);background:var(--sand)}
     catch (err) { $('wsErr').textContent = err.message === 'wa_link' ? 'הלינק צריך להתחיל ב-https://chat.whatsapp.com/' : err.message === 'bit_link' ? 'לינק הביט צריך להתחיל ב-https://www.bitpay.co.il/' : 'משהו לא תקין בשדות. בדקי ונסי שוב.'; }
   });
 
+  if (DEMO) { $('demoBadge').hidden = false; $('logout').hidden = true; weekStart = sunday(addDays(todayIL(), 1)); }
   show();
 })();
 </script>
