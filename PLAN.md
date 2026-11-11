@@ -55,3 +55,8 @@
 2. ~~מיילים~~ ✅ **עובד:** Resend מאומת על deepshift.co.il (DNS ב-box), מפתח שליחה בשרת, התראות ל-litalspirit222@gmail.com. מייל ניסיון נשלח.
 3. **סדנאות:** ליטל מוסיפה מעמוד הניהול (תאריך, מקום, מחיר, מקומות, לינק לקבוצה, לינק לארנק ביט).
 4. לפריסה מחדש: `cd api && CLOUDFLARE_API_TOKEN=proxy-injected CLOUDFLARE_ACCOUNT_ID=<id> npx wrangler deploy`
+
+## ⚠️ פתוח: האתר החי מציג גרסה ישנה (נמצא ב-11.11)
+- מאז 7.11, `www.deepshift.co.il` מפנה ב-box ל-`deepshift.pages.dev` (פרויקט Cloudflare Pages בשם `deepshift` בחשבון של ליטל, העלאה ידנית, עותק ישן), ולא ל-GitHub Pages.
+- כל העדכונים מאז (תמונה בעמוד הבית, איור יאחתי בסדנאות, כרטיס המיתוג ב"קצת עליי" עם deepshift.co.il, מצב ?demo בניהול) נמצאים ב-GitHub אבל לא מוצגים.
+- **התיקון (מחר):** ב-box, לשנות את ה-CNAME של `www` ל-`tal792.github.io`. חלופה: להוסיף למפתח `lital-site` ב-Cloudflare הרשאת Cloudflare Pages: Edit ולהעלות לשם.
