@@ -427,6 +427,19 @@ a.fmt:hover{transform:translateY(-4px);box-shadow:0 22px 40px -26px rgba(58,51,6
 .foot-legal{font-size:.88rem}
 .foot-legal a{color:var(--plum-ink)}
 
+/* certifications */
+.creds{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.cred{display:flex;gap:16px;align-items:flex-start;background:var(--sand);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.cred .sym{flex:none;width:56px;height:56px;font-size:1.7rem}
+.cred .sym-sm{font-size:1rem}
+.cred > div{min-width:0}
+.cred h3{font-size:1.35rem}
+.cred-org{font-size:.9rem;color:var(--plum);margin-bottom:8px}
+.cred ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.cred li{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 12px;border-top:1px dashed var(--line);padding-top:6px}
+.cred li span{color:var(--muted);font-size:.9rem;white-space:nowrap}
+@media (max-width:760px){.creds{grid-template-columns:1fr}}
+
 /* workshops */
 .emo .vis-label{font-size:1.4rem;padding:.2em .45em;line-height:1.2}
 .worlds{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
@@ -1032,7 +1045,15 @@ a.fmt:hover{transform:translateY(-4px);box-shadow:0 22px 40px -26px rgba(58,51,6
     </div>
   </section>
   <section class="band band-cream">
-    <div class="wrap"><div class="todo">כאן אפשר להוסיף הכשרות ותעודות (תטא הילינג, נומרולוגיה, NLP), אם תרצי.</div></div>
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">הכשרות ותעודות</p><h2>הלמידה שמאחורי העבודה</h2></div>
+      <div class="creds">
+        <article class="cred"><span class="sym sym-teal">θ</span><div><h3>תטא הילינג</h3><p class="cred-org">THInK · ThetaHealing Institute of Knowledge</p><ul><li><b>Basic DNA</b><span>אוגוסט 2026</span></li><li><b>Advanced DNA</b><span>ספטמבר 2026</span></li><li><b>Dig Deeper</b><span>אוקטובר 2026</span></li></ul></div></article>
+        <article class="cred"><span class="sym sym-lilac">7</span><div><h3>נומרולוגיה</h3><p class="cred-org">מכללת פרסונה · שוקי גבאי, נומרולוג</p><ul><li><b>לימודי נומרולוגיה</b><span>מאי 2026</span></li><li><b>נומרולוגיה למתקדמים</b><span>יולי 2026</span></li></ul></div></article>
+        <article class="cred"><span class="sym sym-teal sym-sm">NLP</span><div><h3>NLP</h3><p class="cred-org">SMART · המרכז הבינלאומי ללימודי NLP</p><ul><li><b>NLP Practitioner</b><span>2022 · 139 שעות</span></li><li><b>NLP Master Practitioner</b><span>2022 · 139 שעות</span></li></ul></div></article>
+        <article class="cred"><span class="sym sym-lilac">✦</span><div><h3>קלפים טיפוליים</h3><p class="cred-org">מכון פרסונה · הילה גבאי</p><ul><li><b>"קסמם של הקלפים": הכשרה מעשית לעבודה עם קלפים טיפוליים בקליניקה ובקבוצות</b><span>ינואר 2025</span></li></ul></div></article>
+      </div>
+    </div>
   </section>
   <section class="band band-beige"><div class="wrap cta"><h2>הגעת עד כאן? כנראה שיש לנו על מה לדבר.</h2><a class="btn" href="#contact" data-go="contact">בואי נדבר</a></div></section>
 </div>
