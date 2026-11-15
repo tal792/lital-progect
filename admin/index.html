@@ -143,7 +143,7 @@ th{font-size:.8rem;color:var(--muted);background:var(--sand)}
           <div class="field"><label for="f-end">שעת סיום</label><input id="f-end" type="time" value="22:30" required></div>
           <div class="field"><label for="f-place">מיקום</label><input id="f-place" required placeholder="כפר חיטים"></div>
           <div class="field"><label for="f-price">מחיר (₪)</label><input id="f-price" type="number" min="0" value="72" required></div>
-          <div class="field"><label for="f-cap">מספר מקומות</label><input id="f-cap" type="number" min="1" value="20" required></div>
+          <div class="field"><label for="f-cap">מספר מקומות (0 = ללא הגבלה)</label><input id="f-cap" type="number" min="0" value="0" required></div>
           <div class="field"><label for="f-wa">לינק לקבוצת הוואטסאפ</label><input id="f-wa" type="url" dir="ltr" placeholder="https://chat.whatsapp.com/..."></div>
           <div class="field"><label for="f-bit">לינק לארנק ביט של הסדנה</label><input id="f-bit" type="url" dir="ltr" placeholder="https://www.bitpay.co.il/..."></div>
         </div>
@@ -283,7 +283,7 @@ th{font-size:.8rem;color:var(--muted);background:var(--sand)}
       const ev = bookings.filter(b => b.date === d && ['claimed', 'paid'].includes(b.status)).sort((a, b) => (a.hour ?? 99) - (b.hour ?? 99));
       const ws = workshops.filter(w => w.date === d && w.active);
       return `<div class="day ${d === today ? 'today' : ''}"><h3>${fmt(d, { weekday: 'long' })}<small>${fmt(d, { day: 'numeric', month: 'numeric' })}</small></h3>
-        ${ws.map(w => `<div class="ev ws"><b>${esc(w.cohort)}</b><small>${esc(w.start)} · ${w.registered}/${w.capacity} נרשמו</small></div>`).join('')}
+        ${ws.map(w => `<div class="ev ws"><b>${esc(w.cohort)}</b><small>${esc(w.start)} · ${w.registered}${w.capacity ? '/' + w.capacity : ''} נרשמו</small></div>`).join('')}
         ${ev.filter(b => b.kind === 'session').map(b => `<div class="ev ${b.place === 'zoom' ? 'zoom' : ''} ${b.status}"><b>${b.hour}:00 · ${esc(b.name)}</b><small>${esc(b.label)}</small><small>${b.place === 'zoom' ? 'זום' : 'קליניקה'} · <span dir="ltr">${esc(b.phone)}</span></small></div>`).join('')}
         ${!ws.length && !ev.some(b => b.kind === 'session') ? '<p class="muted">אין מפגשים</p>' : ''}</div>`;
     }).join('');
@@ -316,8 +316,8 @@ th{font-size:.8rem;color:var(--muted);background:var(--sand)}
     $('wsList').innerHTML = workshops.length ? workshops.map(w => `
       <div class="card ws"><div><h2>${esc(w.cohort)}${w.active ? '' : ' <span class="st cancelled">הוסתרה</span>'}</h2>
         <p class="muted">${fmt(w.date, { weekday: 'long', day: 'numeric', month: 'long' })} · <bdi dir="ltr">${esc(w.start)}–${esc(w.end)}</bdi> · ${esc(w.place)} · ${money(w.price)}</p>
-        <div class="meter"><i style="width:${Math.min(100, Math.round(w.registered / w.capacity * 100))}%"></i></div>
-        <p class="muted">${w.registered} מתוך ${w.capacity} נרשמו · ${w.paid} שילמו${w.wa_link ? '' : ' · ⚠️ חסר לינק לקבוצה'}</p></div>
+        ${w.capacity ? `<div class="meter"><i style="width:${Math.min(100, Math.round(w.registered / w.capacity * 100))}%"></i></div>` : ''}
+        <p class="muted">${w.registered}${w.capacity ? ' מתוך ' + w.capacity : ''} נרשמו${w.capacity ? '' : ' · ללא הגבלת מקומות'} · ${w.paid} שילמו${w.wa_link ? '' : ' · ⚠️ חסר לינק לקבוצה'}</p></div>
         <div class="row"><button class="btn small ghost" type="button" data-edit="${w.id}">עריכה</button>${w.active ? `<button class="btn small red" type="button" data-hide="${w.id}">הסתרה מהאתר</button>` : ''}</div></div>`).join('')
       : '<p class="empty card">עוד אין סדנאות. הוסיפי את הראשונה למטה.</p>';
   }

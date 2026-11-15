@@ -95,7 +95,8 @@ async function publicWorkshops(env) {
      FROM workshops w WHERE w.active = 1 AND w.date >= ? ORDER BY w.date`
   ).bind(Date.now(), today).all();
   // The WhatsApp link is never public: it is emailed only after Lital confirms the payment.
-  return json(results.map(w => ({ ...w, left: Math.max(0, w.capacity - w.taken) })));
+  // capacity 0 means no limit on registrations
+  return json(results.map(w => ({ ...w, left: w.capacity ? Math.max(0, w.capacity - w.taken) : null })));
 }
 
 async function createBooking(req, env) {
@@ -130,7 +131,7 @@ async function createBooking(req, env) {
     const { n } = await env.DB.prepare(
       `SELECT COUNT(*) AS n FROM bookings WHERE workshop_id = ? AND (status IN ('claimed', 'paid') OR (status = 'held' AND hold_until > ?))`
     ).bind(w.id, now).first();
-    if (n >= w.capacity) throw new HttpError(409, 'full');
+    if (w.capacity && n >= w.capacity) throw new HttpError(409, 'full');
     rec = { kind: 'workshop', service: 'workshop', product: null, place: null, pack_mode: null, date: w.date, hour: null, workshop_id: w.id, amount: w.price };
   } else if (b.kind === 'question') {
     rec = { kind: 'question', service: 'numerology-question', product: null, place: null, pack_mode: null, date: null, hour: null, workshop_id: null, amount: QUESTION_PRICE };
@@ -254,7 +255,7 @@ async function saveWorkshop(req, env, id) {
     end: /^\d{2}:\d{2}$/.test(b.end) ? b.end : bad('end'),
     place: text(b.place, 2, 120, 'place'),
     price: Number.isInteger(+b.price) && +b.price >= 0 ? +b.price : bad('price'),
-    capacity: Number.isInteger(+b.capacity) && +b.capacity > 0 ? +b.capacity : bad('capacity'),
+    capacity: Number.isInteger(+b.capacity) && +b.capacity >= 0 ? +b.capacity : bad('capacity'),
     bit_link: b.bit_link ? (/^https:\/\/(www\.)?bitpay\.co\.il\/\S+$/.test(b.bit_link) ? b.bit_link : bad('bit_link')) : null,
     wa_link: b.wa_link ? (/^https:\/\/chat\.whatsapp\.com\/\S+$/.test(b.wa_link) ? b.wa_link : bad('wa_link')) : null,
   };

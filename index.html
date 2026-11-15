@@ -1885,6 +1885,7 @@ a.fmt:hover{transform:translateY(-4px);box-shadow:0 22px 40px -26px rgba(58,51,6
 
   // ---------- workshops ----------
   const wazeTo = place => 'https://waze.com/ul?navigate=yes&q=' + encodeURIComponent(place);
+  const hasAddr = place => !/יישלח|יפורסם|יעודכן/.test(place); // no Waze link until a real address is set
   const escH = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   let WS = [], wsCur = null;
   async function loadWorkshops() {
@@ -1897,9 +1898,9 @@ a.fmt:hover{transform:translateY(-4px);box-shadow:0 22px 40px -26px rgba(58,51,6
       card.innerHTML =
         `<div class="datebox"><b>${d.getDate()}</b><span>${d.toLocaleDateString('he-IL', { month: 'long' })}</span><small>${d.toLocaleDateString('he-IL', { weekday: 'long' })}</small></div>` +
         `<div class="ws-body"><h3>${escH(w.cohort)}</h3><p class="cal-legend">${escH(w.title)}</p>` +
-        `<p class="ws-meta">🕗 <span dir="ltr">${escH(w.start)}–${escH(w.end)}</span> · 📍 ${escH(w.place)} · <a href="${wazeTo(w.place)}" target="_blank" rel="noopener">ניווט ב-Waze</a></p>` +
-        `<div class="spots"><i style="width:${Math.round((w.capacity - w.left) / w.capacity * 100)}%"></i></div><small class="spots-t">${w.left ? `נשארו ${w.left} מקומות מתוך ${w.capacity}` : 'הסדנה מלאה'}</small></div>` +
-        `<div class="ws-cta"><span class="price">${w.price} ₪</span><button class="btn" type="button" data-ws="${i}" ${w.left ? '' : 'disabled'}>שרייני לי מקום</button></div>`;
+        `<p class="ws-meta">🕗 <span dir="ltr">${escH(w.start)}–${escH(w.end)}</span> · 📍 ${escH(w.place)}${hasAddr(w.place) ? ` · <a href="${wazeTo(w.place)}" target="_blank" rel="noopener">ניווט ב-Waze</a>` : ''}</p>` +
+        (w.left === null ? '<small class="spots-t">ההרשמה פתוחה 💛</small></div>' : `<div class="spots"><i style="width:${Math.round((w.capacity - w.left) / w.capacity * 100)}%"></i></div><small class="spots-t">${w.left ? `נשארו ${w.left} מקומות מתוך ${w.capacity}` : 'הסדנה מלאה'}</small></div>`) +
+        `<div class="ws-cta"><span class="price">${w.price} ₪</span><button class="btn" type="button" data-ws="${i}" ${w.left === 0 ? 'disabled' : ''}>שרייני לי מקום</button></div>`;
       $('wsList').appendChild(card);
     });
   }
@@ -1932,7 +1933,7 @@ a.fmt:hover{transform:translateY(-4px);box-shadow:0 22px 40px -26px rgba(58,51,6
       $('wPaidText').textContent = 'קיבלנו! ברגע שליטל תאשר את התשלום, הלינק לקבוצת הוואטסאפ של ' + w.cohort + ' יישלח למייל ' + $('wMail').value.trim() + '. נתראה ב' + heDate(w.date) + ' בשעה ' + w.start + ', ' + w.place + '.';
       const links = $('wLinks'); links.innerHTML = '';
       [['הוספה ליומן', 'https://calendar.google.com/calendar/render?action=TEMPLATE&ctz=Asia/Jerusalem&dates=' + t(w.start) + '/' + t(w.end) + '&text=' + encodeURIComponent('יאחתי · ' + w.cohort) + '&location=' + encodeURIComponent(w.place)],
-       ['ניווט ב-Waze', wazeTo(w.place)]].forEach(([label, href]) => {
+       ...(hasAddr(w.place) ? [['ניווט ב-Waze', wazeTo(w.place)]] : [])].forEach(([label, href]) => {
         const a = document.createElement('a'); a.className = 'btn btn-sm'; a.href = href; a.target = '_blank'; a.rel = 'noopener'; a.textContent = label; links.appendChild(a);
       });
       $('wPaid').hidden = false;
