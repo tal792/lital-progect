@@ -170,6 +170,15 @@ async function claimBooking(req, env, ctx, id) {
     mailLayout(`<p>${esc(row.name)} דיווחה שהעבירה <b>${row.amount} ₪</b> בביט.</p><p>${esc(describe(row))}</p>
       <p>טלפון: ${esc(row.phone)} · מייל: ${esc(row.email)}</p>
       <p>אחרי שבדקת שהכסף הגיע, אשרי בעמוד הניהול: <a href="${env.SITE_URL}/admin/">${env.SITE_URL}/admin/</a></p>`)));
+  // Let the client know right away that her registration was received.
+  const what = row.kind === 'workshop' ? `${esc(row.cohort)} · ${esc(row.w_title)}<br>📅 ${esc(heDate(row.date))} · ${esc(row.w_start)}–${esc(row.w_end)}<br>📍 ${esc(row.w_place)}`
+    : row.kind === 'question' ? 'שאלה בנומרולוגיה'
+    : `${esc(describe(row))}${row.date != null && row.hour != null ? `<br>📅 ${esc(heDate(row.date))} בשעה ${row.hour}:00` : ''}`;
+  ctx.waitUntil(sendMail(env, row.email, 'קיבלתי את ההרשמה שלך 💛',
+    mailLayout(`<p style="font-size:20px">היי ${esc(row.name)} 💛</p><p>קיבלתי את ההרשמה שלך, ותודה על התשלום (${row.amount} ₪ בביט).</p>
+      <p><b>${what}</b></p>
+      <p>ברגע שאאשר שהתשלום הגיע, ${row.kind === 'workshop' ? 'תקבלי מייל עם הלינק לקבוצת הוואטסאפ' : 'תקבלי מייל אישור סופי'}.</p>
+      <p>שאלות? אפשר לכתוב לי בוואטסאפ: 052-915-4321</p><p>נתראה,<br>ליטל</p>`)));
   return json({ ok: true });
 }
 
