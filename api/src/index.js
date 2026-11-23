@@ -9,6 +9,7 @@ const BOOK_AHEAD_DAYS = 60;
 const HOLD_MINUTES = 15;
 const RETENTION_MONTHS = 12;
 const ADMIN_SESSION_HOURS = 12;
+const RESET_MINUTES = 30;
 
 // Prices are decided here, never by the browser.
 const SERVICES = {
@@ -58,6 +59,8 @@ async function route(req, env, ctx) {
   if (m === 'POST' && p === '/api/bookings') return createBooking(req, env);
   if (m === 'POST' && (g = p.match(/^\/api\/bookings\/(\d+)\/claim$/))) return claimBooking(req, env, ctx, +g[1]);
   if (m === 'POST' && p === '/api/admin/login') return login(req, env);
+  if (m === 'POST' && p === '/api/admin/reset-request') return resetRequest(env, ctx);
+  if (m === 'POST' && p === '/api/admin/reset') return resetPassword(req, env);
   if (p.startsWith('/api/admin/')) {
     await requireAdmin(req, env);
     if (m === 'GET' && p === '/api/admin/bookings') return adminBookings(env);
@@ -184,23 +187,71 @@ async function claimBooking(req, env, ctx, id) {
 
 // ---------- admin ----------
 
+// Lital's password lives in D1 as a PBKDF2 hash, set through an emailed one-time link.
+// ADMIN_PASSWORD (a Worker secret) still works as a fallback while no password has been set.
+async function getAuth(env) {
+  return (await env.DB.prepare('SELECT * FROM admin_auth WHERE id = 1').first()) || {};
+}
+
 async function login(req, env) {
   const { password } = await body(req);
-  if (!env.ADMIN_PASSWORD || !env.SESSION_SECRET) throw new HttpError(500, 'admin not configured');
-  if (!(await safeEqual(String(password || ''), env.ADMIN_PASSWORD, env.SESSION_SECRET))) {
+  if (!env.SESSION_SECRET) throw new HttpError(500, 'admin not configured');
+  const auth = await getAuth(env), pw = String(password || '');
+  const ok = auth.pw_hash
+    ? (await pbkdf2(pw, auth.pw_salt)) === auth.pw_hash
+    : !!env.ADMIN_PASSWORD && (await safeEqual(pw, env.ADMIN_PASSWORD, env.SESSION_SECRET));
+  if (!ok) {
     await new Promise(r => setTimeout(r, 800)); // slow down guessing
-    throw new HttpError(401, 'wrong password');
+    throw new HttpError(401, auth.pw_hash || env.ADMIN_PASSWORD ? 'wrong password' : 'no password');
   }
-  const exp = Date.now() + ADMIN_SESSION_HOURS * 3600000;
-  return json({ token: `${exp}.${await hmac(env.SESSION_SECRET, String(exp))}`, exp });
+  return json(await issueSession(env, auth.pw_ver || 0));
+}
+
+async function issueSession(env, ver) {
+  const exp = Date.now() + ADMIN_SESSION_HOURS * 3600000, payload = `${exp}.${ver}`;
+  return { token: `${payload}.${await hmac(env.SESSION_SECRET, payload)}`, exp };
 }
 
 async function requireAdmin(req, env) {
   const t = (req.headers.get('Authorization') || '').replace(/^Bearer /, '');
-  const [exp, sig] = t.split('.');
-  if (!exp || !sig || !env.SESSION_SECRET || Number(exp) < Date.now() || sig !== await hmac(env.SESSION_SECRET, exp)) {
+  const [exp, ver, sig] = t.split('.');
+  // a new password bumps pw_ver, which signs out every older session
+  if (!exp || !sig || !env.SESSION_SECRET || Number(exp) < Date.now() || Number(ver) !== ((await getAuth(env)).pw_ver || 0)
+    || sig !== await hmac(env.SESSION_SECRET, `${exp}.${ver}`)) {
     throw new HttpError(401, 'login required');
   }
+}
+
+async function resetRequest(env, ctx) {
+  if (!env.LITAL_EMAIL) throw new HttpError(500, 'no email');
+  const auth = await getAuth(env), now = Date.now();
+  if (auth.reset_sent_at && now - auth.reset_sent_at < 60000) return json({ ok: true }); // at most one email a minute
+  const token = randomToken(), exp = now + RESET_MINUTES * 60000;
+  await env.DB.prepare(
+    `INSERT INTO admin_auth (id, reset_hash, reset_exp, reset_sent_at) VALUES (1, ?, ?, ?)
+     ON CONFLICT(id) DO UPDATE SET reset_hash = excluded.reset_hash, reset_exp = excluded.reset_exp, reset_sent_at = excluded.reset_sent_at`
+  ).bind(await sha256(token), exp, now).run();
+  const link = `${env.SITE_URL}/admin/?reset=${token}`;
+  ctx.waitUntil(sendMail(env, env.LITAL_EMAIL, 'קביעת סיסמה לאזור של ליטל',
+    mailLayout(`<p style="font-size:20px">היי ליטל 💛</p><p>ביקשת לקבוע סיסמה לעמוד הניהול של האתר.</p>
+      <p><a href="${link}" style="background:#55C4C0;color:#3A3341;padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:bold">לקביעת סיסמה</a></p>
+      <p style="font-size:14px;color:#6C6274">הקישור תקף ל-${RESET_MINUTES} דקות ולשימוש אחד. אם לא את ביקשת, אפשר פשוט להתעלם מהמייל.</p>`)));
+  return json({ ok: true });
+}
+
+async function resetPassword(req, env) {
+  const { token, password } = await body(req);
+  const pw = String(password || '');
+  if (pw.length < 8 || pw.length > 200) bad('password');
+  const auth = await getAuth(env);
+  if (!token || !auth.reset_hash || auth.reset_exp < Date.now() || (await sha256(String(token))) !== auth.reset_hash) {
+    throw new HttpError(410, 'link expired');
+  }
+  const salt = randomToken(), ver = (auth.pw_ver || 0) + 1;
+  await env.DB.prepare(
+    'UPDATE admin_auth SET pw_hash = ?, pw_salt = ?, pw_ver = ?, reset_hash = NULL, reset_exp = NULL WHERE id = 1'
+  ).bind(await pbkdf2(pw, salt), salt, ver).run();
+  return json(await issueSession(env, ver));
 }
 
 async function adminBookings(env) {
@@ -435,6 +486,19 @@ async function hmac(secret, msg) {
   const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
   const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(msg));
   return btoa(String.fromCharCode(...new Uint8Array(sig))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+function randomToken() {
+  const b = crypto.getRandomValues(new Uint8Array(32));
+  return btoa(String.fromCharCode(...b)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+async function sha256(text) {
+  const d = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return [...new Uint8Array(d)].map(x => x.toString(16).padStart(2, '0')).join('');
+}
+async function pbkdf2(password, salt) {
+  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveBits']);
+  const bits = await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt: new TextEncoder().encode(salt), iterations: 100000 }, key, 256);
+  return [...new Uint8Array(bits)].map(x => x.toString(16).padStart(2, '0')).join('');
 }
 async function safeEqual(a, b, secret) {
   return (await hmac(secret, a)) === (await hmac(secret, b));

@@ -45,3 +45,14 @@ CREATE TABLE IF NOT EXISTS workshops (
   bit_link TEXT, -- Bit wallet link for this workshop's payments
   active INTEGER NOT NULL DEFAULT 1
 );
+
+-- Lital's admin password (PBKDF2 hash) and the one-time link for setting it.
+CREATE TABLE IF NOT EXISTS admin_auth (
+  id INTEGER PRIMARY KEY CHECK (id = 1),
+  pw_hash TEXT,
+  pw_salt TEXT,
+  pw_ver INTEGER NOT NULL DEFAULT 0,
+  reset_hash TEXT,
+  reset_exp INTEGER,
+  reset_sent_at INTEGER
+);

@@ -89,6 +89,16 @@ th{font-size:.8rem;color:var(--muted);background:var(--sand)}
     <div class="field"><label for="pw">סיסמה</label><input id="pw" type="password" autocomplete="current-password" required></div>
     <p class="err" id="loginErr" aria-live="polite"></p>
     <button class="btn" type="submit">כניסה</button>
+    <button class="btn ghost small" type="button" id="forgot">שכחתי סיסמה / קביעת סיסמה</button>
+    <p class="muted" id="forgotMsg" aria-live="polite" hidden></p>
+  </form>
+  <form class="card login" id="resetForm" hidden>
+    <h1>קביעת סיסמה</h1>
+    <p class="muted">בחרי סיסמה חדשה לאזור הניהול. לפחות 8 תווים.</p>
+    <div class="field"><label for="np1">סיסמה חדשה</label><input id="np1" type="password" autocomplete="new-password" minlength="8" required></div>
+    <div class="field"><label for="np2">שוב, לאישור</label><input id="np2" type="password" autocomplete="new-password" minlength="8" required></div>
+    <p class="err" id="resetErr" aria-live="polite"></p>
+    <button class="btn" type="submit">שמירה וכניסה</button>
   </form>
 </section>
 
@@ -225,9 +235,32 @@ th{font-size:.8rem;color:var(--muted);background:var(--sand)}
     e.preventDefault(); $('loginErr').textContent = '';
     const btn = e.submitter; btn.disabled = true;
     try { const r = await api('/api/admin/login', { method: 'POST', body: JSON.stringify({ password: $('pw').value }) }); token = r.token; store.set('lt', token); $('pw').value = ''; show(); }
-    catch (err) { $('loginErr').textContent = err.message === 'wrong password' ? 'הסיסמה לא נכונה.' : 'לא הצלחתי להתחבר לשרת. נסי שוב בעוד רגע.'; }
+    catch (err) { $('loginErr').textContent = err.message === 'wrong password' ? 'הסיסמה לא נכונה.' : err.message === 'no password' ? 'עוד לא נקבעה סיסמה. לחצי "שכחתי סיסמה / קביעת סיסמה".' : 'לא הצלחתי להתחבר לשרת. נסי שוב בעוד רגע.'; }
     finally { btn.disabled = false; }
   });
+  // forgotten / first password: a one-time link is emailed to Lital
+  $('forgot').addEventListener('click', async e => {
+    const b = e.currentTarget; b.disabled = true;
+    try { await api('/api/admin/reset-request', { method: 'POST', body: '{}' }); $('forgotMsg').textContent = 'שלחתי קישור לקביעת סיסמה למייל של ליטל. הוא תקף לחצי שעה (כדאי לבדוק גם בספאם).'; }
+    catch { $('forgotMsg').textContent = 'לא הצלחתי לשלוח. נסי שוב בעוד דקה.'; }
+    $('forgotMsg').hidden = false; setTimeout(() => { b.disabled = false; }, 60000);
+  });
+  const resetToken = new URLSearchParams(location.search).get('reset');
+  if (resetToken) { $('loginForm').hidden = true; $('resetForm').hidden = false; }
+  $('resetForm').addEventListener('submit', async e => {
+    e.preventDefault(); $('resetErr').textContent = '';
+    if ($('np1').value !== $('np2').value) { $('resetErr').textContent = 'שתי הסיסמאות לא זהות.'; return; }
+    const btn = e.submitter; btn.disabled = true;
+    try {
+      const r = await api('/api/admin/reset', { method: 'POST', body: JSON.stringify({ token: resetToken, password: $('np1').value }) });
+      token = r.token; store.set('lt', token); $('np1').value = $('np2').value = '';
+      try { history.replaceState(null, '', location.pathname); } catch {}
+      $('resetForm').hidden = true; $('loginForm').hidden = false; show(); toast('הסיסמה נשמרה 💛');
+    } catch (err) {
+      $('resetErr').textContent = err.message === 'link expired' ? 'הקישור כבר לא בתוקף. חזרי למסך הכניסה ובקשי קישור חדש.' : err.message === 'password' ? 'הסיסמה צריכה להיות לפחות 8 תווים.' : 'משהו השתבש. נסי שוב.';
+    } finally { btn.disabled = false; }
+  });
+
   $('logout').addEventListener('click', logout);
   $('refresh').addEventListener('click', () => load());
 
