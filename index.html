@@ -1938,7 +1938,7 @@ a.fmt:hover{transform:translateY(-4px);box-shadow:0 22px 40px -26px rgba(58,51,6
       });
       $('wPaid').hidden = false;
       loadWorkshops();
-    }, () => { btn.hidden = false; wsReady(); loadWorkshops(); }, w.bit_link || BIT_WS_LINK);
+    }, () => { btn.hidden = false; wsReady(); loadWorkshops(); }, w.bit_link || null); // Lital's personal Bit QR unless a workshop has its own link
   });
   loadWorkshops();
 
